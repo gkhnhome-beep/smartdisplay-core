@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"strings"
 	"time"
 )
 
@@ -25,7 +26,7 @@ type AlarmoState struct {
 }
 
 // Adapter reads alarm state from Home Assistant Alarmo integration
-// Read-only: no arm/disarm operations
+// A4: Now supports controlled write operations via RequestAction
 type Adapter struct {
 	baseURL string
 	token   string
@@ -228,4 +229,79 @@ func parseLastChanged(timeStr string) time.Time {
 
 	// Fallback to now
 	return time.Now()
+}
+
+// RequestAction sends an arm/disarm request to Alarmo
+// A4: Controlled write operations - does NOT modify local state
+// Valid actions: arm_home, arm_away, arm_night, disarm
+// Returns error if request fails, but DOES NOT update AlarmoState
+// Caller must wait for polling to reflect changes
+func (a *Adapter) RequestAction(ctx context.Context, action string) error {
+	// Map action to HA service name
+	serviceName, err := mapActionToService(action)
+	if err != nil {
+		return err
+	}
+
+	// Construct service call URL
+	url := fmt.Sprintf("%s/api/services/alarm_control_panel/%s", a.baseURL, serviceName)
+
+	// Construct request body
+	body := map[string]interface{}{
+		"entity_id": "alarm_control_panel.alarmo",
+	}
+	bodyJSON, err := json.Marshal(body)
+	if err != nil {
+		return fmt.Errorf("alarmo: marshal request failed: %w", err)
+	}
+
+	// Create HTTP request
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, url, nil)
+	if err != nil {
+		return fmt.Errorf("alarmo: request creation failed: %w", err)
+	}
+
+	// Set headers (do not log token)
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", a.token))
+	req.Header.Set("Content-Type", "application/json")
+
+	// Attach body
+	req.Body = io.NopCloser(strings.NewReader(string(bodyJSON)))
+
+	// Execute request
+	resp, err := a.client.Do(req)
+	if err != nil {
+		return fmt.Errorf("alarmo: action request failed: %w", err)
+	}
+	defer resp.Body.Close()
+
+	// Handle HTTP status codes
+	if resp.StatusCode == http.StatusUnauthorized || resp.StatusCode == http.StatusForbidden {
+		return errors.New("alarmo: unauthorized (check HA token)")
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		return fmt.Errorf("alarmo: http %d", resp.StatusCode)
+	}
+
+	// Success - do NOT modify local state
+	// Polling will reflect changes naturally
+	return nil
+}
+
+// mapActionToService converts UI action to HA service name
+// A4: Explicit mapping for security
+func mapActionToService(action string) (string, error) {
+	switch action {
+	case "arm_home":
+		return "alarm_arm_home", nil
+	case "arm_away":
+		return "alarm_arm_away", nil
+	case "arm_night":
+		return "alarm_arm_night", nil
+	case "disarm":
+		return "alarm_disarm", nil
+	default:
+		return "", fmt.Errorf("alarmo: invalid action '%s'", action)
+	}
 }

@@ -639,6 +639,51 @@ func (c *Coordinator) StartAlarmPolling(ctx context.Context) {
 	}()
 }
 
+// RequestAlarmAction sends a controlled arm/disarm request to Alarmo
+// A4: Write operations - does NOT modify local state
+// Valid actions: arm_home, arm_away, arm_night, disarm
+// Returns error if request fails or validation fails
+// Caller must wait for polling to reflect changes
+func (c *Coordinator) RequestAlarmAction(ctx context.Context, action string) error {
+	if c.AlarmoAdapter == nil {
+		logger.Error("alarmo: adapter not initialized")
+		return fmt.Errorf("alarmo adapter not initialized")
+	}
+
+	// Read current state for validation
+	c.AlarmoMu.RLock()
+	currentState := c.AlarmoState
+	alarmoReachable := !c.failsafe.Active
+	c.AlarmoMu.RUnlock()
+
+	// Validation: reject if Alarmo is unreachable
+	if !alarmoReachable {
+		logger.Error(fmt.Sprintf("alarmo action rejected: alarmo unreachable (action=%s)", action))
+		return fmt.Errorf("alarmo unreachable")
+	}
+
+	// Validation: reject arm/disarm if triggered
+	if currentState.Triggered || currentState.Mode == "triggered" {
+		logger.Error(fmt.Sprintf("alarmo action rejected: system triggered (action=%s)", action))
+		return fmt.Errorf("action blocked: system triggered")
+	}
+
+	// Log action request (INFO level, action name only)
+	logger.Info(fmt.Sprintf("alarmo action requested: %s", action))
+	audit.Record("alarmo_action", action)
+
+	// Send request to Alarmo (non-blocking, does not modify state)
+	err := c.AlarmoAdapter.RequestAction(ctx, action)
+	if err != nil {
+		logger.Error(fmt.Sprintf("alarmo action failed: %s (error=%s)", action, err.Error()))
+		audit.Record("alarmo_action_failed", action)
+		return fmt.Errorf("alarmo action failed: %w", err)
+	}
+
+	logger.Info(fmt.Sprintf("alarmo action sent: %s (waiting for state change)", action))
+	return nil
+}
+
 // === SELF-CHECK & DIAGNOSTICS ===
 
 // SelfCheck runs a diagnostic check on all subsystems

@@ -12,12 +12,14 @@ type ErrorCode string
 
 const (
 	// HTTP error codes
-	CodeBadRequest       ErrorCode = "bad_request"        // 400
-	CodeUnauthorized     ErrorCode = "unauthorized"       // 401
-	CodeForbidden        ErrorCode = "forbidden"          // 403
-	CodeNotFound         ErrorCode = "not_found"          // 404
-	CodeMethodNotAllowed ErrorCode = "method_not_allowed" // 405
-	CodeInternalError    ErrorCode = "internal_error"     // 500
+	CodeBadRequest         ErrorCode = "bad_request"         // 400
+	CodeUnauthorized       ErrorCode = "unauthorized"        // 401
+	CodeForbidden          ErrorCode = "forbidden"           // 403
+	CodeNotFound           ErrorCode = "not_found"           // 404
+	CodeMethodNotAllowed   ErrorCode = "method_not_allowed"  // 405
+	CodeConflict           ErrorCode = "conflict"            // 409
+	CodeInternalError      ErrorCode = "internal_error"      // 500
+	CodeServiceUnavailable ErrorCode = "service_unavailable" // 503
 )
 
 // ErrorEnvelope is the standard error response format
@@ -41,8 +43,12 @@ func (e ErrorCode) StatusCode() int {
 		return http.StatusNotFound
 	case CodeMethodNotAllowed:
 		return http.StatusMethodNotAllowed
+	case CodeConflict:
+		return http.StatusConflict
 	case CodeInternalError:
 		return http.StatusInternalServerError
+	case CodeServiceUnavailable:
+		return http.StatusServiceUnavailable
 	default:
 		return http.StatusInternalServerError
 	}

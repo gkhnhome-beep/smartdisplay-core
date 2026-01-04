@@ -850,6 +850,66 @@ func (s *Server) handleAlarmSummary(w http.ResponseWriter, r *http.Request) {
 	s.respond(w, true, summary, "", 200)
 }
 
+// handleAlarmAction handles controlled arm/disarm requests to Alarmo (A4)
+// POST /api/ui/alarm/action
+// Request: {"action": "arm_home | arm_away | arm_night | disarm"}
+// This is the FIRST write operation - fully controlled and audited
+func (s *Server) handleAlarmAction(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		s.respondError(w, r, CodeMethodNotAllowed, "POST required")
+		return
+	}
+
+	// Parse request body
+	var req struct {
+		Action string `json:"action"`
+	}
+
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		s.respondError(w, r, CodeBadRequest, "invalid JSON")
+		return
+	}
+
+	// Validate action
+	validActions := map[string]bool{
+		"arm_home":  true,
+		"arm_away":  true,
+		"arm_night": true,
+		"disarm":    true,
+	}
+
+	if !validActions[req.Action] {
+		s.respondError(w, r, CodeBadRequest, "invalid action")
+		return
+	}
+
+	// Send request to coordinator (does NOT modify local state)
+	ctx, cancel := context.WithTimeout(r.Context(), 10*time.Second)
+	defer cancel()
+
+	err := s.coord.RequestAlarmAction(ctx, req.Action)
+	if err != nil {
+		// Check error type for appropriate status code
+		errMsg := err.Error()
+		if strings.Contains(errMsg, "unreachable") {
+			s.respondError(w, r, CodeServiceUnavailable, "alarmo unreachable")
+			return
+		}
+		if strings.Contains(errMsg, "triggered") {
+			s.respondError(w, r, CodeConflict, "action blocked: system triggered")
+			return
+		}
+		s.respondError(w, r, CodeInternalError, "action request failed")
+		return
+	}
+
+	// Success - but state change will appear via polling
+	s.respond(w, true, map[string]string{
+		"status":  "requested",
+		"message": "action sent to alarmo, state will update via polling",
+	}, "", 200)
+}
+
 // === GUEST ACCESS ENDPOINTS (D4) ===
 
 // handleGuestState returns full guest access state with all contextual data (D4)

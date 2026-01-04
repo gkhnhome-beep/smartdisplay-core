@@ -75,6 +75,7 @@ func (s *Server) registerRoutes() *http.ServeMux {
 	// Alarm Endpoints (D3)
 	mux.HandleFunc("/api/ui/alarm/state", s.handleAlarmState)
 	mux.HandleFunc("/api/ui/alarm/summary", s.handleAlarmSummary)
+	mux.HandleFunc("/api/ui/alarm/action", s.handleAlarmAction) // A4: Controlled write operations
 
 	// Guest Endpoints (D4)
 	mux.HandleFunc("/api/ui/guest/state", s.handleGuestState)
