@@ -4291,3 +4291,38 @@
 2026/01/04 21:59:07 [INFO] menu: resolved for role=admin (sections=6, first_boot=false, failsafe=false, guest_active=false)
 2026/01/04 21:59:07 [INFO] request: id=req-ced6deca9ec4d240 method=GET path=/api/ui/alarm/state
 2026/01/04 22:05:46 [INFO] request: id=req-c4bc7d98318b6c07 method=GET path=/api/health
+2026/01/04 22:49:29 [INFO] request: id=req-323627beae12116e method=OPTIONS path=/api/ui/menu
+2026/01/04 22:49:29 [INFO] request: id=req-8c69b8657833d287 method=OPTIONS path=/api/ui/alarm/state
+2026/01/04 22:49:29 [INFO] request: id=req-82ee2c9c8e4ae6e0 method=GET path=/api/ui/menu
+2026/01/04 22:49:29 [INFO] menu: resolved for role=admin (sections=6, first_boot=false, failsafe=false, guest_active=false)
+2026/01/04 22:49:29 [INFO] request: id=req-a291c38c975f4394 method=GET path=/api/ui/alarm/state
+2026/01/04 22:49:30 [INFO] request: id=req-fd942e727c4f87a7 method=OPTIONS path=/api/ui/menu
+2026/01/04 22:49:30 [INFO] request: id=req-1be04f32aaa06540 method=OPTIONS path=/api/ui/alarm/state
+2026/01/04 22:49:30 [INFO] request: id=req-a43a3749ca3b6311 method=GET path=/api/ui/menu
+2026/01/04 22:49:30 [INFO] menu: resolved for role=admin (sections=6, first_boot=false, failsafe=false, guest_active=false)
+2026/01/04 22:49:30 [INFO] request: id=req-38c2250af9f9b285 method=GET path=/api/ui/alarm/state
+2026/01/04 22:49:30 [INFO] request: id=req-8ca2b5ac31229dfc method=OPTIONS path=/api/ui/menu
+2026/01/04 22:49:30 [INFO] request: id=req-5a06e535e0d9d623 method=OPTIONS path=/api/ui/alarm/state
+2026/01/04 22:49:30 [INFO] request: id=req-b577fc63412050c2 method=GET path=/api/ui/menu
+2026/01/04 22:49:30 [INFO] menu: resolved for role=admin (sections=6, first_boot=false, failsafe=false, guest_active=false)
+2026/01/04 22:49:30 [INFO] request: id=req-ae218b57d2545e9b method=GET path=/api/ui/alarm/state
+2026/01/04 22:49:31 [INFO] request: id=req-cf932595c5f1d6d1 method=OPTIONS path=/api/ui/menu
+2026/01/04 22:49:31 [INFO] request: id=req-c5df4676583396d4 method=OPTIONS path=/api/ui/alarm/state
+2026/01/04 22:49:31 [INFO] request: id=req-b27a1e609f512f03 method=GET path=/api/ui/menu
+2026/01/04 22:49:31 [INFO] menu: resolved for role=admin (sections=6, first_boot=false, failsafe=false, guest_active=false)
+2026/01/04 22:49:31 [INFO] request: id=req-0969977e1096caa1 method=GET path=/api/ui/alarm/state
+2026/01/04 22:49:31 [INFO] request: id=req-e6f667f105d7683b method=OPTIONS path=/api/ui/menu
+2026/01/04 22:49:31 [INFO] request: id=req-359e1cfaf2bbbafd method=OPTIONS path=/api/ui/alarm/state
+2026/01/04 22:49:31 [INFO] request: id=req-256a90108252e285 method=GET path=/api/ui/menu
+2026/01/04 22:49:31 [INFO] menu: resolved for role=admin (sections=6, first_boot=false, failsafe=false, guest_active=false)
+2026/01/04 22:49:31 [INFO] request: id=req-eed8330149148092 method=GET path=/api/ui/alarm/state
+2026/01/04 22:49:31 [INFO] request: id=req-2233328b4691cd45 method=OPTIONS path=/api/ui/menu
+2026/01/04 22:49:31 [INFO] request: id=req-2033bee5e483c4bf method=OPTIONS path=/api/ui/alarm/state
+2026/01/04 22:49:31 [INFO] request: id=req-892f52010251f762 method=GET path=/api/ui/menu
+2026/01/04 22:49:31 [INFO] menu: resolved for role=admin (sections=6, first_boot=false, failsafe=false, guest_active=false)
+2026/01/04 22:49:31 [INFO] request: id=req-7b9edbf14ce3184d method=GET path=/api/ui/alarm/state
+2026/01/04 22:49:31 [INFO] request: id=req-8721a75fa6e9831a method=OPTIONS path=/api/ui/menu
+2026/01/04 22:49:31 [INFO] request: id=req-6743fb23f94ca15f method=OPTIONS path=/api/ui/alarm/state
+2026/01/04 22:49:31 [INFO] request: id=req-90484b0c1488a230 method=GET path=/api/ui/menu
+2026/01/04 22:49:31 [INFO] menu: resolved for role=admin (sections=6, first_boot=false, failsafe=false, guest_active=false)
+2026/01/04 22:49:31 [INFO] request: id=req-e2147624fe381bc5 method=GET path=/api/ui/alarm/state

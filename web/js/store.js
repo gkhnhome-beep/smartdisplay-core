@@ -22,6 +22,9 @@
             // First boot flag
             firstBoot: false,
 
+            // Current user role (FAZ S0: for access control)
+            currentRole: 'admin', // admin|user|guest
+
             // Home view state
             homeState: {
                 aiInsight: null,

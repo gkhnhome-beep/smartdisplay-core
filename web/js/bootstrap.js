@@ -22,7 +22,8 @@
             isInitialized: false,
             isOnline: true,
             currentUser: null,
-            appVersion: '1.0.0'
+            appVersion: '1.0.0',
+            currentRole: 'admin'  // FAZ S0: Role-based access control (admin|user|guest)
         },
 
         // Configuration

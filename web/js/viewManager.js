@@ -1588,10 +1588,12 @@
     /**
      * Settings View
      * System settings and diagnostics (admin only)
+     * FAZ S0/S1: Settings access control and UI scaffold with Home Assistant integration surface
      */
     var SettingsView = {
         id: 'settings',
         name: 'Settings',
+        currentSubpage: null,  // 'main', 'ha-settings'
 
         mount: function() {
             console.log('[View] Mounting SettingsView');
@@ -1603,31 +1605,53 @@
             viewElement.className = 'view view-settings';
             
             viewElement.innerHTML = [
-                '<div class="view-content">',
-                '  <div class="settings-section">',
-                '    <h2>System Status</h2>',
-                '    <div class="settings-item">',
-                '      <span class="settings-label">Backend:</span>',
-                '      <span class="settings-value" id="settings-backend">--</span>',
-                '    </div>',
-                '    <div class="settings-item">',
-                '      <span class="settings-label">Home Assistant:</span>',
-                '      <span class="settings-value" id="settings-ha">--</span>',
-                '    </div>',
-                '    <div class="settings-item">',
-                '      <span class="settings-label">Platform:</span>',
-                '      <span class="settings-value" id="settings-platform">--</span>',
+                '<div class="settings-header">',
+                '  <h1 class="settings-title">Settings</h1>',
+                '  <button class="settings-back-btn" id="settings-back-btn" style="display:none;">Back</button>',
+                '</div>',
+                '<div class="settings-container">',
+                '  <!-- Main Settings Menu -->', 
+                '  <div class="settings-main" id="settings-main">',
+                '    <div class="settings-section">',
+                '      <div class="settings-section-header">System</div>',
+                '      <button class="settings-item-btn" id="settings-ha-btn">',
+                '        <span class="settings-item-label">Home Assistant</span>',
+                '        <span class="settings-item-arrow">›</span>',
+                '      </button>',
                 '    </div>',
                 '  </div>',
-                '</div>',
-                '<div class="view-nav">',
-                '  <button class="nav-btn" data-view="home">Home</button>',
-                '  <button class="nav-btn" data-view="alarm">Alarm</button>',
-                '  <button class="nav-btn" data-view="devices">Devices</button>',
+                '  <!-- HA Settings Subpage -->',
+                '  <div class="settings-subpage" id="settings-ha-subpage" style="display:none;">',
+                '    <div class="settings-section">',
+                '      <div class="settings-form">',
+                '        <div class="form-group">',
+                '          <label for="ha-server-addr" class="form-label">Server Address</label>',
+                '          <input type="text" id="ha-server-addr" class="form-input" placeholder="http://homeassistant.local:8123" />',
+                '        </div>',
+                '        <div class="form-group">',
+                '          <label for="ha-token" class="form-label">Long-Lived Access Token</label>',
+                '          <input type="password" id="ha-token" class="form-input" placeholder="••••••••••••••••••••" />',
+                '        </div>',
+                '        <div class="form-status">',
+                '          <span class="status-label">Connection Status:</span>',
+                '          <span class="status-value" id="ha-status">Not configured</span>',
+                '        </div>',
+                '        <button class="settings-save-btn" id="ha-save-btn">Save (Non-functional)</button>',
+                '      </div>',
+                '    </div>',
+                '  </div>',
+                '  <div class="settings-error" id="settings-error" style="display:none;"></div>',
                 '</div>'
             ].join('\n');
             
             container.appendChild(viewElement);
+            
+            // Setup event listeners
+            this._setupEventListeners();
+            
+            // Show main menu by default
+            this.currentSubpage = 'main';
+            this._showSubpage('main');
         },
 
         unmount: function() {
@@ -1641,6 +1665,99 @@
         update: function(data) {
             console.log('[View] Updating SettingsView', data);
             // Settings view updates would populate status information
+        },
+
+        // ====================================================================
+        // Private Methods
+        // ====================================================================
+
+        _setupEventListeners: function() {
+            var self = this;
+
+            // Back button
+            var backBtn = document.getElementById('settings-back-btn');
+            if (backBtn) {
+                backBtn.addEventListener('click', function() {
+                    self._goBackToMain();
+                });
+            }
+
+            // Home Assistant settings button
+            var haBtn = document.getElementById('settings-ha-btn');
+            if (haBtn) {
+                haBtn.addEventListener('click', function() {
+                    self._showSubpage('ha-settings');
+                });
+            }
+
+            // HA Save button
+            var saveBtn = document.getElementById('ha-save-btn');
+            if (saveBtn) {
+                saveBtn.addEventListener('click', function() {
+                    self._handleHASave();
+                });
+            }
+        },
+
+        _showSubpage: function(subpageName) {
+            var mainEl = document.getElementById('settings-main');
+            var haEl = document.getElementById('settings-ha-subpage');
+            var backBtn = document.getElementById('settings-back-btn');
+
+            if (subpageName === 'main') {
+                if (mainEl) mainEl.style.display = 'block';
+                if (haEl) haEl.style.display = 'none';
+                if (backBtn) backBtn.style.display = 'none';
+                this.currentSubpage = 'main';
+            } else if (subpageName === 'ha-settings') {
+                if (mainEl) mainEl.style.display = 'none';
+                if (haEl) haEl.style.display = 'block';
+                if (backBtn) backBtn.style.display = 'block';
+                this.currentSubpage = 'ha-settings';
+                console.log('[SettingsView] Showing HA Settings subpage');
+            }
+        },
+
+        _goBackToMain: function() {
+            console.log('[SettingsView] Going back to main menu');
+            this._showSubpage('main');
+        },
+
+        _handleHASave: function() {
+            var serverAddr = document.getElementById('ha-server-addr');
+            var token = document.getElementById('ha-token');
+
+            console.log('[SettingsView] HA Save button clicked (non-functional)');
+
+            // FAZ S1: Non-functional placeholder
+            // In future: Validate inputs, save to backend, test connection
+            if (serverAddr && token) {
+                console.log('[SettingsView] Would save: Server=' + serverAddr.value + ', Token=***');
+                this._showStatus('Settings saved (placeholder)');
+            }
+        },
+
+        _showStatus: function(message) {
+            var statusEl = document.getElementById('ha-status');
+            if (statusEl) {
+                statusEl.textContent = message;
+            }
+        },
+
+        _showError: function(message) {
+            var errorEl = document.getElementById('settings-error');
+            if (errorEl) {
+                errorEl.textContent = 'Error: ' + message;
+                errorEl.style.display = 'block';
+            }
+        },
+
+        _clearError: function() {
+            var errorEl = document.getElementById('settings-error');
+            if (errorEl) {
+                errorEl.style.display = 'none';
+                errorEl.textContent = '';
+            }
         }
     };
 
@@ -1779,6 +1896,7 @@
         _renderMenu: function() {
             var controller = window.SmartDisplay.menuController;
             var sections = controller.getVisibleSections();
+            var currentRole = window.SmartDisplay.store.getState().currentRole || 'guest';
 
             if (!sections || sections.length === 0) {
                 console.warn('[MenuView] No visible sections');
@@ -1812,6 +1930,12 @@
                     section.items.forEach(function(item) {
                         // Skip disabled items - don't render them
                         if (!controller.isItemEnabled(item)) {
+                            return;
+                        }
+
+                        // FAZ S0: Hide Settings for non-Admin users
+                        if (item.view === 'settings' && currentRole !== 'admin') {
+                            console.log('[MenuView] Settings hidden for role: ' + currentRole);
                             return;
                         }
 
@@ -2029,9 +2153,16 @@
                 return 'guest';
             }
 
+            // FAZ S0: Route protection - Settings Admin-only access
             if (state.menu && state.menu.currentView === 'settings') {
-                console.log('[ViewManager] Route: Settings');
-                return 'settings';
+                var currentRole = state.currentRole || 'guest';
+                if (currentRole === 'admin') {
+                    console.log('[ViewManager] Route: Settings');
+                    return 'settings';
+                } else {
+                    console.log('[ViewManager] Route: Settings blocked for role: ' + currentRole + ', redirecting to Home');
+                    return 'home';
+                }
             }
 
             if (state.menu && state.menu.currentView === 'alarm') {
