@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"strings"
 	"time"
+
+	"smartdisplay-core/internal/i18n"
 )
 
 type TimelineEntry struct {
@@ -29,27 +31,27 @@ func ToTimeline(entries []Entry) []TimelineEntry {
 func humanize(e Entry) string {
 	switch strings.ToLower(e.Action) {
 	case "perm_check":
-		return fmt.Sprintf("Permission check: %s", e.Detail)
+		return fmt.Sprintf(i18n.T("audit.perm_check"), e.Detail)
 	case "smoke_test":
-		return "Admin ran a system smoke test."
+		return i18n.T("audit.smoke_test")
 	case "hardware_event":
-		return fmt.Sprintf("Hardware event: %s", e.Detail)
+		return fmt.Sprintf(i18n.T("audit.hardware_event"), e.Detail)
 	case "domain_event":
-		return fmt.Sprintf("Domain event: %s", e.Detail)
+		return fmt.Sprintf(i18n.T("audit.domain_event"), e.Detail)
 	case "alarm":
-		return fmt.Sprintf("Alarm event: %s", e.Detail)
+		return fmt.Sprintf(i18n.T("audit.alarm"), e.Detail)
 	case "guest":
-		return fmt.Sprintf("Guest event: %s", e.Detail)
+		return fmt.Sprintf(i18n.T("audit.guest"), e.Detail)
 	case "login":
-		return fmt.Sprintf("Login: %s", e.Detail)
+		return fmt.Sprintf(i18n.T("audit.login"), e.Detail)
 	case "config":
-		return fmt.Sprintf("Config change: %s", e.Detail)
+		return fmt.Sprintf(i18n.T("audit.config"), e.Detail)
 	case "restore":
-		return "Configuration was restored from backup."
+		return i18n.T("audit.restore")
 	case "trust_learn":
-		return fmt.Sprintf("User trust learning: %s", e.Detail)
+		return fmt.Sprintf(i18n.T("audit.trust_learn"), e.Detail)
 	default:
-		return fmt.Sprintf("%s: %s", e.Action, e.Detail)
+		return fmt.Sprintf(i18n.T("audit.default"), e.Action, e.Detail)
 	}
 }
 

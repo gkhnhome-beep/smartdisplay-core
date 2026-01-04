@@ -1,126 +1,38 @@
-  <div id="backend-error-banner" class="backend-error-banner" style="display:none;">
-    <div class="backend-error-content">
-      <div class="backend-error-title">Cannot connect to backend</div>
-      <div class="backend-error-desc">Trying to reconnect... Please check your network or server.</div>
-    </div>
-  </div>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SmartDisplay Panel</title>
-  <link rel="stylesheet" href="/assets/app.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>SmartDisplay</title>
+    <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
-  <div id="status-bar">
-    <span id="datetime"></span>
-    <span id="ha-status" class="status"></span>
-    <span id="alarm-status" class="status"></span>
-  </div>
-  <main>
-            <!-- Idle/Kiosk Screen -->
-            <div id="idle-screen" class="idle-screen" style="display:none;">
-              <div class="idle-clock" id="idle-clock"></div>
-              <div class="idle-date" id="idle-date"></div>
-              <div class="idle-alarm" id="idle-alarm"></div>
-              <div class="idle-ai" id="idle-ai"></div>
-            </div>
-        <!-- Guest Request/Waiting Overlay -->
-        <div id="guest-overlay" class="guest-overlay" style="display:none;">
-          <div class="guest-overlay-content">
-            <div id="guest-request-section">
-              <button id="guest-request-btn" class="guest-action-btn">Request Access</button>
-            </div>
-            <div id="guest-waiting-section" style="display:none;">
-              <div class="guest-waiting-title">Waiting for owner approval</div>
-              <div id="guest-waiting-countdown" class="guest-waiting-countdown"></div>
-              <div id="guest-waiting-status" class="guest-waiting-status"></div>
-            </div>
-            <div id="guest-approved-section" style="display:none;">
-              <div class="guest-approved-title">Access granted</div>
-              <button id="guest-leave-btn" class="guest-action-btn">Leave Home</button>
-            </div>
-            <div id="guest-denied-section" style="display:none;">
-              <div class="guest-denied-title">Access denied or expired</div>
-              <div id="guest-denied-msg" class="guest-waiting-status"></div>
-            </div>
-          </div>
-        </div>
-    <section id="view-home" class="view">
-      <section id="ai-card" class="card">
-        <div id="ai-insight"></div>
-        <div id="ai-severity"></div>
-      </section>
-      <section id="quick-tiles">
-        <div class="tile" id="tile-lights">Lights</div>
-        <div class="tile" id="tile-covers">Covers</div>
-        <div class="tile" id="tile-plugs">Plugs</div>
-        <div class="tile" id="tile-temp">Temp</div>
-      </section>
-    </section>
-    <section id="view-alarm" class="view" style="display:none">
-      <div id="alarm-state-indicator"></div>
-      <div id="alarm-countdown"></div>
-      <div id="alarm-guest"></div>
-      <div id="alarm-ai-hint"></div>
-      <div id="alarm-btns">
-        <button class="alarm-btn" id="btn-arm-home">ARM HOME</button>
-        <button class="alarm-btn" id="btn-arm-away">ARM AWAY</button>
-        <button class="alarm-btn" id="btn-disarm">DISARM</button>
-      </div>
-      <div id="disarm-confirm" style="display:none">
-        <div>Tap again to confirm DISARM</div>
-        <button class="alarm-btn" id="btn-disarm-confirm">Confirm DISARM</button>
-        <button class="alarm-btn" id="btn-disarm-cancel">Cancel</button>
-      </div>
-    </section>
-    <section id="view-devices" class="view" style="display:none">
-      <div id="devices-tabs">
-        <button class="devices-tab" data-tab="lights">Lights</button>
-        <button class="devices-tab" data-tab="covers">Covers</button>
-        <button class="devices-tab" data-tab="plugs">Plugs</button>
-      </div>
-      <input id="devices-search" type="text" placeholder="Search devices..." autocomplete="off" />
-      <div id="devices-list" class="devices-grid"></div>
-    </section>
-    <section id="view-settings" class="view" style="display:none">
-      <div id="settings-cards" class="settings-cards">
-        <div class="settings-card" id="settings-backend">
-          <div class="settings-label">Backend Status</div>
-          <div class="settings-value" id="settings-backend-status">...</div>
-        </div>
-        <div class="settings-card" id="settings-ha">
-          <div class="settings-label">HA Connection</div>
-          <div class="settings-value" id="settings-ha-status">...</div>
-        </div>
-        <div class="settings-card" id="settings-platform">
-          <div class="settings-label">Platform</div>
-          <div class="settings-value" id="settings-platform-value">...</div>
-        </div>
-        <div class="settings-card" id="settings-profile">
-          <div class="settings-label">Hardware Profile</div>
-          <div class="settings-value" id="settings-profile-value">...</div>
-        </div>
-        <div class="settings-card" id="settings-uptime">
-          <div class="settings-label">Uptime</div>
-          <div class="settings-value" id="settings-uptime-value">...</div>
-        </div>
-      </div>
-      <div id="settings-advanced" class="settings-advanced">
-        <button id="toggle-advanced" class="settings-advanced-toggle">Show Advanced</button>
-        <pre id="advanced-json" class="settings-advanced-json" style="display:none;"></pre>
-      </div>
-      <div style="text-align:center;opacity:0.7;padding:1em 0 0 0;font-size:0.9em;">Current role: <span id="current-role"></span></div>
-    </section>
-  </main>
-  <nav id="bottom-nav">
-    <button class="nav-btn" id="nav-home"><span class="icon"></span>Home</button>
-    <button class="nav-btn" id="nav-alarm"><span class="icon"></span>Alarm</button>
-    <button class="nav-btn" id="nav-devices"><span class="icon"></span>Devices</button>
-    <button class="nav-btn" id="nav-settings" style="display:none;"><span class="icon"></span>Settings</button>
-  </nav>
-  <div id="offline-banner" style="display:none;">Backend Offline</div>
-  <script src="/assets/app.js"></script>
+    <div id="app" class="app-container">
+        <!-- App content will be rendered here -->
+    </div>
+    
+    <!-- Menu overlay (hidden by default) -->
+    <div id="menu-overlay" class="menu-overlay"></div>
+
+    <!-- Bootstrap script - initializes global state and app -->
+    <script src="js/bootstrap.js"></script>
+    <!-- API Client -->
+    <script src="js/api.js"></script>
+    <!-- State Store -->
+    <script src="js/store.js"></script>
+    <!-- First Boot Controller -->
+    <script src="js/firstboot.js"></script>
+    <!-- Home Controller -->
+    <script src="js/home.js"></script>
+    <!-- Alarm Controller -->
+    <script src="js/alarm.js"></script>
+    <!-- Guest Controller -->
+    <script src="js/guest.js"></script>
+    <!-- Menu Controller -->
+    <script src="js/menu.js"></script>
+    <!-- View Manager -->
+    <script src="js/viewManager.js"></script>
 </body>
 </html>

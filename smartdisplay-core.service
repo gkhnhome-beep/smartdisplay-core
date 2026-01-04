@@ -1,15 +1,31 @@
 [Unit]
-Description=SmartDisplay Core Service
+Description=SmartDisplay Core Backend Service
 After=network.target
+Wants=network-online.target
 
 [Service]
+Type=simple
 User=smartdisplay
+Group=smartdisplay
 WorkingDirectory=/opt/smartdisplay-core
 ExecStart=/opt/smartdisplay-core/smartdisplay-core
 Restart=always
 RestartSec=5
+StartLimitInterval=60s
+StartLimitBurst=5
+
+# File descriptor and resource limits
+LimitNOFILE=4096
+LimitNPROC=512
+
+# Logging
 StandardOutput=journal
 StandardError=journal
+SyslogIdentifier=smartdisplay-core
+
+# Security/stability
+NoNewPrivileges=true
+PrivateTmp=true
 
 [Install]
 WantedBy=multi-user.target

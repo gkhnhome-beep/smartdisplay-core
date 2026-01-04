@@ -83,3 +83,8 @@ func (sm *StateMachine) Handle(event string) error {
 	}
 	return errors.New("invalid transition")
 }
+
+// HasPendingRequest returns true if there's a pending guest request
+func (sm *StateMachine) HasPendingRequest() bool {
+	return sm.currentState == REQUESTED
+}

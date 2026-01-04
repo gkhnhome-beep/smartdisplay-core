@@ -1,12 +1,25 @@
 [Unit]
-Description=SmartDisplay Kiosk (Chromium)
-After=graphical-session.target
+Description=SmartDisplay Kiosk (Chromium Fullscreen)
+After=graphical-session.target network-online.target
+Wants=smartdisplay-core.service
+ConditionPathExists=/proc/net/route
 
 [Service]
 Type=simple
 ExecStart=%h/deploy/kiosk-start.sh
 ExecStop=%h/deploy/kiosk-stop.sh
 Restart=always
+RestartSec=3
+StartLimitInterval=120s
+StartLimitBurst=5
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=smartdisplay-kiosk
+
+# Security
+NoNewPrivileges=true
 
 [Install]
 WantedBy=default.target

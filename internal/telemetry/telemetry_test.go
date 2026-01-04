@@ -28,7 +28,7 @@ func ExampleUsage() {
 	collector.RecordPerformance("alarm_arm", 1500*time.Millisecond)
 
 	// Get summary
-	summary := collector.GetSummary()
+	_ = collector.GetSummary()
 	// summary.FeatureUsage["alarm_armed"] == 2
 	// summary.FeatureUsage["guest_approval"] == 1
 	// summary.ErrorCategories["network_timeout"] == 2

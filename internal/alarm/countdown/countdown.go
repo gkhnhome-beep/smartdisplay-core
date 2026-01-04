@@ -36,3 +36,13 @@ func (c *Countdown) Tick() bool {
 	}
 	return false
 }
+
+// IsActive returns true if countdown is currently running
+func (c *Countdown) IsActive() bool {
+	return c.active
+}
+
+// Remaining returns the number of seconds remaining
+func (c *Countdown) Remaining() int {
+	return c.remainingSeconds
+}

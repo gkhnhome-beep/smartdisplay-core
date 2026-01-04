@@ -1,4 +1,3 @@
-import "errors"
 package rfid
 
 import (
@@ -10,13 +9,14 @@ type RFIDDevice struct {
 	ready bool
 	card  string
 	err   error
+}
+
 func (r *RFIDDevice) IsReady() bool {
 	return r.ready
 }
 
 func (r *RFIDDevice) LastError() error {
 	return r.err
-}
 }
 
 func NewRFIDDevice(id string) *RFIDDevice {

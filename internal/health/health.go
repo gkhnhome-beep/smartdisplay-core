@@ -38,13 +38,28 @@ func HealthHandler(w http.ResponseWriter, r *http.Request) {
 	if coordinator != nil {
 		degraded = coordinator.DegradedMode()
 	}
+
+	// Include version info
+	versionInfo := version.Get()
+
 	response := map[string]interface{}{
 		"status":         "ok",
-		"version":        version.Version,
+		"version":        versionInfo.Version,
 		"uptime_seconds": uptime,
 		"ha_connected":   haConnected,
 		"hardware_ready": hardwareReady,
 		"degraded_mode":  degraded,
 	}
+
+	// Add commit if available
+	if versionInfo.Commit != "" {
+		response["commit"] = versionInfo.Commit
+	}
+
+	// Add build date if available
+	if versionInfo.BuildDate != "" {
+		response["build_date"] = versionInfo.BuildDate
+	}
+
 	json.NewEncoder(w).Encode(response)
 }

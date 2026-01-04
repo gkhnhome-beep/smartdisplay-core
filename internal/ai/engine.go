@@ -1,10 +1,18 @@
+package ai
+
+import (
+	"fmt"
+	"strings"
+	"time"
+)
+
 // GroupAnomalies groups related anomaly events into packets
 func (e *InsightEngine) GroupAnomalies() []AnomalyPacket {
 	var packets []AnomalyPacket
 	var window time.Duration = 10 * time.Minute
 	var lastPacket *AnomalyPacket
 
-	for i, ins := range e.history {
+	for _, ins := range e.history {
 		if ins.Type != Anomaly {
 			continue
 		}
@@ -83,19 +91,16 @@ func insTimeClose(t1, t2 time.Time, window time.Duration) bool {
 	}
 	return diff <= window
 }
+
 // AnomalyPacket groups related anomaly events
 type AnomalyPacket struct {
-	StartTime    time.Time
-	EndTime      time.Time
-	Events       []Insight
-	Severity     float64
-	Description  string
+	StartTime   time.Time
+	EndTime     time.Time
+	Events      []Insight
+	Severity    float64
+	Description string
 }
-import (
-	"fmt"
-	"strings"
-	"time"
-)
+
 // GetDailySummary generates a deterministic daily summary (max 5 bullet points, human language)
 func (e *InsightEngine) GetDailySummary() string {
 	var bullets []string
@@ -146,7 +151,6 @@ func (e *InsightEngine) GetDailySummary() string {
 
 	return "Daily Summary for " + time.Now().Format("Jan 2, 2006") + ":\n- " + strings.Join(bullets, "\n- ")
 }
-package ai
 
 type InsightType string
 
@@ -174,16 +178,16 @@ type Insight struct {
 }
 
 type InsightEngine struct {
-	current     Insight
-	history     []Insight
-	recentTypes []InsightType
-	windowSize  int
+	current              Insight
+	history              []Insight
+	recentTypes          []InsightType
+	windowSize           int
 	lastSirenExplanation string // explanation for last siren suppression/allowance
-	 // Trust learning fields
-	 quickApprovals int
-	 frequentCancels int
-	 ignoredWarnings int
-	 lastTrustExplanation string
+	// Trust learning fields
+	quickApprovals       int
+	frequentCancels      int
+	ignoredWarnings      int
+	lastTrustExplanation string
 }
 
 func NewInsightEngine() *InsightEngine {
@@ -192,94 +196,94 @@ func NewInsightEngine() *InsightEngine {
 
 // Observe now tracks user trust actions for deterministic learning
 func (e *InsightEngine) Observe(alarmState, guestState string, deviceStates ...string) {
- var newInsight Insight
- // Determine context for tone selection
- now := time.Now()
- hour := now.Hour()
- userRole := "user" // Default; can be set by Coordinator if needed
- severity := "low"
+	var newInsight Insight
+	// Determine context for tone selection
+	now := time.Now()
+	hour := now.Hour()
+	userRole := "user" // Default; can be set by Coordinator if needed
+	severity := "low"
 	// Device anomaly detection (deterministic)
-	       for _, ds := range deviceStates {
-		       if ds == "offline" {
-			       severity = "high"
-			       newInsight = Insight{
-				       Type:       Anomaly,
-				       Detail:     "Device offline detected.",
-				       Severity:   severity,
-				       Confidence: 0.99,
-			       }
-			       goto selectTone
-		       }
-		       if ds == "error" {
-			       severity = "high"
-			       newInsight = Insight{
-				       Type:       Anomaly,
-				       Detail:     "Device error state detected.",
-				       Severity:   severity,
-				       Confidence: 0.98,
-			       }
-			       goto selectTone
-		       }
-	       }
-		if alarmState == "TRIGGERED" {
-		 severity = "high"
-		 newInsight = Insight{
-		  Type:       Anomaly,
-		  Detail:     "Alarm was triggered.",
-		  Severity:   severity,
-		  Confidence: 1.0,
-		 }
-		} else if guestState == "APPROVED" {
-		 severity = "medium"
-		 newInsight = Insight{
-		  Type:       Suggestion,
-		  Detail:     "Guest access is active. Monitor entry.",
-		  Severity:   severity,
-		  Confidence: 0.8,
-		 }
-		} else {
-		 severity = "low"
-		 newInsight = Insight{
-		  Type:       Summary,
-		  Detail:     "System normal.",
-		  Severity:   severity,
-		  Confidence: 0.95,
-		 }
+	for _, ds := range deviceStates {
+		if ds == "offline" {
+			severity = "high"
+			newInsight = Insight{
+				Type:       Anomaly,
+				Detail:     "Device offline detected.",
+				Severity:   severity,
+				Confidence: 0.99,
+			}
+			goto selectTone
 		}
+		if ds == "error" {
+			severity = "high"
+			newInsight = Insight{
+				Type:       Anomaly,
+				Detail:     "Device error state detected.",
+				Severity:   severity,
+				Confidence: 0.98,
+			}
+			goto selectTone
+		}
+	}
+	if alarmState == "TRIGGERED" {
+		severity = "high"
+		newInsight = Insight{
+			Type:       Anomaly,
+			Detail:     "Alarm was triggered.",
+			Severity:   severity,
+			Confidence: 1.0,
+		}
+	} else if guestState == "APPROVED" {
+		severity = "medium"
+		newInsight = Insight{
+			Type:       Suggestion,
+			Detail:     "Guest access is active. Monitor entry.",
+			Severity:   severity,
+			Confidence: 0.8,
+		}
+	} else {
+		severity = "low"
+		newInsight = Insight{
+			Type:       Summary,
+			Detail:     "System normal.",
+			Severity:   severity,
+			Confidence: 0.95,
+		}
+	}
 
-	selectTone:
-	       // Tone selection logic (never playful/unsafe)
-	       // - High severity: Professional
-	       // - Night (22:00-6:00): Reassuring
-	       // - Admin: Professional
-	       // - Default: Neutral
-	       tone := ToneNeutral
-	       if severity == "high" {
-		       tone = ToneProfessional
-	       } else if hour >= 22 || hour < 6 {
-		       tone = ToneReassuring
-	       }
-	       if userRole == "admin" {
-		       tone = ToneProfessional
-	       }
-	       newInsight.Tone = tone
+selectTone:
+	// Tone selection logic (never playful/unsafe)
+	// - High severity: Professional
+	// - Night (22:00-6:00): Reassuring
+	// - Admin: Professional
+	// - Default: Neutral
+	tone := ToneNeutral
+	if severity == "high" {
+		tone = ToneProfessional
+	} else if hour >= 22 || hour < 6 {
+		tone = ToneReassuring
+	}
+	if userRole == "admin" {
+		tone = ToneProfessional
+	}
+	newInsight.Tone = tone
 
 	// Adjust confidence/severity based on trust
 	if e.quickApprovals > 3 {
-	 newInsight.Confidence += 0.05
-	 newInsight.Severity = "lower"
-	 e.lastTrustExplanation = "Based on your previous quick alarm approvals, confidence is increased and severity is reduced."
+		newInsight.Confidence += 0.05
+		newInsight.Severity = "lower"
+		e.lastTrustExplanation = "Based on your previous quick alarm approvals, confidence is increased and severity is reduced."
 	} else if e.frequentCancels > 3 {
-	 newInsight.Confidence -= 0.1
-	 newInsight.Severity = "higher"
-	 e.lastTrustExplanation = "Based on your frequent alarm cancels, confidence is reduced and severity is increased."
+		newInsight.Confidence -= 0.1
+		newInsight.Severity = "higher"
+		e.lastTrustExplanation = "Based on your frequent alarm cancels, confidence is reduced and severity is increased."
 	} else if e.ignoredWarnings > 3 {
-	 newInsight.Confidence -= 0.05
-	 e.lastTrustExplanation = "Based on your tendency to ignore warnings, confidence is slightly reduced."
+		newInsight.Confidence -= 0.05
+		e.lastTrustExplanation = "Based on your tendency to ignore warnings, confidence is slightly reduced."
 	} else {
-	 e.lastTrustExplanation = ""
+		e.lastTrustExplanation = ""
 	}
-rateLimit:
+	// Rate limit check for insight type
 	for _, t := range e.recentTypes {
 		if t == newInsight.Type {
 			logSuppressed(newInsight)
@@ -318,40 +322,40 @@ func (e *InsightEngine) GetCurrentInsight() Insight {
 
 // ExplainInsight returns a human explanation for the current insight or last siren decision
 func (e *InsightEngine) ExplainInsight() string {
- if e.lastSirenExplanation != "" {
-  return e.lastSirenExplanation
- }
- if e.lastTrustExplanation != "" {
-  return e.lastTrustExplanation
- }
- switch e.current.Type {
- case Anomaly:
-  return "An anomaly was detected: " + e.current.Detail
- case Suggestion:
-  return "Suggestion: " + e.current.Detail
- case Summary:
-  return "Summary: " + e.current.Detail
- case Explanation:
-  return "Explanation: " + e.current.Detail
- default:
-  return "No insight available."
- }
+	if e.lastSirenExplanation != "" {
+		return e.lastSirenExplanation
+	}
+	if e.lastTrustExplanation != "" {
+		return e.lastTrustExplanation
+	}
+	switch e.current.Type {
+	case Anomaly:
+		return "An anomaly was detected: " + e.current.Detail
+	case Suggestion:
+		return "Suggestion: " + e.current.Detail
+	case Summary:
+		return "Summary: " + e.current.Detail
+	case Explanation:
+		return "Explanation: " + e.current.Detail
+	default:
+		return "No insight available."
+	}
 }
 
 // Methods to track user trust actions
 func (e *InsightEngine) TrackQuickApproval() {
- e.quickApprovals++
+	e.quickApprovals++
 }
+
 func (e *InsightEngine) TrackFrequentCancel() {
- e.frequentCancels++
+	e.frequentCancels++
 }
+
 func (e *InsightEngine) TrackIgnoredWarning() {
- e.ignoredWarnings++
-}
+	e.ignoredWarnings++
 }
 
 // SetSirenExplanation sets the last siren explanation for UI/API
 func (e *InsightEngine) SetSirenExplanation(msg string) {
 	e.lastSirenExplanation = msg
-}
 }

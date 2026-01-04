@@ -10,13 +10,14 @@ type RGBLed struct {
 	color [3]uint8
 	mode  string
 	err   error
+}
+
 func (l *RGBLed) IsReady() bool {
 	return true
 }
 
 func (l *RGBLed) LastError() error {
 	return l.err
-}
 }
 
 func NewRGBLed(id string) *RGBLed {

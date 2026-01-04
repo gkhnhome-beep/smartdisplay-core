@@ -9,13 +9,14 @@ type RFDevice struct {
 	code  string
 	ready bool
 	err   error
+}
+
 func (r *RFDevice) IsReady() bool {
 	return r.ready
 }
 
 func (r *RFDevice) LastError() error {
 	return r.err
-}
 }
 
 func NewRFDevice(id string) *RFDevice {

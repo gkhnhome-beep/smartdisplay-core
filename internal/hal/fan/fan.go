@@ -10,13 +10,14 @@ type FanDevice struct {
 	on    bool
 	level int
 	err   error
+}
+
 func (f *FanDevice) IsReady() bool {
 	return true
 }
 
 func (f *FanDevice) LastError() error {
 	return f.err
-}
 }
 
 func NewFanDevice(id string) *FanDevice {

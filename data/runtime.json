@@ -1,0 +1,17 @@
+{
+  "ha_base_url": "",
+  "ha_token": "",
+  "ui_enabled": false,
+  "hardware_profile": "minimal",
+  "wizard_completed": true,
+  "bind_addr": "0.0.0.0",
+  "port": 8090,
+  "trust_proxy": false,
+  "quiet_hours_start": "",
+  "quiet_hours_end": "",
+  "language": "en",
+  "high_contrast": false,
+  "large_text": false,
+  "reduced_motion": false,
+  "voice_enabled": false
+}

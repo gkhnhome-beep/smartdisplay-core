@@ -19,6 +19,15 @@ type RuntimeConfig struct {
 	TrustProxy      bool   `json:"trust_proxy"`
 	QuietHoursStart string `json:"quiet_hours_start"` // "22:00"
 	QuietHoursEnd   string `json:"quiet_hours_end"`   // "06:00"
+	Language        string `json:"language"`          // "en"|"tr"
+
+	// Accessibility preferences (FAZ 80)
+	HighContrast  bool `json:"high_contrast"`  // High contrast mode
+	LargeText     bool `json:"large_text"`     // Large text mode
+	ReducedMotion bool `json:"reduced_motion"` // Reduced motion/calmer AI phrasing
+
+	// Voice feedback (FAZ 81)
+	VoiceEnabled bool `json:"voice_enabled"` // Voice feedback hooks enabled
 }
 
 const RuntimeConfigPath = "data/runtime.json"
@@ -42,6 +51,11 @@ func LoadRuntimeConfig() (*RuntimeConfig, error) {
 			BindAddr:        "0.0.0.0",
 			Port:            8090,
 			TrustProxy:      false,
+			Language:        "en",
+			HighContrast:    false,
+			LargeText:       false,
+			ReducedMotion:   false,
+			VoiceEnabled:    false,
 		}
 	} else {
 		return nil, err
@@ -64,6 +78,11 @@ func LoadRuntimeConfig() (*RuntimeConfig, error) {
 	}
 	if v := os.Getenv("TRUST_PROXY"); v != "" {
 		cfg.TrustProxy = v == "true" || v == "1"
+	}
+	if v := os.Getenv("LANGUAGE"); v != "" {
+		cfg.Language = v
+	} else if cfg.Language == "" {
+		cfg.Language = "en"
 	}
 	return &cfg, nil
 }
