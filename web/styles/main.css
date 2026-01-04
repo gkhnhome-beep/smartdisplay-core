@@ -99,6 +99,18 @@ iframe {
     }
 }
 
+/* A6.B.4: Long idle state - subtle brightness reduction */
+body.long-idle {
+    filter: brightness(0.85) contrast(0.95);
+    transition: filter 2s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body.long-idle {
+        transition: none;
+    }
+}
+
 /* Large text mode for accessibility */
 @media (prefers-contrast: more) {
     body {
@@ -539,9 +551,16 @@ iframe {
     color: white;
 }
 
+/* A5.4: Enhanced disabled state clarity */
 .alarm-action-btn:disabled {
-    opacity: 0.5;
+    opacity: 0.4;
     cursor: not-allowed;
+    background-color: #ccc;
+    color: #666;
+}
+
+.alarm-action-btn:hover:not(:disabled) {
+    opacity: 0.9;
 }
 
 .alarm-action-btn:active:not(:disabled) {
@@ -563,6 +582,35 @@ iframe {
 
 .alarm-action-btn.action-style-warning {
     background-color: #ff9800;
+}
+
+/* Action status message */
+.action-status {
+    background-color: #e3f2fd;
+    color: #1565c0;
+    padding: 12px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+/* Action buttons container */
+.action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* A5.3: Connection warning */
+.alarm-connection-warning {
+    background-color: #fff3e0;
+    color: #e65100;
+    padding: 12px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    text-align: center;
+    margin: 10px 0;
 }
 
 /* Error display */
@@ -1064,6 +1112,68 @@ body.alarm-locked .menu-overlay {
 .view-settings {
     display: flex;
     flex-direction: column;
+}
+
+/* A6.A: System Status Diagnostic Overlay */
+.system-status-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.system-status-content {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.system-status-content h3 {
+    margin: 0 0 20px 0;
+    font-size: 1.4em;
+    color: #333;
+}
+
+.status-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.status-item:last-of-type {
+    border-bottom: none;
+    margin-bottom: 20px;
+}
+
+.status-label {
+    font-weight: 500;
+    color: #666;
+}
+
+.status-close-btn {
+    width: 100%;
+    padding: 14px;
+    font-size: 1.1em;
+    background-color: #007acc;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    min-height: 44px;
+}
+
+.status-close-btn:active {
+    opacity: 0.8;
 }
 
 .settings-section {

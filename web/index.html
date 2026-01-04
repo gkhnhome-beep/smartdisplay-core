@@ -16,6 +16,30 @@
     <!-- Menu overlay (hidden by default) -->
     <div id="menu-overlay" class="menu-overlay"></div>
 
+    <!-- A6.A: System Status Diagnostic Overlay -->
+    <div id="system-status-overlay" class="system-status-overlay" style="display:none;">
+        <div class="system-status-content">
+            <h3>System Status</h3>
+            <div class="status-item">
+                <span class="status-label">Version:</span>
+                <span id="status-version">--</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Backend:</span>
+                <span id="status-backend">--</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Alarmo:</span>
+                <span id="status-alarmo">--</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Last Poll:</span>
+                <span id="status-last-poll">--</span>
+            </div>
+            <button id="status-close-btn" class="status-close-btn">Close</button>
+        </div>
+    </div>
+
     <!-- Bootstrap script - initializes global state and app -->
     <script src="js/bootstrap.js"></script>
     <!-- API Client -->

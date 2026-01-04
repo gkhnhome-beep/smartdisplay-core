@@ -32,6 +32,122 @@
             maxRetries: 3
         },
 
+        // A6.C: UI Strings Dictionary - Centralized for maintainability and future i18n
+        strings: {
+            alarm: {
+                triggered: 'ALARM LOCKDOWN IN EFFECT',
+                arming: 'Arming in progress',
+                pending: 'Entry/exit pending',
+                armed: 'System armed',
+                disarmed: 'System disarmed',
+                unknown: 'System state',
+                
+                explanation: {
+                    triggered: 'Alarm triggered.',
+                    arming: 'Exit delay active.',
+                    pending: 'Entry delay active.',
+                    armed: 'Alarm is armed. Disarm required to continue.',
+                    disarmed: ''
+                },
+                
+                action: {
+                    sending: 'Sending request...',
+                    waiting: 'Waiting for alarm state update\u2026',
+                    blocked: 'Alarm is triggered. Action blocked.',
+                    unreachable: 'Alarm system unreachable.',
+                    invalid: 'Invalid request.',
+                    failed: 'Action request failed'
+                }
+            },
+            
+            connection: {
+                retrying: 'Connection issue. Retrying\u2026',
+                loading: 'Waiting for Alarmo state...',
+                connecting: 'Connecting...'
+            },
+            
+            error: {
+                controllerNotInit: 'Controller not initialized'
+            }
+        },
+
+        // A6.D: Diagnostic Mode - Runtime flag for extra logging (default: OFF)
+        diagnostic: {
+            enabled: false,
+            log: function(component, message, data) {
+                if (this.enabled) {
+                    var logMsg = '[' + component + '] ' + message;
+                    if (data !== undefined) {
+                        console.log(logMsg, data);
+                    } else {
+                        console.log(logMsg);
+                    }
+                }
+            }
+        },
+
+        // A6.B: Kiosk Longevity Features
+        kiosk: {
+            idleTime: 0,
+            idleThreshold: 300000, // 5 minutes
+            burnInShiftInterval: null,
+            burnInShiftActive: false,
+            
+            startBurnInPrevention: function() {
+                if (this.burnInShiftActive) return;
+                
+                var self = this;
+                this.burnInShiftInterval = setInterval(function() {
+                    // Only shift during idle (and respect reduced-motion)
+                    if (self.idleTime < self.idleThreshold) return;
+                    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+                    
+                    var shiftX = Math.sin(Date.now() / 30000) * 2;
+                    var shiftY = Math.cos(Date.now() / 30000) * 2;
+                    
+                    var appEl = document.getElementById('app');
+                    if (appEl) {
+                        appEl.style.transform = 'translate(' + shiftX + 'px, ' + shiftY + 'px)';
+                    }
+                }, 10000);
+                
+                this.burnInShiftActive = true;
+            },
+            
+            stopBurnInPrevention: function() {
+                if (this.burnInShiftInterval) {
+                    clearInterval(this.burnInShiftInterval);
+                    this.burnInShiftInterval = null;
+                }
+                
+                var appEl = document.getElementById('app');
+                if (appEl) {
+                    appEl.style.transform = '';
+                }
+                
+                this.burnInShiftActive = false;
+            },
+            
+            updateIdleState: function() {
+                var body = document.body;
+                if (this.idleTime >= this.idleThreshold) {
+                    body.classList.add('long-idle');
+                } else {
+                    body.classList.remove('long-idle');
+                }
+            },
+            
+            resetIdle: function() {
+                this.idleTime = 0;
+                this.updateIdleState();
+            },
+            
+            incrementIdle: function(ms) {
+                this.idleTime += ms;
+                this.updateIdleState();
+            }
+        },
+
         // Lifecycle Hooks
         hooks: {
             onInit: [],
@@ -193,5 +309,85 @@
     } else {
         init();
     }
+
+    // ========================================================================
+    // A6.B: Initialize Kiosk Longevity Features
+    // ========================================================================
+    window.SmartDisplay.onReady(function() {
+        window.SmartDisplay.kiosk.startBurnInPrevention();
+        
+        // Track idle time
+        setInterval(function() {
+            window.SmartDisplay.kiosk.incrementIdle(1000);
+        }, 1000);
+        
+        // Reset idle on any interaction
+        ['mousedown', 'mousemove', 'keydown', 'touchstart', 'scroll'].forEach(function(eventType) {
+            document.addEventListener(eventType, function() {
+                window.SmartDisplay.kiosk.resetIdle();
+            }, { passive: true });
+        });
+    });
+
+    // ========================================================================
+    // A6.A: System Status Overlay (Ctrl+Shift+D)\n    // ========================================================================
+    window.SmartDisplay.onReady(function() {
+        var overlay = document.getElementById('system-status-overlay');
+        var closeBtn = document.getElementById('status-close-btn');
+        
+        function updateSystemStatus() {
+            // Fetch health data
+            fetch(window.SmartDisplay.api.baseUrl.replace('/api', '') + '/health')
+                .then(function(r) { return r.json(); })
+                .then(function(health) {
+                    document.getElementById('status-version').textContent = health.version || '1.0.0-rc1';
+                    document.getElementById('status-backend').textContent = health.status === 'ok' ? 'Connected' : 'Degraded';
+                    document.getElementById('status-alarmo').textContent = health.ha_connected ? 'Connected' : 'Disconnected';
+                    
+                    var controller = window.SmartDisplay.alarmController;
+                    if (controller && controller.lastUpdateTime) {
+                        var ago = Math.floor((Date.now() - controller.lastUpdateTime) / 1000);
+                        document.getElementById('status-last-poll').textContent = ago + 's ago';
+                    } else {
+                        document.getElementById('status-last-poll').textContent = 'Never';
+                    }
+                })
+                .catch(function() {
+                    document.getElementById('status-backend').textContent = 'Unreachable';
+                });
+        }
+        
+        function toggleSystemStatus() {
+            if (overlay.style.display === 'none') {
+                updateSystemStatus();
+                overlay.style.display = 'flex';
+            } else {
+                overlay.style.display = 'none';
+            }
+        }
+        
+        // Ctrl+Shift+D to toggle
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.shiftKey && e.key === 'D') {
+                e.preventDefault();
+                toggleSystemStatus();
+            }
+        });
+        
+        if (closeBtn) {
+            closeBtn.addEventListener('click', function() {
+                overlay.style.display = 'none';
+            });
+        }
+        
+        // Close on overlay click (not content)
+        if (overlay) {
+            overlay.addEventListener('click', function(e) {
+                if (e.target === overlay) {
+                    overlay.style.display = 'none';
+                }
+            });
+        }
+    });
 
 })();

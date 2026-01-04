@@ -599,6 +599,7 @@
     var AlarmView = {
         id: 'alarm',
         name: 'Alarm',
+        _listenersSetup: false,
 
         mount: function() {
             console.log('[View] Mounting AlarmView');
@@ -624,6 +625,16 @@
                 '    <div class="countdown-label" id="countdown-label">--</div>',
                 '    <div class="countdown-value" id="countdown-value">--</div>',
                 '  </div>',
+                '  <div class="alarm-connection-warning" id="alarm-connection-warning" style="display:none;">Connection issue. Retrying\u2026</div>',
+                '  <div class="alarm-actions" id="alarm-actions" style="display:none;">',
+                '    <div class="action-status" id="action-status" style="display:none;"></div>',
+                '    <div class="action-buttons">',
+                '      <button class="alarm-action-btn" id="btn-arm-home" disabled>Arm Home</button>',
+                '      <button class="alarm-action-btn" id="btn-arm-away" disabled>Arm Away</button>',
+                '      <button class="alarm-action-btn" id="btn-arm-night" disabled>Arm Night</button>',
+                '      <button class="alarm-action-btn" id="btn-disarm" disabled>Disarm</button>',
+                '    </div>',
+                '  </div>',
                 '  <div class="alarm-error" id="alarm-error" style="display:none;"></div>',
                 '</div>'
             ].join('\n');
@@ -636,6 +647,9 @@
 
         unmount: function() {
             console.log('[View] Unmounting AlarmView');
+
+            // A5.6: Reset listener flag for clean re-mount
+            this._listenersSetup = false;
 
             var element = document.getElementById(this.id);
             if (element) {
@@ -654,9 +668,14 @@
             }
 
             this._clearError();
+            // A5.3: Clear action status when state updates (poll recovered)
+            this._hideActionStatus();
+            // A5.3: Update connection warning based on poll failures
+            this._updateConnectionWarning();
             this._renderModeUI(alarmState);
             this._renderDelay(alarmState.delay);
             this._renderMeta(alarmState);
+            this._updateButtonStates(alarmState);
         },
 
         // ====================================================================
@@ -664,7 +683,44 @@
         // ====================================================================
 
         _setupEventListeners: function() {
-            // No interactive controls on this view; placeholder for future
+            var self = this;
+
+            // A5.6: Prevent duplicate listeners
+            if (this._listenersSetup) {
+                console.log('[AlarmView] Listeners already setup, skipping');
+                return;
+            }
+
+            var btnArmHome = document.getElementById('btn-arm-home');
+            var btnArmAway = document.getElementById('btn-arm-away');
+            var btnArmNight = document.getElementById('btn-arm-night');
+            var btnDisarm = document.getElementById('btn-disarm');
+
+            if (btnArmHome) {
+                btnArmHome.addEventListener('click', function() {
+                    self._handleAction('arm_home');
+                });
+            }
+
+            if (btnArmAway) {
+                btnArmAway.addEventListener('click', function() {
+                    self._handleAction('arm_away');
+                });
+            }
+
+            if (btnArmNight) {
+                btnArmNight.addEventListener('click', function() {
+                    self._handleAction('arm_night');
+                });
+            }
+
+            if (btnDisarm) {
+                btnDisarm.addEventListener('click', function() {
+                    self._handleAction('disarm');
+                });
+            }
+
+            this._listenersSetup = true;
         },
 
         _initController: function() {
@@ -678,6 +734,145 @@
                     .catch(function(err) {
                         console.error('[AlarmView] Failed to init controller:', err);
                     });
+            }
+        },
+
+        _handleAction: function(action) {
+            var self = this;
+            var controller = window.SmartDisplay.alarmController;
+            var strings = window.SmartDisplay.strings;
+
+            if (!controller) {
+                this._showError(strings.error.controllerNotInit);
+                return;
+            }
+
+            // A5.2: Prevent action if already loading (spam protection)
+            if (controller.isLoading) {
+                console.log('[AlarmView] Action ignored: already processing');
+                return;
+            }
+
+            console.log('[AlarmView] Action requested:', action);
+
+            // Disable all buttons immediately
+            this._setButtonsDisabled(true);
+            this._showActionStatus(strings.alarm.action.sending);
+            this._clearError();
+
+            controller.requestAction(action)
+                .then(function(response) {
+                    console.log('[AlarmView] Action accepted:', response);
+                    self._showActionStatus(strings.alarm.action.waiting);
+                })
+                .catch(function(err) {
+                    console.error('[AlarmView] Action failed:', err);
+                    
+                    // Handle specific error codes using strings
+                    if (err.statusCode === 409) {
+                        self._showError(strings.alarm.action.blocked);
+                    } else if (err.statusCode === 503) {
+                        self._showError(strings.alarm.action.unreachable);
+                    } else if (err.statusCode === 400) {
+                        self._showError(strings.alarm.action.invalid);
+                    } else {
+                        self._showError(err.message || strings.alarm.action.failed);
+                    }
+
+                    self._updateButtonStates(window.SmartDisplay.store.getState().alarmState);
+                    self._hideActionStatus();
+                });
+        },
+
+        _setButtonsDisabled: function(disabled) {
+            var buttons = [
+                document.getElementById('btn-arm-home'),
+                document.getElementById('btn-arm-away'),
+                document.getElementById('btn-arm-night'),
+                document.getElementById('btn-disarm')
+            ];
+
+            buttons.forEach(function(btn) {
+                if (btn) {
+                    btn.disabled = disabled;
+                }
+            });
+        },
+
+        _updateButtonStates: function(alarmState) {
+            if (!alarmState || !alarmState.isHydrated) {
+                this._setButtonsDisabled(true);
+                return;
+            }
+
+            var state = (alarmState.state || 'unknown').toLowerCase();
+            var triggered = alarmState.triggered;
+
+            var btnArmHome = document.getElementById('btn-arm-home');
+            var btnArmAway = document.getElementById('btn-arm-away');
+            var btnArmNight = document.getElementById('btn-arm-night');
+            var btnDisarm = document.getElementById('btn-disarm');
+            var actionsContainer = document.getElementById('alarm-actions');
+
+            // Hide actions entirely if triggered
+            if (triggered || state === 'triggered') {
+                if (actionsContainer) {
+                    actionsContainer.style.display = 'none';
+                }
+                return;
+            }
+
+            // Show actions container
+            if (actionsContainer) {
+                actionsContainer.style.display = 'block';
+            }
+
+            // Disable all during pending/arming states
+            if (state === 'pending' || state === 'arming') {
+                this._setButtonsDisabled(true);
+                return;
+            }
+
+            // Enable arm buttons only when disarmed
+            var isDisarmed = state === 'disarmed';
+            if (btnArmHome) btnArmHome.disabled = !isDisarmed;
+            if (btnArmAway) btnArmAway.disabled = !isDisarmed;
+            if (btnArmNight) btnArmNight.disabled = !isDisarmed;
+
+            // Enable disarm button only when armed
+            var isArmed = state.indexOf('armed_') === 0;
+            if (btnDisarm) btnDisarm.disabled = !isArmed;
+        },
+
+        _showActionStatus: function(message) {
+            var statusEl = document.getElementById('action-status');
+            if (statusEl) {
+                statusEl.textContent = message;
+                statusEl.style.display = 'block';
+            }
+        },
+
+        _hideActionStatus: function() {
+            var statusEl = document.getElementById('action-status');
+            if (statusEl) {
+                statusEl.style.display = 'none';
+                statusEl.textContent = '';
+            }
+        },
+
+        _updateConnectionWarning: function() {
+            var warningEl = document.getElementById('alarm-connection-warning');
+            if (!warningEl) {
+                return;
+            }
+
+            var controller = window.SmartDisplay.alarmController;
+            if (controller && controller.pollFailureCount >= 3) {
+                var strings = window.SmartDisplay.strings;
+                warningEl.textContent = strings.connection.retrying;
+                warningEl.style.display = 'block';
+            } else {
+                warningEl.style.display = 'none';
             }
         },
 
@@ -752,7 +947,11 @@
                 return;
             }
 
-            if (alarmState.triggered || alarmState.state === 'triggered') {
+            var explanation = this._getStateExplanation(alarmState);
+            
+            if (explanation) {
+                contextEl.textContent = explanation;
+            } else if (alarmState.triggered || alarmState.state === 'triggered') {
                 contextEl.textContent = 'Triggered at ' + this._formatLastUpdated(alarmState.lastUpdated);
             } else {
                 contextEl.textContent = 'Last updated ' + this._formatLastUpdated(alarmState.lastUpdated);
@@ -784,6 +983,32 @@
             }
 
             return 'System state: ' + state;
+        },
+
+        _getStateExplanation: function(alarmState) {
+            var state = (alarmState.state || 'unknown').toLowerCase();
+
+            if (alarmState.triggered || state === 'triggered') {
+                return 'Alarm triggered.';
+            }
+
+            if (state === 'arming') {
+                return 'Exit delay active.';
+            }
+
+            if (state === 'pending') {
+                return 'Entry delay active.';
+            }
+
+            if (state.startsWith('armed_')) {
+                return 'Alarm is armed. Disarm required to continue.';
+            }
+
+            if (state === 'disarmed') {
+                return '';
+            }
+
+            return '';
         },
 
         _formatModeName: function(mode, triggered) {
