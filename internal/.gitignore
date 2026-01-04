@@ -1,0 +1,6 @@
+.env
+data/
+logs/
+tmp/
+dist/
+node_modules/

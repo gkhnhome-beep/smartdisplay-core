@@ -1,0 +1,15 @@
+[Unit]
+Description=SmartDisplay Core Service
+After=network.target
+
+[Service]
+User=smartdisplay
+WorkingDirectory=/opt/smartdisplay-core
+ExecStart=/opt/smartdisplay-core/smartdisplay-core
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

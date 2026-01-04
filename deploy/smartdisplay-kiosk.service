@@ -1,0 +1,12 @@
+[Unit]
+Description=SmartDisplay Kiosk (Chromium)
+After=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=%h/deploy/kiosk-start.sh
+ExecStop=%h/deploy/kiosk-stop.sh
+Restart=always
+
+[Install]
+WantedBy=default.target
