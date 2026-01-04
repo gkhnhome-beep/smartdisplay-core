@@ -30,19 +30,15 @@
 
             return window.SmartDisplay.api.client.get('/ui/alarm/state')
                 .then(function(response) {
-                    console.log('[Alarm] Alarm state loaded:', response);
-                    self.currentState = response;
+                    var normalized = self._normalizeState(response);
+                    console.log('[Alarm] Alarm state loaded:', normalized);
+                    self.currentState = normalized;
                     self.error = null;
                     self.lastUpdateTime = Date.now();
-                    
-                    // Update store with alarm data
-                    if (response.alarmState) {
-                        window.SmartDisplay.store.setState({
-                            alarmState: response.alarmState
-                        });
-                    }
 
-                    return response;
+                    return {
+                        alarmState: normalized
+                    };
                 })
                 .catch(function(err) {
                     console.error('[Alarm] Failed to fetch state:', err);
@@ -51,42 +47,32 @@
                 });
         },
 
-        // ====================================================================
-        // Alarm Actions
-        // ====================================================================
-
         /**
-         * Request alarm action
-         * @param {string} action - Action name (arm-home, arm-away, disarm, etc.)
-         * @returns {Promise<object>} - Action response
+         * Normalize Alarmo response into store shape
+         * @private
          */
-        performAction: function(action) {
-            var self = this;
+        _normalizeState: function(response) {
+            return {
+                state: (response && response.state) || 'unknown',
+                triggered: Boolean(response && response.triggered),
+                delay: this._normalizeDelay(response && response.delay),
+                lastUpdated: (response && response.last_updated) || new Date().toISOString(),
+                isHydrated: true
+            };
+        },
 
-            if (this.isLoading) {
-                console.warn('[Alarm] Already loading, skipping action');
-                return Promise.reject({ message: 'Already processing' });
+        _normalizeDelay: function(delay) {
+            if (!delay || typeof delay.remaining !== 'number') {
+                return null;
             }
 
-            this.isLoading = true;
-            console.log('[Alarm] Performing action:', action);
+            var type = delay.type === 'entry' ? 'entry' : 'exit';
+            var remaining = Math.max(0, Math.floor(delay.remaining));
 
-            return window.SmartDisplay.api.client.post('/ui/alarm/action', {
-                action: action
-            })
-                .then(function(response) {
-                    console.log('[Alarm] Action succeeded:', action, response);
-                    self.isLoading = false;
-                    
-                    // Fetch updated state
-                    return self.fetchAlarmState();
-                })
-                .catch(function(err) {
-                    console.error('[Alarm] Action failed:', action, err);
-                    self.error = err;
-                    self.isLoading = false;
-                    throw err;
-                });
+            return {
+                type: type,
+                remaining: remaining
+            };
         },
 
         // ====================================================================

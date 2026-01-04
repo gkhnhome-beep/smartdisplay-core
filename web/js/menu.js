@@ -135,7 +135,7 @@
                     // Check if updates that affect menu
                     if (updates.firstBoot !== undefined ||
                         (updates.guestState && updates.guestState.state) ||
-                        (updates.alarmState && updates.alarmState.status)) {
+                        (updates.alarmState && updates.alarmState.state)) {
                         
                         console.log('[Menu] State change detected, refreshing menu');
                         self.fetchMenu()

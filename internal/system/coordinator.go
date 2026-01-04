@@ -217,10 +217,10 @@ func NewCoordinator(a *alarm.StateMachine, g *guest.StateMachine, c *countdown.C
 		pluginRegistry: plugin.NewRegistry(),
 	}
 
-	// A2: Initialize Alarmo state from first fetch
+	// A2/A3: Initialize Alarmo state from first fetch
 	if coord.AlarmoAdapter != nil {
 		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-		state, err := coord.AlarmoAdapter.FetchState(ctx)
+		state, err := coord.AlarmoAdapter.FetchState(ctx, alarmo.AlarmoState{})
 		cancel()
 		if err != nil {
 			logger.Error("alarmo initial fetch failed: " + err.Error())
@@ -594,9 +594,13 @@ func (c *Coordinator) StartAlarmPolling(ctx context.Context) {
 				logger.Info("alarmo: polling stopped")
 				return
 			case <-ticker.C:
+				// Snapshot previous state to preserve countdown when HA omits attributes
+				c.AlarmoMu.RLock()
+				prevState := c.AlarmoState
+				c.AlarmoMu.RUnlock()
 				// Fetch latest state
 				fetchCtx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-				newState, err := c.AlarmoAdapter.FetchState(fetchCtx)
+				newState, err := c.AlarmoAdapter.FetchState(fetchCtx, prevState)
 				cancel()
 
 				if err != nil {

@@ -20,6 +20,7 @@ import (
 	"smartdisplay-core/internal/update"
 	"strings"
 	"sync"
+	"time"
 )
 
 // handleAIAnomalies returns grouped anomaly packets for UI
@@ -786,7 +787,30 @@ func (s *Server) handleAlarmState(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	s.respond(w, true, state, "", 200)
+	lastUpdated := ""
+	if !alarmoState.LastChanged.IsZero() {
+		lastUpdated = alarmoState.LastChanged.Format(time.RFC3339)
+	}
+
+	// A3: Expose Alarmo countdown/trigger metadata alongside screen state
+	payload := struct {
+		*alarm.ScreenState
+		Alarmo map[string]interface{} `json:"alarmo"`
+	}{
+		ScreenState: state,
+		Alarmo: map[string]interface{}{
+			"state":      alarmoState.Mode,
+			"armed_mode": alarmoState.ArmedMode,
+			"triggered":  alarmoState.Triggered,
+			"delay": map[string]interface{}{
+				"type":      alarmoState.DelayType,
+				"remaining": alarmoState.DelayRemaining,
+			},
+			"last_updated": lastUpdated,
+		},
+	}
+
+	s.respond(w, true, payload, "", 200)
 }
 
 // handleAlarmSummary returns lightweight alarm summary for frequent polling (D3)

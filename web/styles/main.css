@@ -790,6 +790,23 @@ iframe {
     display: flex !important;
 }
 
+.menu-overlay.menu-locked {
+    pointer-events: none;
+}
+
+.menu-overlay.menu-locked .menu-container {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+body.alarm-locked [data-view] {
+    pointer-events: none;
+}
+
+body.alarm-locked .menu-overlay {
+    pointer-events: none;
+}
+
 .menu-overlay .view-menu {
     width: 80%;
     max-width: 400px;

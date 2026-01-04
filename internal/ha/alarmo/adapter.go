@@ -13,13 +13,15 @@ import (
 // AlarmoState represents normalized alarm state from Home Assistant
 // This is the single source of truth for alarm state within SmartDisplay
 type AlarmoState struct {
-	RawState      string    // Raw state string from HA (e.g., "armed_home")
-	Mode          string    // disarmed | arming | armed | triggered
-	ArmedMode     string    // home | away | night | "" (empty if not armed)
-	EntryDelaySec int       // Entry delay in seconds (0 if not applicable)
-	ExitDelaySec  int       // Exit delay in seconds (0 if not applicable)
-	Triggered     bool      // True if alarm is triggered
-	LastChanged   time.Time // When state last changed
+	RawState       string    // Raw state string from HA (e.g., "armed_home")
+	Mode           string    // disarmed | arming | armed | triggered
+	ArmedMode      string    // home | away | night | "" (empty if not armed)
+	EntryDelaySec  int       // Entry delay in seconds (0 if not applicable)
+	ExitDelaySec   int       // Exit delay in seconds (0 if not applicable)
+	DelayType      string    // entry | exit | ""
+	DelayRemaining int       // Countdown seconds (>=0), preserved if HA omits
+	Triggered      bool      // True if alarm is triggered
+	LastChanged    time.Time // When state last changed
 }
 
 // Adapter reads alarm state from Home Assistant Alarmo integration
@@ -52,7 +54,7 @@ func New(baseURL string, decryptedToken string) *Adapter {
 
 // FetchState retrieves the current alarm state from Home Assistant
 // Returns normalized AlarmoState and error if fetch fails
-func (a *Adapter) FetchState(ctx context.Context) (AlarmoState, error) {
+func (a *Adapter) FetchState(ctx context.Context, prev AlarmoState) (AlarmoState, error) {
 	// Construct request (do not log URL)
 	url := a.baseURL + "/api/states/alarm_control_panel.alarmo"
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
@@ -90,8 +92,8 @@ func (a *Adapter) FetchState(ctx context.Context) (AlarmoState, error) {
 		return AlarmoState{}, fmt.Errorf("alarmo: parse failed: %w", err)
 	}
 
-	// Map to normalized state
-	state := mapAlarmoState(haResp)
+	// Map to normalized state (preserve prior countdown when HA omits)
+	state := mapAlarmoState(haResp, prev)
 	return state, nil
 }
 
@@ -104,13 +106,14 @@ func (a *Adapter) FetchState(ctx context.Context) (AlarmoState, error) {
 //	"armed_home"      -> armed      + home
 //	"armed_away"      -> armed      + away
 //	"armed_night"     -> armed      + night
-//	"triggered"       -> triggered  + (triggered=true)
-func mapAlarmoState(ha haStateResponse) AlarmoState {
-	state := AlarmoState{
-		RawState:    ha.State,
-		Triggered:   ha.State == "triggered",
-		LastChanged: parseLastChanged(ha.LastChanged),
-	}
+//
+// "triggered"       -> triggered  + (triggered=true)
+func mapAlarmoState(ha haStateResponse, prev AlarmoState) AlarmoState {
+	// Start with previous to preserve countdown when HA omits attributes
+	state := prev
+	state.RawState = ha.State
+	state.LastChanged = parseLastChanged(ha.LastChanged)
+	state.Triggered = ha.State == "triggered"
 
 	// Map HA state to normalized mode
 	switch ha.State {
@@ -150,7 +153,6 @@ func mapAlarmoState(ha haStateResponse) AlarmoState {
 		if delay, ok := entryDelay.(float64); ok {
 			state.EntryDelaySec = int(delay)
 		} else if delayStr, ok := entryDelay.(string); ok {
-			// Try parsing as string
 			fmt.Sscanf(delayStr, "%d", &state.EntryDelaySec)
 		}
 	}
@@ -160,12 +162,49 @@ func mapAlarmoState(ha haStateResponse) AlarmoState {
 		if delay, ok := exitDelay.(float64); ok {
 			state.ExitDelaySec = int(delay)
 		} else if delayStr, ok := exitDelay.(string); ok {
-			// Try parsing as string
 			fmt.Sscanf(delayStr, "%d", &state.ExitDelaySec)
 		}
 	}
 
+	// Parse countdown attributes while preserving previous values when absent/invalid
+	if delayRem, ok := ha.Attributes["delay_remaining"]; ok {
+		if parsed, ok := toInt(delayRem); ok && parsed >= 0 {
+			state.DelayRemaining = parsed
+		}
+	}
+
+	if delayType, ok := ha.Attributes["delay_type"]; ok {
+		if dt, ok := delayType.(string); ok && (dt == "entry" || dt == "exit") {
+			state.DelayType = dt
+		}
+	}
+
+	// Triggered forces countdown reset
+	if state.Mode == "triggered" {
+		state.DelayRemaining = 0
+		state.DelayType = ""
+		state.Triggered = true
+	}
+
 	return state
+}
+
+// toInt converts HA attribute values to int when possible
+func toInt(val interface{}) (int, bool) {
+	switch v := val.(type) {
+	case float64:
+		return int(v), true
+	case int:
+		return v, true
+	case int64:
+		return int(v), true
+	case string:
+		var out int
+		if _, err := fmt.Sscanf(v, "%d", &out); err == nil {
+			return out, true
+		}
+	}
+	return 0, false
 }
 
 // parseLastChanged parses HA timestamp string to time.Time

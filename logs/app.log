@@ -1650,3 +1650,2139 @@
 2026/01/04 19:26:58 [INFO] request: id=req-dd5b637286840781 method=GET path=/api/ui/menu
 2026/01/04 19:26:58 [INFO] request: id=req-51ca5f8c742bf121 method=GET path=/api/ui/home/state
 2026/01/04 19:26:58 [INFO] menu: resolved for role=admin (sections=6, first_boot=false, failsafe=false, guest_active=false)
+2026/01/04 20:16:12 [INFO] request: id=req-27a3c0567e00f478 method=OPTIONS path=/api/ui/menu
+2026/01/04 20:16:12 [INFO] request: id=req-720ad94b0b5a699a method=OPTIONS path=/api/ui/home/state
+2026/01/04 20:16:12 [INFO] request: id=req-04dd45b17e82d336 method=GET path=/api/ui/menu
+2026/01/04 20:16:12 [INFO] request: id=req-4bace77b2e80da9a method=GET path=/api/ui/home/state
+2026/01/04 20:16:12 [INFO] menu: resolved for role=admin (sections=6, first_boot=false, failsafe=false, guest_active=false)
+2026/01/04 20:16:13 [INFO] request: id=req-05f7474c9622fdc5 method=GET path=/api/ui/home/state
+2026/01/04 20:16:13 [INFO] request: id=req-bb0cd8b5bb6be6ac method=GET path=/api/ui/menu
+2026/01/04 20:16:13 [INFO] menu: resolved for role=admin (sections=6, first_boot=false, failsafe=false, guest_active=false)
+2026/01/04 21:13:45 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:13:45 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:13:45 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:45 [INFO] platform detected: linux
+2026/01/04 21:13:45 [INFO] config: AI disabled
+2026/01/04 21:13:45 [INFO] config: Guest access disabled
+2026/01/04 21:13:45 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:13:45 [INFO] request: id=req-085d9fbb56a54a93 method=GET path=/health
+2026/01/04 21:13:45 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:13:45 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:13:45 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:45 [INFO] platform detected: linux
+2026/01/04 21:13:45 [INFO] config: AI disabled
+2026/01/04 21:13:45 [INFO] config: Guest access disabled
+2026/01/04 21:13:45 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:13:45 [INFO] request: id=req-aff3af4e178e36f5 method=GET path=/api/admin/telemetry/optin
+2026/01/04 21:13:45 [INFO] error: id=req-aff3af4e178e36f5 code=method_not_allowed msg=POST required
+2026/01/04 21:13:45 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:13:45 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:13:45 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:45 [INFO] platform detected: linux
+2026/01/04 21:13:45 [INFO] config: AI disabled
+2026/01/04 21:13:45 [INFO] config: Guest access disabled
+2026/01/04 21:13:45 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:13:45 [INFO] request: id=req-f76f500fc20728c3 method=GET path=/api/admin/telemetry/summary
+2026/01/04 21:13:45 [INFO] error: id=req-f76f500fc20728c3 code=forbidden msg=admin required
+2026/01/04 21:13:45 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:13:45 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:13:45 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:45 [INFO] platform detected: linux
+2026/01/04 21:13:45 [INFO] config: AI disabled
+2026/01/04 21:13:45 [INFO] config: Guest access disabled
+2026/01/04 21:13:45 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:13:45 [INFO] request: id=req-6b581a1a75580a34 method=GET path=/api/admin/telemetry/summary
+2026/01/04 21:13:45 [INFO] error: id=req-6b581a1a75580a34 code=forbidden msg=admin required
+2026/01/04 21:13:45 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:13:45 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:13:45 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:45 [INFO] platform detected: linux
+2026/01/04 21:13:45 [INFO] config: AI disabled
+2026/01/04 21:13:45 [INFO] config: Guest access disabled
+2026/01/04 21:13:45 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:13:45 [INFO] request: id=req-3c09b470d4d8ca68 method=GET path=/api/admin/telemetry/summary
+2026/01/04 21:13:45 [INFO] error: id=req-3c09b470d4d8ca68 code=forbidden msg=admin required
+2026/01/04 21:13:45 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:13:45 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:13:45 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:45 [INFO] platform detected: linux
+2026/01/04 21:13:45 [INFO] config: AI disabled
+2026/01/04 21:13:45 [INFO] config: Guest access disabled
+2026/01/04 21:13:45 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:13:45 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:13:45 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:13:45 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:45 [INFO] platform detected: linux
+2026/01/04 21:13:45 [INFO] config: AI disabled
+2026/01/04 21:13:45 [INFO] config: Guest access disabled
+2026/01/04 21:13:45 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:13:45 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:45 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:13:45 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:13:45 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:45 [INFO] platform detected: linux
+2026/01/04 21:13:45 [INFO] config: AI disabled
+2026/01/04 21:13:45 [INFO] config: Guest access disabled
+2026/01/04 21:13:45 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:13:45 [INFO] request: id=req-f2b48ab9da6735d2 method=GET path=/health
+2026/01/04 21:13:46 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:13:46 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:13:46 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:46 [INFO] platform detected: linux
+2026/01/04 21:13:46 [INFO] config: AI disabled
+2026/01/04 21:13:46 [INFO] config: Guest access disabled
+2026/01/04 21:13:46 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:13:46 [INFO] request: id=req-4ef4840b73ceea10 method=GET path=/health
+2026/01/04 21:13:46 [INFO] request: id=req-cb426968b1bf842c method=GET path=/health
+2026/01/04 21:13:46 [INFO] request: id=req-38962f96c73c566b method=GET path=/health
+2026/01/04 21:13:46 [INFO] request: id=req-5acece12bb601c0e method=GET path=/health
+2026/01/04 21:13:46 [INFO] request: id=req-eeec5ceacbd97ba5 method=GET path=/health
+2026/01/04 21:13:46 [INFO] request: id=req-7d974e33f11db557 method=GET path=/health
+2026/01/04 21:13:46 [INFO] request: id=req-c7039e42f997008c method=GET path=/health
+2026/01/04 21:13:46 [INFO] request: id=req-cec585d8cce6c9f2 method=GET path=/health
+2026/01/04 21:13:46 [INFO] request: id=req-9492b7dbfe1082d7 method=GET path=/health
+2026/01/04 21:13:46 [INFO] request: id=req-862e5b0350d8235f method=GET path=/health
+2026/01/04 21:13:46 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:13:46 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:13:46 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:46 [INFO] platform detected: linux
+2026/01/04 21:13:46 [INFO] config: AI disabled
+2026/01/04 21:13:46 [INFO] config: Guest access disabled
+2026/01/04 21:13:46 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:13:46 [INFO] request: id=req-bd39ba6727319b58 method=GET path=/api/admin/smoke
+2026/01/04 21:13:46 [INFO] error: id=req-bd39ba6727319b58 code=method_not_allowed msg=POST required
+2026/01/04 21:13:46 [INFO] request: id=req-65e31c067a5c96f0 method=GET path=/api/ui/home/state
+2026/01/04 21:13:46 [INFO] request: id=req-c31f5bf503e0ae9a method=GET path=/api/ui/home/state
+2026/01/04 21:13:46 [INFO] request: id=req-275692a517c73a47 method=GET path=/api/admin/telemetry/summary
+2026/01/04 21:13:46 [INFO] error: id=req-275692a517c73a47 code=forbidden msg=admin required
+2026/01/04 21:13:46 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:13:46 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:13:46 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:46 [INFO] platform detected: linux
+2026/01/04 21:13:46 [INFO] config: AI disabled
+2026/01/04 21:13:46 [INFO] config: Guest access disabled
+2026/01/04 21:13:46 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:13:46 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:46 [INFO] request: id=req-ccb46deb7ab83f1f method=GET path=/api/setup/firstboot/status
+2026/01/04 21:13:46 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:13:46 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:13:46 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:46 [INFO] platform detected: linux
+2026/01/04 21:13:46 [INFO] config: AI disabled
+2026/01/04 21:13:46 [INFO] config: Guest access disabled
+2026/01/04 21:13:46 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:13:46 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:46 [INFO] request: id=req-6990b14f02b52491 method=POST path=/api/alarm/arm
+2026/01/04 21:13:46 [INFO] alarm countdown created
+2026/01/04 21:13:46 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:13:46 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:13:46 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:46 [INFO] platform detected: linux
+2026/01/04 21:13:46 [INFO] config: AI disabled
+2026/01/04 21:13:46 [INFO] config: Guest access disabled
+2026/01/04 21:13:46 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:13:46 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:46 [INFO] request: id=req-fc0b1b99dbf13882 method=GET path=/api/guest/status
+2026/01/04 21:13:46 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:13:46 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:13:46 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:46 [INFO] platform detected: linux
+2026/01/04 21:13:46 [INFO] config: AI disabled
+2026/01/04 21:13:46 [INFO] config: Guest access disabled
+2026/01/04 21:13:46 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:13:46 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:46 [INFO] request: id=req-9d4160dfdc278473 method=GET path=/api/setup/firstboot/status
+2026/01/04 21:13:46 [INFO] request: id=req-9dbe65abfb71447e method=POST path=/api/setup/firstboot/next
+2026/01/04 21:13:46 [INFO] firstboot: advanced to step 2 (language)
+2026/01/04 21:13:46 [INFO] request: id=req-bcfd068d18851db5 method=GET path=/api/setup/firstboot/status
+2026/01/04 21:13:46 [INFO] request: id=req-92d84f8d070d1484 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:13:46 [INFO] firstboot: advanced to step 3 (ha_check)
+2026/01/04 21:13:46 [INFO] request: id=req-e514000b40bd0d79 method=GET path=/api/setup/firstboot/status
+2026/01/04 21:13:46 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:13:46 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:13:46 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:46 [INFO] platform detected: linux
+2026/01/04 21:13:46 [INFO] config: AI disabled
+2026/01/04 21:13:46 [INFO] config: Guest access disabled
+2026/01/04 21:13:46 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:13:46 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:46 [INFO] request: id=req-6fa1f61fb55cd2e0 method=POST path=/api/setup/firstboot/complete
+2026/01/04 21:13:46 [INFO] error: id=req-6fa1f61fb55cd2e0 code=bad_request msg=firstboot: must complete all steps before finishing
+2026/01/04 21:13:46 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:13:46 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:13:46 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:46 [INFO] platform detected: linux
+2026/01/04 21:13:46 [INFO] config: AI disabled
+2026/01/04 21:13:46 [INFO] config: Guest access disabled
+2026/01/04 21:13:46 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:13:46 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:46 [INFO] request: id=req-7a8519104460e2c1 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:13:46 [INFO] firstboot: advanced to step 2 (language)
+2026/01/04 21:13:46 [INFO] request: id=req-6f89b3beb13a9263 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:13:46 [INFO] firstboot: advanced to step 3 (ha_check)
+2026/01/04 21:13:46 [INFO] request: id=req-b31a739fa4c77c3e method=GET path=/api/setup/firstboot/status
+2026/01/04 21:13:46 [INFO] request: id=req-2505f7790c83880f method=POST path=/api/setup/firstboot/back
+2026/01/04 21:13:46 [INFO] firstboot: returned to step 2 (language)
+2026/01/04 21:13:46 [INFO] request: id=req-37f7f175ec6f967d method=GET path=/api/setup/firstboot/status
+2026/01/04 21:13:46 [INFO] request: id=req-8a6e9cf2f671f814 method=POST path=/api/setup/firstboot/back
+2026/01/04 21:13:46 [INFO] firstboot: returned to step 1 (welcome)
+2026/01/04 21:13:46 [INFO] request: id=req-674d50260c22eab5 method=GET path=/api/setup/firstboot/status
+2026/01/04 21:13:46 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:13:46 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:13:46 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:46 [INFO] platform detected: linux
+2026/01/04 21:13:46 [INFO] config: AI disabled
+2026/01/04 21:13:46 [INFO] config: Guest access disabled
+2026/01/04 21:13:46 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:13:46 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:46 [INFO] request: id=req-9e97fd703a9301ce method=POST path=/api/setup/firstboot/back
+2026/01/04 21:13:46 [INFO] error: id=req-9e97fd703a9301ce code=bad_request msg=firstboot: already at first step
+2026/01/04 21:13:46 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:13:46 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:13:46 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:46 [INFO] platform detected: linux
+2026/01/04 21:13:46 [INFO] config: AI disabled
+2026/01/04 21:13:46 [INFO] config: Guest access disabled
+2026/01/04 21:13:46 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:13:46 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:46 [INFO] request: id=req-bbd74a9e7cdd3cb8 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:13:46 [INFO] firstboot: advanced to step 2 (language)
+2026/01/04 21:13:46 [INFO] request: id=req-15e0031896ebe6fb method=POST path=/api/setup/firstboot/next
+2026/01/04 21:13:46 [INFO] firstboot: advanced to step 3 (ha_check)
+2026/01/04 21:13:46 [INFO] request: id=req-bde56860feff84ca method=POST path=/api/setup/firstboot/next
+2026/01/04 21:13:46 [INFO] firstboot: advanced to step 4 (alarm_role)
+2026/01/04 21:13:46 [INFO] request: id=req-1b5408506c4bc021 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:13:46 [INFO] firstboot: advanced to step 5 (ready)
+2026/01/04 21:13:46 [INFO] request: id=req-c99b727b4f383649 method=GET path=/api/setup/firstboot/status
+2026/01/04 21:13:46 [INFO] request: id=req-4c58f4d434b1a776 method=POST path=/api/setup/firstboot/complete
+2026/01/04 21:13:46 [INFO] firstboot: wizard completed, exiting first-boot mode
+2026/01/04 21:13:46 [INFO] firstboot: wizard_completed flag saved to config
+2026/01/04 21:13:46 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:13:46 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:13:46 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:46 [INFO] platform detected: linux
+2026/01/04 21:13:46 [INFO] config: AI disabled
+2026/01/04 21:13:46 [INFO] config: Guest access disabled
+2026/01/04 21:13:46 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:13:46 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:46 [INFO] request: id=req-6b3700a85cd3c30e method=POST path=/api/setup/firstboot/next
+2026/01/04 21:13:46 [INFO] firstboot: advanced to step 2 (language)
+2026/01/04 21:13:46 [INFO] request: id=req-07826642da381c1f method=POST path=/api/setup/firstboot/complete
+2026/01/04 21:13:46 [INFO] error: id=req-07826642da381c1f code=bad_request msg=firstboot: must complete all steps before finishing
+2026/01/04 21:13:46 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:13:46 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:13:46 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:46 [INFO] platform detected: linux
+2026/01/04 21:13:46 [INFO] config: AI disabled
+2026/01/04 21:13:46 [INFO] config: Guest access disabled
+2026/01/04 21:13:46 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:13:46 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:46 [INFO] request: id=req-e1892d7f477c48a2 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:13:46 [INFO] firstboot: advanced to step 2 (language)
+2026/01/04 21:13:46 [INFO] request: id=req-d5fd7cdc92118e2b method=POST path=/api/setup/firstboot/next
+2026/01/04 21:13:46 [INFO] firstboot: advanced to step 3 (ha_check)
+2026/01/04 21:13:46 [INFO] request: id=req-259f3ccb15e45393 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:13:46 [INFO] firstboot: advanced to step 4 (alarm_role)
+2026/01/04 21:13:46 [INFO] request: id=req-955fabf065adda16 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:13:46 [INFO] firstboot: advanced to step 5 (ready)
+2026/01/04 21:13:46 [INFO] request: id=req-b5696c4b73e561d6 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:13:46 [INFO] error: id=req-b5696c4b73e561d6 code=bad_request msg=firstboot: already at final step
+2026/01/04 21:13:46 [INFO] request: id=req-98c68e5ce540343f method=GET path=/api/setup/firstboot/status
+2026/01/04 21:13:46 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:13:46 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:13:46 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:46 [INFO] platform detected: linux
+2026/01/04 21:13:46 [INFO] config: AI disabled
+2026/01/04 21:13:46 [INFO] config: Guest access disabled
+2026/01/04 21:13:46 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:13:46 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:46 [INFO] request: id=req-1a5bd7cb657b8127 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:13:46 [INFO] firstboot: advanced to step 2 (language)
+2026/01/04 21:13:46 [INFO] request: id=req-a1f5b02058d0a251 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:13:46 [INFO] firstboot: advanced to step 3 (ha_check)
+2026/01/04 21:13:46 [INFO] request: id=req-7b96c40c5c1f2545 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:13:46 [INFO] firstboot: advanced to step 4 (alarm_role)
+2026/01/04 21:13:46 [INFO] request: id=req-da3f543f058c0a48 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:13:46 [INFO] firstboot: advanced to step 5 (ready)
+2026/01/04 21:13:46 [INFO] request: id=req-d9073cb107c14cee method=POST path=/api/setup/firstboot/complete
+2026/01/04 21:13:46 [INFO] firstboot: wizard completed, exiting first-boot mode
+2026/01/04 21:13:46 [INFO] firstboot: wizard_completed flag saved to config
+2026/01/04 21:13:46 [INFO] request: id=req-d1a70e38d3a64f94 method=POST path=/api/alarm/arm
+2026/01/04 21:13:46 [INFO] alarm countdown created
+2026/01/04 21:13:46 [INFO] request: id=req-0c8dd48924e8a8ae method=GET path=/api/ui/home/state
+2026/01/04 21:13:46 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:13:46 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:13:46 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:46 [INFO] platform detected: linux
+2026/01/04 21:13:46 [INFO] config: AI disabled
+2026/01/04 21:13:46 [INFO] config: Guest access disabled
+2026/01/04 21:13:46 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:13:46 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:46 [INFO] request: id=req-f6f5989c153b545f method=GET path=/api/setup/firstboot/status
+2026/01/04 21:13:46 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:13:46 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:13:46 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:46 [INFO] platform detected: linux
+2026/01/04 21:13:46 [INFO] config: AI disabled
+2026/01/04 21:13:46 [INFO] config: Guest access disabled
+2026/01/04 21:13:46 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:13:46 [INFO] request: id=req-db30609cf8f43801 method=GET path=/api/setup/firstboot/status
+2026/01/04 21:13:46 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:13:46 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:13:46 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:46 [INFO] platform detected: linux
+2026/01/04 21:13:46 [INFO] config: AI disabled
+2026/01/04 21:13:46 [INFO] config: Guest access disabled
+2026/01/04 21:13:46 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:13:46 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:46 [INFO] request: id=req-c2fcbc75a921db51 method=GET path=/api/setup/firstboot/status
+2026/01/04 21:13:46 [INFO] request: id=req-a52b1c382a4cfdd2 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:13:46 [INFO] firstboot: advanced to step 2 (language)
+2026/01/04 21:13:46 [INFO] request: id=req-65a27c8a121e1729 method=GET path=/api/setup/firstboot/status
+2026/01/04 21:13:46 [INFO] request: id=req-05c9327c3cc9cb5f method=POST path=/api/setup/firstboot/next
+2026/01/04 21:13:46 [INFO] firstboot: advanced to step 3 (ha_check)
+2026/01/04 21:13:46 [INFO] request: id=req-738647abfa48ed2c method=GET path=/api/setup/firstboot/status
+2026/01/04 21:13:46 [INFO] request: id=req-05ebd2fbda34a7b3 method=POST path=/api/setup/firstboot/back
+2026/01/04 21:13:46 [INFO] firstboot: returned to step 2 (language)
+2026/01/04 21:13:46 [INFO] request: id=req-41c4c6c632528d6e method=GET path=/api/setup/firstboot/status
+2026/01/04 21:13:46 [INFO] request: id=req-7fbe6e74961ccb5a method=POST path=/api/setup/firstboot/next
+2026/01/04 21:13:46 [INFO] firstboot: advanced to step 3 (ha_check)
+2026/01/04 21:13:46 [INFO] request: id=req-e4808dad9268798c method=GET path=/api/setup/firstboot/status
+2026/01/04 21:13:46 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:13:46 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:13:46 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:46 [INFO] platform detected: linux
+2026/01/04 21:13:46 [INFO] config: AI disabled
+2026/01/04 21:13:46 [INFO] config: Guest access disabled
+2026/01/04 21:13:46 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:13:46 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:46 [INFO] request: id=req-4cad68b9b1d48048 method=POST path=/api/setup/firstboot/complete
+2026/01/04 21:13:46 [INFO] error: id=req-4cad68b9b1d48048 code=bad_request msg=firstboot: must complete all steps before finishing
+2026/01/04 21:13:46 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:13:46 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:13:46 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:46 [INFO] platform detected: linux
+2026/01/04 21:13:46 [INFO] config: AI disabled
+2026/01/04 21:13:46 [INFO] config: Guest access disabled
+2026/01/04 21:13:46 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:13:46 [INFO] request: id=req-2310ce1d73c5e3df method=GET path=/api/ui/menu
+2026/01/04 21:13:46 [INFO] menu: resolved for role=admin (sections=6, first_boot=false, failsafe=false, guest_active=false)
+2026/01/04 21:13:46 [INFO] request: id=req-947c5306501edb11 method=GET path=/api/ui/settings
+2026/01/04 21:13:46 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:13:46 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:13:46 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:46 [INFO] platform detected: linux
+2026/01/04 21:13:46 [INFO] config: AI disabled
+2026/01/04 21:13:46 [INFO] config: Guest access disabled
+2026/01/04 21:13:46 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:13:46 [INFO] menu: role changed (admin → user)
+2026/01/04 21:13:46 [INFO] request: id=req-61b2f4d5ec3787d5 method=GET path=/api/ui/menu
+2026/01/04 21:13:46 [INFO] menu: resolved for role=user (sections=5, first_boot=false, failsafe=false, guest_active=false)
+2026/01/04 21:13:46 [INFO] request: id=req-e4d6e27531710165 method=GET path=/api/ui/settings
+2026/01/04 21:13:46 [INFO] error: id=req-e4d6e27531710165 code=forbidden msg=admin required
+2026/01/04 21:13:46 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:13:46 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:13:46 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:46 [INFO] platform detected: linux
+2026/01/04 21:13:46 [INFO] config: AI disabled
+2026/01/04 21:13:46 [INFO] config: Guest access disabled
+2026/01/04 21:13:46 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:13:46 [INFO] menu: role changed (admin → guest)
+2026/01/04 21:13:46 [INFO] request: id=req-7ba364446cd238ed method=GET path=/api/ui/menu
+2026/01/04 21:13:46 [INFO] menu: resolved for role=guest (sections=5, first_boot=false, failsafe=false, guest_active=false)
+2026/01/04 21:13:46 [INFO] request: id=req-a526b1006c327180 method=GET path=/api/ui/logbook
+2026/01/04 21:13:46 [INFO] logbook: entries retrieved by role guest (count: 0, filtered)
+2026/01/04 21:13:46 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:13:46 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:13:46 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:46 [INFO] platform detected: linux
+2026/01/04 21:13:46 [INFO] config: AI disabled
+2026/01/04 21:13:46 [INFO] config: Guest access disabled
+2026/01/04 21:13:46 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:13:46 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:46 [INFO] request: id=req-1ed85a6448f0221e method=GET path=/api/ui/menu
+2026/01/04 21:13:46 [INFO] menu: resolved for role=admin (sections=3, first_boot=true, failsafe=false, guest_active=false)
+2026/01/04 21:13:46 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:13:46 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:13:46 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:46 [INFO] platform detected: linux
+2026/01/04 21:13:46 [INFO] config: AI disabled
+2026/01/04 21:13:46 [INFO] config: Guest access disabled
+2026/01/04 21:13:46 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:13:46 [INFO] alarm countdown created
+2026/01/04 21:13:46 [INFO] request: id=req-71b92f54e357aeb0 method=GET path=/api/ui/alarm/state
+2026/01/04 21:13:46 [INFO] alarm: screen mode transition (disarmed → armed, trigger: alarm_state:ARMED)
+2026/01/04 21:13:46 [INFO] request: id=req-2a8e707ed91fdb14 method=POST path=/api/ui/guest/request
+2026/01/04 21:13:46 [INFO] guest: request initiated (guest_id: guest_unknown, request_id: req_1767557626)
+2026/01/04 21:13:46 [INFO] guest: state transition (guest_idle → guest_requesting)
+2026/01/04 21:13:46 [INFO] request: id=req-3c82a8170c11c072 method=GET path=/api/ui/alarm/state
+2026/01/04 21:13:46 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:13:46 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:13:46 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:46 [INFO] platform detected: linux
+2026/01/04 21:13:46 [INFO] config: AI disabled
+2026/01/04 21:13:46 [INFO] config: Guest access disabled
+2026/01/04 21:13:46 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:13:46 [INFO] alarm countdown created
+2026/01/04 21:13:46 [INFO] request: id=req-a2d2d2e6bd777c20 method=POST path=/api/ui/guest/request
+2026/01/04 21:13:46 [INFO] guest: request initiated (guest_id: guest_unknown, request_id: req_1767557626)
+2026/01/04 21:13:46 [INFO] guest: state transition (guest_idle → guest_requesting)
+2026/01/04 21:13:46 [INFO] request: id=req-da8d51bb4431a1cc method=POST path=/api/guest/approve
+2026/01/04 21:13:46 [ERROR] error: id=req-da8d51bb4431a1cc code=internal_error msg=guest approve error
+2026/01/04 21:13:46 [INFO] request: id=req-887fbf9216bb0c22 method=GET path=/api/ui/guest/state
+2026/01/04 21:13:46 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:13:46 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:13:46 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:46 [INFO] platform detected: linux
+2026/01/04 21:13:46 [INFO] config: AI disabled
+2026/01/04 21:13:46 [INFO] config: Guest access disabled
+2026/01/04 21:13:46 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:13:46 [INFO] alarm countdown created
+2026/01/04 21:13:46 [INFO] request: id=req-12012f341ed11947 method=POST path=/api/ui/guest/request
+2026/01/04 21:13:46 [INFO] guest: request initiated (guest_id: guest_unknown, request_id: req_1767557626)
+2026/01/04 21:13:46 [INFO] guest: state transition (guest_idle → guest_requesting)
+2026/01/04 21:13:46 [INFO] request: id=req-903554ece41aac1d method=POST path=/api/guest/approve
+2026/01/04 21:13:46 [ERROR] error: id=req-903554ece41aac1d code=internal_error msg=guest approve error
+2026/01/04 21:13:46 [INFO] request: id=req-22ea7499171c9780 method=POST path=/api/guest/exit
+2026/01/04 21:13:46 [INFO] guest: guest exited manually (guest_id: guest_unknown)
+2026/01/04 21:13:46 [INFO] guest: state transition (guest_requesting → guest_exit)
+2026/01/04 21:13:46 [INFO] request: id=req-643c6301f7a945a2 method=GET path=/api/ui/alarm/state
+2026/01/04 21:13:46 [INFO] alarm: screen mode transition (disarmed → armed, trigger: alarm_state:ARMED)
+2026/01/04 21:13:46 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:13:46 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:13:46 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:46 [INFO] platform detected: linux
+2026/01/04 21:13:46 [INFO] config: AI disabled
+2026/01/04 21:13:46 [INFO] config: Guest access disabled
+2026/01/04 21:13:46 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:13:46 [INFO] alarm countdown created
+2026/01/04 21:13:46 [INFO] request: id=req-01e8ca7d7742858c method=POST path=/api/ui/guest/request
+2026/01/04 21:13:46 [INFO] guest: request initiated (guest_id: guest_unknown, request_id: req_1767557626)
+2026/01/04 21:13:46 [INFO] guest: state transition (guest_idle → guest_requesting)
+2026/01/04 21:13:46 [INFO] request: id=req-f5dc0e75e7b61480 method=POST path=/api/guest/approve
+2026/01/04 21:13:46 [ERROR] error: id=req-f5dc0e75e7b61480 code=internal_error msg=guest approve error
+2026/01/04 21:13:46 [INFO] request: id=req-9d48b461a886916d method=GET path=/api/ui/alarm/state
+2026/01/04 21:13:46 [INFO] alarm: screen mode transition (disarmed → triggered, trigger: alarm_triggered)
+2026/01/04 21:13:46 [INFO] request: id=req-8b34fb613732afe8 method=POST path=/api/guest/exit
+2026/01/04 21:13:46 [INFO] guest: guest exited manually (guest_id: guest_unknown)
+2026/01/04 21:13:46 [INFO] guest: state transition (guest_requesting → guest_exit)
+2026/01/04 21:13:46 [INFO] request: id=req-355ab7e537cb1043 method=GET path=/api/ui/guest/state
+2026/01/04 21:13:46 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:13:46 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:13:46 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:46 [INFO] platform detected: linux
+2026/01/04 21:13:46 [INFO] config: AI disabled
+2026/01/04 21:13:46 [INFO] config: Guest access disabled
+2026/01/04 21:13:46 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:13:46 [INFO] request: id=req-2a33877fe5fee33b method=GET path=/api/ui/alarm/state
+2026/01/04 21:13:46 [INFO] alarm: screen mode transition (disarmed → arming, trigger: countdown_active)
+2026/01/04 21:13:46 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:13:46 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:13:46 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:13:46 [INFO] platform detected: linux
+2026/01/04 21:13:46 [INFO] config: AI disabled
+2026/01/04 21:13:46 [INFO] config: Guest access disabled
+2026/01/04 21:13:46 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:13:46 [INFO] request: id=req-cf4eaea69667414f method=GET path=/api/ui/alarm/state
+2026/01/04 21:13:46 [INFO] alarm: screen mode transition (disarmed → arming, trigger: countdown_active)
+2026/01/04 21:18:35 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:18:36 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] platform detected: linux
+2026/01/04 21:18:36 [INFO] config: AI disabled
+2026/01/04 21:18:36 [INFO] config: Guest access disabled
+2026/01/04 21:18:36 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:18:36 [INFO] request: id=req-164c7346a648148f method=GET path=/health
+2026/01/04 21:18:36 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:18:36 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] platform detected: linux
+2026/01/04 21:18:36 [INFO] config: AI disabled
+2026/01/04 21:18:36 [INFO] config: Guest access disabled
+2026/01/04 21:18:36 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:18:36 [INFO] request: id=req-8a2f51f65362a718 method=GET path=/api/admin/telemetry/optin
+2026/01/04 21:18:36 [INFO] error: id=req-8a2f51f65362a718 code=method_not_allowed msg=POST required
+2026/01/04 21:18:36 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:18:36 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] platform detected: linux
+2026/01/04 21:18:36 [INFO] config: AI disabled
+2026/01/04 21:18:36 [INFO] config: Guest access disabled
+2026/01/04 21:18:36 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:18:36 [INFO] request: id=req-ab5b9d8806996c97 method=GET path=/api/admin/telemetry/summary
+2026/01/04 21:18:36 [INFO] error: id=req-ab5b9d8806996c97 code=forbidden msg=admin required
+2026/01/04 21:18:36 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:18:36 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] platform detected: linux
+2026/01/04 21:18:36 [INFO] config: AI disabled
+2026/01/04 21:18:36 [INFO] config: Guest access disabled
+2026/01/04 21:18:36 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:18:36 [INFO] request: id=req-914cf1cdbcf3b612 method=GET path=/api/admin/telemetry/summary
+2026/01/04 21:18:36 [INFO] error: id=req-914cf1cdbcf3b612 code=forbidden msg=admin required
+2026/01/04 21:18:36 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:18:36 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] platform detected: linux
+2026/01/04 21:18:36 [INFO] config: AI disabled
+2026/01/04 21:18:36 [INFO] config: Guest access disabled
+2026/01/04 21:18:36 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:18:36 [INFO] request: id=req-3d70486cc2ce03eb method=GET path=/api/admin/telemetry/summary
+2026/01/04 21:18:36 [INFO] error: id=req-3d70486cc2ce03eb code=forbidden msg=admin required
+2026/01/04 21:18:36 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:18:36 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] platform detected: linux
+2026/01/04 21:18:36 [INFO] config: AI disabled
+2026/01/04 21:18:36 [INFO] config: Guest access disabled
+2026/01/04 21:18:36 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:18:36 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:18:36 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] platform detected: linux
+2026/01/04 21:18:36 [INFO] config: AI disabled
+2026/01/04 21:18:36 [INFO] config: Guest access disabled
+2026/01/04 21:18:36 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:18:36 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] platform detected: linux
+2026/01/04 21:18:36 [INFO] config: AI disabled
+2026/01/04 21:18:36 [INFO] config: Guest access disabled
+2026/01/04 21:18:36 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:18:36 [INFO] request: id=req-acb7b4d6b6567a21 method=GET path=/health
+2026/01/04 21:18:36 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:18:36 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] platform detected: linux
+2026/01/04 21:18:36 [INFO] config: AI disabled
+2026/01/04 21:18:36 [INFO] config: Guest access disabled
+2026/01/04 21:18:36 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:18:36 [INFO] request: id=req-730a68c5180cbb10 method=GET path=/health
+2026/01/04 21:18:36 [INFO] request: id=req-1ae4a9cec0836e4b method=GET path=/health
+2026/01/04 21:18:36 [INFO] request: id=req-ca44ecb86c413f7a method=GET path=/health
+2026/01/04 21:18:36 [INFO] request: id=req-63690a5febf8a66e method=GET path=/health
+2026/01/04 21:18:36 [INFO] request: id=req-dbad3e5e3998025d method=GET path=/health
+2026/01/04 21:18:36 [INFO] request: id=req-1612bf86b00b1dbd method=GET path=/health
+2026/01/04 21:18:36 [INFO] request: id=req-adbc6d40fc9dfb9a method=GET path=/health
+2026/01/04 21:18:36 [INFO] request: id=req-99488ad3157c8ed3 method=GET path=/health
+2026/01/04 21:18:36 [INFO] request: id=req-eecf4607c583ceb3 method=GET path=/health
+2026/01/04 21:18:36 [INFO] request: id=req-9a9d3c83a3e4d696 method=GET path=/health
+2026/01/04 21:18:36 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:18:36 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] platform detected: linux
+2026/01/04 21:18:36 [INFO] config: AI disabled
+2026/01/04 21:18:36 [INFO] config: Guest access disabled
+2026/01/04 21:18:36 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:18:36 [INFO] request: id=req-2e9d5b59dd4b52af method=GET path=/api/admin/smoke
+2026/01/04 21:18:36 [INFO] error: id=req-2e9d5b59dd4b52af code=method_not_allowed msg=POST required
+2026/01/04 21:18:36 [INFO] request: id=req-cd841ed7c05f610a method=GET path=/api/ui/home/state
+2026/01/04 21:18:36 [INFO] request: id=req-af3a597101c42277 method=GET path=/api/ui/home/state
+2026/01/04 21:18:36 [INFO] request: id=req-356ab06d7469c1dc method=GET path=/api/admin/telemetry/summary
+2026/01/04 21:18:36 [INFO] error: id=req-356ab06d7469c1dc code=forbidden msg=admin required
+2026/01/04 21:18:36 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:18:36 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] platform detected: linux
+2026/01/04 21:18:36 [INFO] config: AI disabled
+2026/01/04 21:18:36 [INFO] config: Guest access disabled
+2026/01/04 21:18:36 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] request: id=req-3932982ecdff7b3b method=GET path=/api/setup/firstboot/status
+2026/01/04 21:18:36 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:18:36 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] platform detected: linux
+2026/01/04 21:18:36 [INFO] config: AI disabled
+2026/01/04 21:18:36 [INFO] config: Guest access disabled
+2026/01/04 21:18:36 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] request: id=req-37d93ca2e403009e method=GET path=/api/ui/alarm/state
+2026/01/04 21:18:36 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:18:36 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] platform detected: linux
+2026/01/04 21:18:36 [INFO] config: AI disabled
+2026/01/04 21:18:36 [INFO] config: Guest access disabled
+2026/01/04 21:18:36 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] request: id=req-05a6228457bd820a method=GET path=/api/guest/status
+2026/01/04 21:18:36 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:18:36 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] platform detected: linux
+2026/01/04 21:18:36 [INFO] config: AI disabled
+2026/01/04 21:18:36 [INFO] config: Guest access disabled
+2026/01/04 21:18:36 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] request: id=req-549c65383be27153 method=GET path=/api/setup/firstboot/status
+2026/01/04 21:18:36 [INFO] request: id=req-30946e2e58b59574 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:18:36 [INFO] firstboot: advanced to step 2 (language)
+2026/01/04 21:18:36 [INFO] request: id=req-445d0e67eba4a6bd method=GET path=/api/setup/firstboot/status
+2026/01/04 21:18:36 [INFO] request: id=req-bf361bba0c9aec20 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:18:36 [INFO] firstboot: advanced to step 3 (ha_check)
+2026/01/04 21:18:36 [INFO] request: id=req-96abdfdb9c1b64a0 method=GET path=/api/setup/firstboot/status
+2026/01/04 21:18:36 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:18:36 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] platform detected: linux
+2026/01/04 21:18:36 [INFO] config: AI disabled
+2026/01/04 21:18:36 [INFO] config: Guest access disabled
+2026/01/04 21:18:36 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] request: id=req-e59ee37ab073daa5 method=POST path=/api/setup/firstboot/complete
+2026/01/04 21:18:36 [INFO] error: id=req-e59ee37ab073daa5 code=bad_request msg=firstboot: must complete all steps before finishing
+2026/01/04 21:18:36 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:18:36 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] platform detected: linux
+2026/01/04 21:18:36 [INFO] config: AI disabled
+2026/01/04 21:18:36 [INFO] config: Guest access disabled
+2026/01/04 21:18:36 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] request: id=req-3ea5faeaff716701 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:18:36 [INFO] firstboot: advanced to step 2 (language)
+2026/01/04 21:18:36 [INFO] request: id=req-8392b40a545d5b5a method=POST path=/api/setup/firstboot/next
+2026/01/04 21:18:36 [INFO] firstboot: advanced to step 3 (ha_check)
+2026/01/04 21:18:36 [INFO] request: id=req-159e9f5b88d7aef3 method=GET path=/api/setup/firstboot/status
+2026/01/04 21:18:36 [INFO] request: id=req-9b8861414ccacd7c method=POST path=/api/setup/firstboot/back
+2026/01/04 21:18:36 [INFO] firstboot: returned to step 2 (language)
+2026/01/04 21:18:36 [INFO] request: id=req-1a95975e695ef358 method=GET path=/api/setup/firstboot/status
+2026/01/04 21:18:36 [INFO] request: id=req-c5f363c870e7d7ce method=POST path=/api/setup/firstboot/back
+2026/01/04 21:18:36 [INFO] firstboot: returned to step 1 (welcome)
+2026/01/04 21:18:36 [INFO] request: id=req-97c0d07fde60a8b5 method=GET path=/api/setup/firstboot/status
+2026/01/04 21:18:36 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:18:36 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] platform detected: linux
+2026/01/04 21:18:36 [INFO] config: AI disabled
+2026/01/04 21:18:36 [INFO] config: Guest access disabled
+2026/01/04 21:18:36 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] request: id=req-9f7c48350fa90c4e method=POST path=/api/setup/firstboot/back
+2026/01/04 21:18:36 [INFO] error: id=req-9f7c48350fa90c4e code=bad_request msg=firstboot: already at first step
+2026/01/04 21:18:36 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:18:36 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] platform detected: linux
+2026/01/04 21:18:36 [INFO] config: AI disabled
+2026/01/04 21:18:36 [INFO] config: Guest access disabled
+2026/01/04 21:18:36 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] request: id=req-5e6272010d653d06 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:18:36 [INFO] firstboot: advanced to step 2 (language)
+2026/01/04 21:18:36 [INFO] request: id=req-4b0f0a3d684ce6b0 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:18:36 [INFO] firstboot: advanced to step 3 (ha_check)
+2026/01/04 21:18:36 [INFO] request: id=req-50680208243546ed method=POST path=/api/setup/firstboot/next
+2026/01/04 21:18:36 [INFO] firstboot: advanced to step 4 (alarm_role)
+2026/01/04 21:18:36 [INFO] request: id=req-0588cfec71b0111d method=POST path=/api/setup/firstboot/next
+2026/01/04 21:18:36 [INFO] firstboot: advanced to step 5 (ready)
+2026/01/04 21:18:36 [INFO] request: id=req-212eb32100a353a3 method=GET path=/api/setup/firstboot/status
+2026/01/04 21:18:36 [INFO] request: id=req-c5e266e77dcb44f8 method=POST path=/api/setup/firstboot/complete
+2026/01/04 21:18:36 [INFO] firstboot: wizard completed, exiting first-boot mode
+2026/01/04 21:18:36 [INFO] firstboot: wizard_completed flag saved to config
+2026/01/04 21:18:36 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:18:36 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] platform detected: linux
+2026/01/04 21:18:36 [INFO] config: AI disabled
+2026/01/04 21:18:36 [INFO] config: Guest access disabled
+2026/01/04 21:18:36 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] request: id=req-8557684561c260de method=POST path=/api/setup/firstboot/next
+2026/01/04 21:18:36 [INFO] firstboot: advanced to step 2 (language)
+2026/01/04 21:18:36 [INFO] request: id=req-8d357f4b18e63c5d method=POST path=/api/setup/firstboot/complete
+2026/01/04 21:18:36 [INFO] error: id=req-8d357f4b18e63c5d code=bad_request msg=firstboot: must complete all steps before finishing
+2026/01/04 21:18:36 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:18:36 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] platform detected: linux
+2026/01/04 21:18:36 [INFO] config: AI disabled
+2026/01/04 21:18:36 [INFO] config: Guest access disabled
+2026/01/04 21:18:36 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] request: id=req-346f6746a0592b60 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:18:36 [INFO] firstboot: advanced to step 2 (language)
+2026/01/04 21:18:36 [INFO] request: id=req-633fcdc1b80db989 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:18:36 [INFO] firstboot: advanced to step 3 (ha_check)
+2026/01/04 21:18:36 [INFO] request: id=req-926f476c820c78d5 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:18:36 [INFO] firstboot: advanced to step 4 (alarm_role)
+2026/01/04 21:18:36 [INFO] request: id=req-7345d33844299647 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:18:36 [INFO] firstboot: advanced to step 5 (ready)
+2026/01/04 21:18:36 [INFO] request: id=req-896aa75963864f28 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:18:36 [INFO] error: id=req-896aa75963864f28 code=bad_request msg=firstboot: already at final step
+2026/01/04 21:18:36 [INFO] request: id=req-fb48d7b6e0bdf8fa method=GET path=/api/setup/firstboot/status
+2026/01/04 21:18:36 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:18:36 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] platform detected: linux
+2026/01/04 21:18:36 [INFO] config: AI disabled
+2026/01/04 21:18:36 [INFO] config: Guest access disabled
+2026/01/04 21:18:36 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] request: id=req-6ee5cdd90eac3cc4 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:18:36 [INFO] firstboot: advanced to step 2 (language)
+2026/01/04 21:18:36 [INFO] request: id=req-93521dbe233a6e2d method=POST path=/api/setup/firstboot/next
+2026/01/04 21:18:36 [INFO] firstboot: advanced to step 3 (ha_check)
+2026/01/04 21:18:36 [INFO] request: id=req-71f47fe75b391a0a method=POST path=/api/setup/firstboot/next
+2026/01/04 21:18:36 [INFO] firstboot: advanced to step 4 (alarm_role)
+2026/01/04 21:18:36 [INFO] request: id=req-7f082a5350805c3e method=POST path=/api/setup/firstboot/next
+2026/01/04 21:18:36 [INFO] firstboot: advanced to step 5 (ready)
+2026/01/04 21:18:36 [INFO] request: id=req-12b27069db6dae93 method=POST path=/api/setup/firstboot/complete
+2026/01/04 21:18:36 [INFO] firstboot: wizard completed, exiting first-boot mode
+2026/01/04 21:18:36 [INFO] firstboot: wizard_completed flag saved to config
+2026/01/04 21:18:36 [INFO] request: id=req-e121b9ccddd09d04 method=POST path=/api/alarm/arm
+2026/01/04 21:18:36 [INFO] alarm countdown created
+2026/01/04 21:18:36 [INFO] request: id=req-bafa77bc70346843 method=GET path=/api/ui/home/state
+2026/01/04 21:18:36 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:18:36 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] platform detected: linux
+2026/01/04 21:18:36 [INFO] config: AI disabled
+2026/01/04 21:18:36 [INFO] config: Guest access disabled
+2026/01/04 21:18:36 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] request: id=req-91df9acf30d5c69d method=GET path=/api/setup/firstboot/status
+2026/01/04 21:18:36 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:18:36 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] platform detected: linux
+2026/01/04 21:18:36 [INFO] config: AI disabled
+2026/01/04 21:18:36 [INFO] config: Guest access disabled
+2026/01/04 21:18:36 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:18:36 [INFO] request: id=req-e013e5676348cfd2 method=GET path=/api/setup/firstboot/status
+2026/01/04 21:18:36 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:18:36 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] platform detected: linux
+2026/01/04 21:18:36 [INFO] config: AI disabled
+2026/01/04 21:18:36 [INFO] config: Guest access disabled
+2026/01/04 21:18:36 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] request: id=req-9d037df7b30e1a93 method=GET path=/api/setup/firstboot/status
+2026/01/04 21:18:36 [INFO] request: id=req-b73fbf6af4412a80 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:18:36 [INFO] firstboot: advanced to step 2 (language)
+2026/01/04 21:18:36 [INFO] request: id=req-637e8c903389923d method=GET path=/api/setup/firstboot/status
+2026/01/04 21:18:36 [INFO] request: id=req-0def0d6b3f66b55a method=POST path=/api/setup/firstboot/next
+2026/01/04 21:18:36 [INFO] firstboot: advanced to step 3 (ha_check)
+2026/01/04 21:18:36 [INFO] request: id=req-f5eeea98cadf35ef method=GET path=/api/setup/firstboot/status
+2026/01/04 21:18:36 [INFO] request: id=req-c375ae479bdfaaff method=POST path=/api/setup/firstboot/back
+2026/01/04 21:18:36 [INFO] firstboot: returned to step 2 (language)
+2026/01/04 21:18:36 [INFO] request: id=req-3fea0020a8ad6858 method=GET path=/api/setup/firstboot/status
+2026/01/04 21:18:36 [INFO] request: id=req-8f6fffa985ac5b2a method=POST path=/api/setup/firstboot/next
+2026/01/04 21:18:36 [INFO] firstboot: advanced to step 3 (ha_check)
+2026/01/04 21:18:36 [INFO] request: id=req-f302775c45b83e9f method=GET path=/api/setup/firstboot/status
+2026/01/04 21:18:36 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:18:36 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] platform detected: linux
+2026/01/04 21:18:36 [INFO] config: AI disabled
+2026/01/04 21:18:36 [INFO] config: Guest access disabled
+2026/01/04 21:18:36 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] request: id=req-0e7b43bbc8dea56c method=POST path=/api/setup/firstboot/complete
+2026/01/04 21:18:36 [INFO] error: id=req-0e7b43bbc8dea56c code=bad_request msg=firstboot: must complete all steps before finishing
+2026/01/04 21:18:36 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:18:36 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] platform detected: linux
+2026/01/04 21:18:36 [INFO] config: AI disabled
+2026/01/04 21:18:36 [INFO] config: Guest access disabled
+2026/01/04 21:18:36 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:18:36 [INFO] request: id=req-4af266e16a05d07b method=GET path=/api/ui/menu
+2026/01/04 21:18:36 [INFO] menu: resolved for role=admin (sections=6, first_boot=false, failsafe=false, guest_active=false)
+2026/01/04 21:18:36 [INFO] request: id=req-c8a12eb706a0383f method=GET path=/api/ui/settings
+2026/01/04 21:18:36 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:18:36 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] platform detected: linux
+2026/01/04 21:18:36 [INFO] config: AI disabled
+2026/01/04 21:18:36 [INFO] config: Guest access disabled
+2026/01/04 21:18:36 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:18:36 [INFO] menu: role changed (admin → user)
+2026/01/04 21:18:36 [INFO] request: id=req-745c084b830e354a method=GET path=/api/ui/menu
+2026/01/04 21:18:36 [INFO] menu: resolved for role=user (sections=5, first_boot=false, failsafe=false, guest_active=false)
+2026/01/04 21:18:36 [INFO] request: id=req-aa118dccccf2dbac method=GET path=/api/ui/settings
+2026/01/04 21:18:36 [INFO] error: id=req-aa118dccccf2dbac code=forbidden msg=admin required
+2026/01/04 21:18:36 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:18:36 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] platform detected: linux
+2026/01/04 21:18:36 [INFO] config: AI disabled
+2026/01/04 21:18:36 [INFO] config: Guest access disabled
+2026/01/04 21:18:36 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:18:36 [INFO] menu: role changed (admin → guest)
+2026/01/04 21:18:36 [INFO] request: id=req-a07810395920840b method=GET path=/api/ui/menu
+2026/01/04 21:18:36 [INFO] menu: resolved for role=guest (sections=5, first_boot=false, failsafe=false, guest_active=false)
+2026/01/04 21:18:36 [INFO] request: id=req-df608c24076f722c method=GET path=/api/ui/logbook
+2026/01/04 21:18:36 [INFO] logbook: entries retrieved by role guest (count: 0, filtered)
+2026/01/04 21:18:36 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:18:36 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] platform detected: linux
+2026/01/04 21:18:36 [INFO] config: AI disabled
+2026/01/04 21:18:36 [INFO] config: Guest access disabled
+2026/01/04 21:18:36 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] request: id=req-2da0f99ab39886f2 method=GET path=/api/ui/menu
+2026/01/04 21:18:36 [INFO] menu: resolved for role=admin (sections=3, first_boot=true, failsafe=false, guest_active=false)
+2026/01/04 21:18:36 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:18:36 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] platform detected: linux
+2026/01/04 21:18:36 [INFO] config: AI disabled
+2026/01/04 21:18:36 [INFO] config: Guest access disabled
+2026/01/04 21:18:36 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:18:36 [INFO] request: id=req-82a08022cc9884c8 method=GET path=/api/ui/alarm/state
+2026/01/04 21:18:36 [INFO] request: id=req-8950e4603bdbd5b4 method=POST path=/api/ui/guest/request
+2026/01/04 21:18:36 [INFO] guest: request initiated (guest_id: guest_unknown, request_id: req_1767557916)
+2026/01/04 21:18:36 [INFO] guest: state transition (guest_idle → guest_requesting)
+2026/01/04 21:18:36 [INFO] request: id=req-a4a3c94e6dfc845b method=GET path=/api/ui/alarm/state
+2026/01/04 21:18:36 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:18:36 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] platform detected: linux
+2026/01/04 21:18:36 [INFO] config: AI disabled
+2026/01/04 21:18:36 [INFO] config: Guest access disabled
+2026/01/04 21:18:36 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:18:36 [INFO] request: id=req-92a8419c05da1c9b method=POST path=/api/ui/guest/request
+2026/01/04 21:18:36 [INFO] guest: request initiated (guest_id: guest_unknown, request_id: req_1767557916)
+2026/01/04 21:18:36 [INFO] guest: state transition (guest_idle → guest_requesting)
+2026/01/04 21:18:36 [INFO] request: id=req-62bd335a9b041541 method=POST path=/api/guest/approve
+2026/01/04 21:18:36 [ERROR] error: id=req-62bd335a9b041541 code=internal_error msg=guest approve error
+2026/01/04 21:18:36 [INFO] request: id=req-90ef389d845643a4 method=GET path=/api/ui/guest/state
+2026/01/04 21:18:36 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:18:36 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] platform detected: linux
+2026/01/04 21:18:36 [INFO] config: AI disabled
+2026/01/04 21:18:36 [INFO] config: Guest access disabled
+2026/01/04 21:18:36 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:18:36 [INFO] alarm countdown created
+2026/01/04 21:18:36 [INFO] request: id=req-76753ff21b4f7e85 method=POST path=/api/ui/guest/request
+2026/01/04 21:18:36 [INFO] guest: request initiated (guest_id: guest_unknown, request_id: req_1767557916)
+2026/01/04 21:18:36 [INFO] guest: state transition (guest_idle → guest_requesting)
+2026/01/04 21:18:36 [INFO] request: id=req-4d84d56222fe0994 method=POST path=/api/guest/approve
+2026/01/04 21:18:36 [ERROR] error: id=req-4d84d56222fe0994 code=internal_error msg=guest approve error
+2026/01/04 21:18:36 [INFO] request: id=req-d5fefa29abe4eab2 method=POST path=/api/guest/exit
+2026/01/04 21:18:36 [INFO] guest: guest exited manually (guest_id: guest_unknown)
+2026/01/04 21:18:36 [INFO] guest: state transition (guest_requesting → guest_exit)
+2026/01/04 21:18:36 [INFO] request: id=req-afe4b493e51d7391 method=GET path=/api/ui/alarm/state
+2026/01/04 21:18:36 [INFO] alarm: screen mode transition (disarmed → armed, trigger: alarm_state:ARMED)
+2026/01/04 21:18:36 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:18:36 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] platform detected: linux
+2026/01/04 21:18:36 [INFO] config: AI disabled
+2026/01/04 21:18:36 [INFO] config: Guest access disabled
+2026/01/04 21:18:36 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:18:36 [INFO] alarm countdown created
+2026/01/04 21:18:36 [INFO] request: id=req-2cf8938d56d1a66f method=POST path=/api/ui/guest/request
+2026/01/04 21:18:36 [INFO] guest: request initiated (guest_id: guest_unknown, request_id: req_1767557916)
+2026/01/04 21:18:36 [INFO] guest: state transition (guest_idle → guest_requesting)
+2026/01/04 21:18:36 [INFO] request: id=req-24d15390ebaf263d method=POST path=/api/guest/approve
+2026/01/04 21:18:36 [ERROR] error: id=req-24d15390ebaf263d code=internal_error msg=guest approve error
+2026/01/04 21:18:36 [INFO] request: id=req-4454f1f4a3abb30e method=GET path=/api/ui/alarm/state
+2026/01/04 21:18:36 [INFO] alarm: screen mode transition (disarmed → triggered, trigger: alarm_triggered)
+2026/01/04 21:18:36 [INFO] request: id=req-602965a29dd03d09 method=POST path=/api/guest/exit
+2026/01/04 21:18:36 [INFO] guest: guest exited manually (guest_id: guest_unknown)
+2026/01/04 21:18:36 [INFO] guest: state transition (guest_requesting → guest_exit)
+2026/01/04 21:18:36 [INFO] request: id=req-64561222ff24abca method=GET path=/api/ui/guest/state
+2026/01/04 21:18:36 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:18:36 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] platform detected: linux
+2026/01/04 21:18:36 [INFO] config: AI disabled
+2026/01/04 21:18:36 [INFO] config: Guest access disabled
+2026/01/04 21:18:36 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:18:36 [INFO] request: id=req-5addb8b0e983e9d5 method=GET path=/api/ui/alarm/state
+2026/01/04 21:18:36 [INFO] alarm: screen mode transition (disarmed → arming, trigger: countdown_active)
+2026/01/04 21:18:36 [INFO] request: id=req-f604c65ca23f3ca9 method=GET path=/api/ui/alarm/state
+2026/01/04 21:18:36 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:18:36 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:18:36 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:18:36 [INFO] platform detected: linux
+2026/01/04 21:18:36 [INFO] config: AI disabled
+2026/01/04 21:18:36 [INFO] config: Guest access disabled
+2026/01/04 21:18:36 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:18:36 [INFO] request: id=req-e4fd5daa1508edff method=GET path=/api/ui/alarm/state
+2026/01/04 21:18:36 [INFO] alarm: screen mode transition (disarmed → arming, trigger: countdown_active)
+2026/01/04 21:19:49 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:19:49 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] platform detected: linux
+2026/01/04 21:19:49 [INFO] config: AI disabled
+2026/01/04 21:19:49 [INFO] config: Guest access disabled
+2026/01/04 21:19:49 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:19:49 [INFO] alarm countdown created
+2026/01/04 21:19:49 [INFO] request: id=req-fa8d8ccd466aca85 method=GET path=/health
+2026/01/04 21:19:49 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:19:49 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] platform detected: linux
+2026/01/04 21:19:49 [INFO] config: AI disabled
+2026/01/04 21:19:49 [INFO] config: Guest access disabled
+2026/01/04 21:19:49 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:19:49 [INFO] request: id=req-ed7ddc28843e7a89 method=GET path=/api/admin/telemetry/optin
+2026/01/04 21:19:49 [INFO] error: id=req-ed7ddc28843e7a89 code=method_not_allowed msg=POST required
+2026/01/04 21:19:49 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:19:49 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] platform detected: linux
+2026/01/04 21:19:49 [INFO] config: AI disabled
+2026/01/04 21:19:49 [INFO] config: Guest access disabled
+2026/01/04 21:19:49 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:19:49 [INFO] request: id=req-913256cffd33f81f method=GET path=/api/admin/telemetry/summary
+2026/01/04 21:19:49 [INFO] error: id=req-913256cffd33f81f code=forbidden msg=admin required
+2026/01/04 21:19:49 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:19:49 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] platform detected: linux
+2026/01/04 21:19:49 [INFO] config: AI disabled
+2026/01/04 21:19:49 [INFO] config: Guest access disabled
+2026/01/04 21:19:49 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:19:49 [INFO] request: id=req-fea892cf28c61b9b method=GET path=/api/admin/telemetry/summary
+2026/01/04 21:19:49 [INFO] error: id=req-fea892cf28c61b9b code=forbidden msg=admin required
+2026/01/04 21:19:49 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:19:49 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] platform detected: linux
+2026/01/04 21:19:49 [INFO] config: AI disabled
+2026/01/04 21:19:49 [INFO] config: Guest access disabled
+2026/01/04 21:19:49 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:19:49 [INFO] request: id=req-bfd6b0c6d8ea0e67 method=GET path=/api/admin/telemetry/summary
+2026/01/04 21:19:49 [INFO] error: id=req-bfd6b0c6d8ea0e67 code=forbidden msg=admin required
+2026/01/04 21:19:49 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:19:49 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] platform detected: linux
+2026/01/04 21:19:49 [INFO] config: AI disabled
+2026/01/04 21:19:49 [INFO] config: Guest access disabled
+2026/01/04 21:19:49 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:19:49 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:19:49 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] platform detected: linux
+2026/01/04 21:19:49 [INFO] config: AI disabled
+2026/01/04 21:19:49 [INFO] config: Guest access disabled
+2026/01/04 21:19:49 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:19:49 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] platform detected: linux
+2026/01/04 21:19:49 [INFO] config: AI disabled
+2026/01/04 21:19:49 [INFO] config: Guest access disabled
+2026/01/04 21:19:49 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:19:49 [INFO] request: id=req-e4cfb35c4eac09c0 method=GET path=/health
+2026/01/04 21:19:49 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:19:49 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] platform detected: linux
+2026/01/04 21:19:49 [INFO] config: AI disabled
+2026/01/04 21:19:49 [INFO] config: Guest access disabled
+2026/01/04 21:19:49 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:19:49 [INFO] request: id=req-91e4646792a40a07 method=GET path=/health
+2026/01/04 21:19:49 [INFO] request: id=req-116b6365aa66e919 method=GET path=/health
+2026/01/04 21:19:49 [INFO] request: id=req-64ae2d4a853903a6 method=GET path=/health
+2026/01/04 21:19:49 [INFO] request: id=req-c6477b45952e4ddb method=GET path=/health
+2026/01/04 21:19:49 [INFO] request: id=req-804290c314c09d37 method=GET path=/health
+2026/01/04 21:19:49 [INFO] request: id=req-bd22d30221e5df49 method=GET path=/health
+2026/01/04 21:19:49 [INFO] request: id=req-b2e69164b2bfc263 method=GET path=/health
+2026/01/04 21:19:49 [INFO] request: id=req-e8fdc5825f062674 method=GET path=/health
+2026/01/04 21:19:49 [INFO] request: id=req-f14a76b4f87e40a2 method=GET path=/health
+2026/01/04 21:19:49 [INFO] request: id=req-7a38fd15d1e69fca method=GET path=/health
+2026/01/04 21:19:49 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:19:49 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] platform detected: linux
+2026/01/04 21:19:49 [INFO] config: AI disabled
+2026/01/04 21:19:49 [INFO] config: Guest access disabled
+2026/01/04 21:19:49 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:19:49 [INFO] request: id=req-abf71784284cb531 method=GET path=/api/admin/smoke
+2026/01/04 21:19:49 [INFO] error: id=req-abf71784284cb531 code=method_not_allowed msg=POST required
+2026/01/04 21:19:49 [INFO] request: id=req-85f436ba80b6d44b method=GET path=/api/ui/home/state
+2026/01/04 21:19:49 [INFO] request: id=req-851b92a7b3a5ce0d method=GET path=/api/ui/home/state
+2026/01/04 21:19:49 [INFO] request: id=req-39861d522a525663 method=GET path=/api/admin/telemetry/summary
+2026/01/04 21:19:49 [INFO] error: id=req-39861d522a525663 code=forbidden msg=admin required
+2026/01/04 21:19:49 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:19:49 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] platform detected: linux
+2026/01/04 21:19:49 [INFO] config: AI disabled
+2026/01/04 21:19:49 [INFO] config: Guest access disabled
+2026/01/04 21:19:49 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] request: id=req-76c5e1f1cf8ca784 method=GET path=/api/setup/firstboot/status
+2026/01/04 21:19:49 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:19:49 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] platform detected: linux
+2026/01/04 21:19:49 [INFO] config: AI disabled
+2026/01/04 21:19:49 [INFO] config: Guest access disabled
+2026/01/04 21:19:49 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] request: id=req-ced23c21bba716ec method=GET path=/api/ui/alarm/state
+2026/01/04 21:19:49 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:19:49 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] platform detected: linux
+2026/01/04 21:19:49 [INFO] config: AI disabled
+2026/01/04 21:19:49 [INFO] config: Guest access disabled
+2026/01/04 21:19:49 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] request: id=req-877a1d9d064b0411 method=GET path=/api/guest/status
+2026/01/04 21:19:49 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:19:49 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] platform detected: linux
+2026/01/04 21:19:49 [INFO] config: AI disabled
+2026/01/04 21:19:49 [INFO] config: Guest access disabled
+2026/01/04 21:19:49 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] request: id=req-9f9a6b8d7b1ff16f method=GET path=/api/setup/firstboot/status
+2026/01/04 21:19:49 [INFO] request: id=req-abde80c3517a2367 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:19:49 [INFO] firstboot: advanced to step 2 (language)
+2026/01/04 21:19:49 [INFO] request: id=req-f5efe0685cdeee0c method=GET path=/api/setup/firstboot/status
+2026/01/04 21:19:49 [INFO] request: id=req-177e348679c89eee method=POST path=/api/setup/firstboot/next
+2026/01/04 21:19:49 [INFO] firstboot: advanced to step 3 (ha_check)
+2026/01/04 21:19:49 [INFO] request: id=req-09010407b2533141 method=GET path=/api/setup/firstboot/status
+2026/01/04 21:19:49 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:19:49 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] platform detected: linux
+2026/01/04 21:19:49 [INFO] config: AI disabled
+2026/01/04 21:19:49 [INFO] config: Guest access disabled
+2026/01/04 21:19:49 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] request: id=req-3663a5d732f1cd53 method=POST path=/api/setup/firstboot/complete
+2026/01/04 21:19:49 [INFO] error: id=req-3663a5d732f1cd53 code=bad_request msg=firstboot: must complete all steps before finishing
+2026/01/04 21:19:49 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:19:49 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] platform detected: linux
+2026/01/04 21:19:49 [INFO] config: AI disabled
+2026/01/04 21:19:49 [INFO] config: Guest access disabled
+2026/01/04 21:19:49 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] request: id=req-65947e47994613a5 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:19:49 [INFO] firstboot: advanced to step 2 (language)
+2026/01/04 21:19:49 [INFO] request: id=req-f7116133230a0895 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:19:49 [INFO] firstboot: advanced to step 3 (ha_check)
+2026/01/04 21:19:49 [INFO] request: id=req-7bb1205ff0ad1c00 method=GET path=/api/setup/firstboot/status
+2026/01/04 21:19:49 [INFO] request: id=req-9f6668b1056adc6b method=POST path=/api/setup/firstboot/back
+2026/01/04 21:19:49 [INFO] firstboot: returned to step 2 (language)
+2026/01/04 21:19:49 [INFO] request: id=req-2b8727c7d6f91f87 method=GET path=/api/setup/firstboot/status
+2026/01/04 21:19:49 [INFO] request: id=req-caf3acd533df23f3 method=POST path=/api/setup/firstboot/back
+2026/01/04 21:19:49 [INFO] firstboot: returned to step 1 (welcome)
+2026/01/04 21:19:49 [INFO] request: id=req-1bff05e2c9705f7b method=GET path=/api/setup/firstboot/status
+2026/01/04 21:19:49 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:19:49 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] platform detected: linux
+2026/01/04 21:19:49 [INFO] config: AI disabled
+2026/01/04 21:19:49 [INFO] config: Guest access disabled
+2026/01/04 21:19:49 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] request: id=req-61840d694ffcbdb4 method=POST path=/api/setup/firstboot/back
+2026/01/04 21:19:49 [INFO] error: id=req-61840d694ffcbdb4 code=bad_request msg=firstboot: already at first step
+2026/01/04 21:19:49 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:19:49 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] platform detected: linux
+2026/01/04 21:19:49 [INFO] config: AI disabled
+2026/01/04 21:19:49 [INFO] config: Guest access disabled
+2026/01/04 21:19:49 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] request: id=req-487d1e1c9e325333 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:19:49 [INFO] firstboot: advanced to step 2 (language)
+2026/01/04 21:19:49 [INFO] request: id=req-640fc15facc37dee method=POST path=/api/setup/firstboot/next
+2026/01/04 21:19:49 [INFO] firstboot: advanced to step 3 (ha_check)
+2026/01/04 21:19:49 [INFO] request: id=req-a1f99e8de8e460bc method=POST path=/api/setup/firstboot/next
+2026/01/04 21:19:49 [INFO] firstboot: advanced to step 4 (alarm_role)
+2026/01/04 21:19:49 [INFO] request: id=req-d12daf0ac3b5763a method=POST path=/api/setup/firstboot/next
+2026/01/04 21:19:49 [INFO] firstboot: advanced to step 5 (ready)
+2026/01/04 21:19:49 [INFO] request: id=req-980e79446653c980 method=GET path=/api/setup/firstboot/status
+2026/01/04 21:19:49 [INFO] request: id=req-7bd67dd5c4e9f268 method=POST path=/api/setup/firstboot/complete
+2026/01/04 21:19:49 [INFO] firstboot: wizard completed, exiting first-boot mode
+2026/01/04 21:19:49 [INFO] firstboot: wizard_completed flag saved to config
+2026/01/04 21:19:49 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:19:49 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] platform detected: linux
+2026/01/04 21:19:49 [INFO] config: AI disabled
+2026/01/04 21:19:49 [INFO] config: Guest access disabled
+2026/01/04 21:19:49 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] request: id=req-2c9fd82d34cc3a29 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:19:49 [INFO] firstboot: advanced to step 2 (language)
+2026/01/04 21:19:49 [INFO] request: id=req-76b46bc968d8f141 method=POST path=/api/setup/firstboot/complete
+2026/01/04 21:19:49 [INFO] error: id=req-76b46bc968d8f141 code=bad_request msg=firstboot: must complete all steps before finishing
+2026/01/04 21:19:49 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:19:49 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] platform detected: linux
+2026/01/04 21:19:49 [INFO] config: AI disabled
+2026/01/04 21:19:49 [INFO] config: Guest access disabled
+2026/01/04 21:19:49 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] request: id=req-71d0adf59576c82f method=POST path=/api/setup/firstboot/next
+2026/01/04 21:19:49 [INFO] firstboot: advanced to step 2 (language)
+2026/01/04 21:19:49 [INFO] request: id=req-ada5951be7ce7ada method=POST path=/api/setup/firstboot/next
+2026/01/04 21:19:49 [INFO] firstboot: advanced to step 3 (ha_check)
+2026/01/04 21:19:49 [INFO] request: id=req-9c753524e097c0a2 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:19:49 [INFO] firstboot: advanced to step 4 (alarm_role)
+2026/01/04 21:19:49 [INFO] request: id=req-26fc7e6ddb82c065 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:19:49 [INFO] firstboot: advanced to step 5 (ready)
+2026/01/04 21:19:49 [INFO] request: id=req-fa52eae43c82e044 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:19:49 [INFO] error: id=req-fa52eae43c82e044 code=bad_request msg=firstboot: already at final step
+2026/01/04 21:19:49 [INFO] request: id=req-f4d0514167407623 method=GET path=/api/setup/firstboot/status
+2026/01/04 21:19:49 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:19:49 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] platform detected: linux
+2026/01/04 21:19:49 [INFO] config: AI disabled
+2026/01/04 21:19:49 [INFO] config: Guest access disabled
+2026/01/04 21:19:49 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] request: id=req-5465cd7af17c2361 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:19:49 [INFO] firstboot: advanced to step 2 (language)
+2026/01/04 21:19:49 [INFO] request: id=req-3fb9a7f63763d908 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:19:49 [INFO] firstboot: advanced to step 3 (ha_check)
+2026/01/04 21:19:49 [INFO] request: id=req-32d01454adb2f7d9 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:19:49 [INFO] firstboot: advanced to step 4 (alarm_role)
+2026/01/04 21:19:49 [INFO] request: id=req-caad47835bc46400 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:19:49 [INFO] firstboot: advanced to step 5 (ready)
+2026/01/04 21:19:49 [INFO] request: id=req-4dfb0c8208d47ba7 method=POST path=/api/setup/firstboot/complete
+2026/01/04 21:19:49 [INFO] firstboot: wizard completed, exiting first-boot mode
+2026/01/04 21:19:49 [INFO] firstboot: wizard_completed flag saved to config
+2026/01/04 21:19:49 [INFO] request: id=req-15ce1d8294eb0b99 method=POST path=/api/alarm/arm
+2026/01/04 21:19:49 [INFO] alarm countdown created
+2026/01/04 21:19:49 [INFO] request: id=req-8c0ff8a4cb73a8be method=GET path=/api/ui/home/state
+2026/01/04 21:19:49 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:19:49 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] platform detected: linux
+2026/01/04 21:19:49 [INFO] config: AI disabled
+2026/01/04 21:19:49 [INFO] config: Guest access disabled
+2026/01/04 21:19:49 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] request: id=req-a4303a27efa7f518 method=GET path=/api/setup/firstboot/status
+2026/01/04 21:19:49 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:19:49 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] platform detected: linux
+2026/01/04 21:19:49 [INFO] config: AI disabled
+2026/01/04 21:19:49 [INFO] config: Guest access disabled
+2026/01/04 21:19:49 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:19:49 [INFO] request: id=req-8ebfc4b0ee0aacb1 method=GET path=/api/setup/firstboot/status
+2026/01/04 21:19:49 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:19:49 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] platform detected: linux
+2026/01/04 21:19:49 [INFO] config: AI disabled
+2026/01/04 21:19:49 [INFO] config: Guest access disabled
+2026/01/04 21:19:49 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] request: id=req-56ba259ccbffdf1f method=GET path=/api/setup/firstboot/status
+2026/01/04 21:19:49 [INFO] request: id=req-2cf538e23d682e8c method=POST path=/api/setup/firstboot/next
+2026/01/04 21:19:49 [INFO] firstboot: advanced to step 2 (language)
+2026/01/04 21:19:49 [INFO] request: id=req-c7dde415fd324ab5 method=GET path=/api/setup/firstboot/status
+2026/01/04 21:19:49 [INFO] request: id=req-be1bd7b0285870b9 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:19:49 [INFO] firstboot: advanced to step 3 (ha_check)
+2026/01/04 21:19:49 [INFO] request: id=req-1ce4e5b750f637c1 method=GET path=/api/setup/firstboot/status
+2026/01/04 21:19:49 [INFO] request: id=req-4e823446a0bf3c34 method=POST path=/api/setup/firstboot/back
+2026/01/04 21:19:49 [INFO] firstboot: returned to step 2 (language)
+2026/01/04 21:19:49 [INFO] request: id=req-6d0a1148b5997ad1 method=GET path=/api/setup/firstboot/status
+2026/01/04 21:19:49 [INFO] request: id=req-f4a1b6a5492a769e method=POST path=/api/setup/firstboot/next
+2026/01/04 21:19:49 [INFO] firstboot: advanced to step 3 (ha_check)
+2026/01/04 21:19:49 [INFO] request: id=req-01a2363673fca436 method=GET path=/api/setup/firstboot/status
+2026/01/04 21:19:49 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:19:49 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] platform detected: linux
+2026/01/04 21:19:49 [INFO] config: AI disabled
+2026/01/04 21:19:49 [INFO] config: Guest access disabled
+2026/01/04 21:19:49 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] request: id=req-aa298a31a9a72456 method=POST path=/api/setup/firstboot/complete
+2026/01/04 21:19:49 [INFO] error: id=req-aa298a31a9a72456 code=bad_request msg=firstboot: must complete all steps before finishing
+2026/01/04 21:19:49 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:19:49 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] platform detected: linux
+2026/01/04 21:19:49 [INFO] config: AI disabled
+2026/01/04 21:19:49 [INFO] config: Guest access disabled
+2026/01/04 21:19:49 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:19:49 [INFO] request: id=req-6baa2b3d2fe45dd5 method=GET path=/api/ui/menu
+2026/01/04 21:19:49 [INFO] menu: resolved for role=admin (sections=6, first_boot=false, failsafe=false, guest_active=false)
+2026/01/04 21:19:49 [INFO] request: id=req-7d033fad7723f5c5 method=GET path=/api/ui/settings
+2026/01/04 21:19:49 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:19:49 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] platform detected: linux
+2026/01/04 21:19:49 [INFO] config: AI disabled
+2026/01/04 21:19:49 [INFO] config: Guest access disabled
+2026/01/04 21:19:49 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:19:49 [INFO] menu: role changed (admin → user)
+2026/01/04 21:19:49 [INFO] request: id=req-db11991fb2678d02 method=GET path=/api/ui/menu
+2026/01/04 21:19:49 [INFO] menu: resolved for role=user (sections=5, first_boot=false, failsafe=false, guest_active=false)
+2026/01/04 21:19:49 [INFO] request: id=req-fe500d456aa56bf3 method=GET path=/api/ui/settings
+2026/01/04 21:19:49 [INFO] error: id=req-fe500d456aa56bf3 code=forbidden msg=admin required
+2026/01/04 21:19:49 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:19:49 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] platform detected: linux
+2026/01/04 21:19:49 [INFO] config: AI disabled
+2026/01/04 21:19:49 [INFO] config: Guest access disabled
+2026/01/04 21:19:49 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:19:49 [INFO] menu: role changed (admin → guest)
+2026/01/04 21:19:49 [INFO] request: id=req-c9b608880ae812af method=GET path=/api/ui/menu
+2026/01/04 21:19:49 [INFO] menu: resolved for role=guest (sections=5, first_boot=false, failsafe=false, guest_active=false)
+2026/01/04 21:19:49 [INFO] request: id=req-8f0fab0fe13fad6d method=GET path=/api/ui/logbook
+2026/01/04 21:19:49 [INFO] logbook: entries retrieved by role guest (count: 0, filtered)
+2026/01/04 21:19:49 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:19:49 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] platform detected: linux
+2026/01/04 21:19:49 [INFO] config: AI disabled
+2026/01/04 21:19:49 [INFO] config: Guest access disabled
+2026/01/04 21:19:49 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] request: id=req-ea870978c94f9414 method=GET path=/api/ui/menu
+2026/01/04 21:19:49 [INFO] menu: resolved for role=admin (sections=3, first_boot=true, failsafe=false, guest_active=false)
+2026/01/04 21:19:49 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:19:49 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] platform detected: linux
+2026/01/04 21:19:49 [INFO] config: AI disabled
+2026/01/04 21:19:49 [INFO] config: Guest access disabled
+2026/01/04 21:19:49 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:19:49 [INFO] request: id=req-f4130c73d6b05020 method=GET path=/api/ui/alarm/state
+2026/01/04 21:19:49 [INFO] request: id=req-acd96f639dfd12e2 method=POST path=/api/ui/guest/request
+2026/01/04 21:19:49 [INFO] guest: request initiated (guest_id: guest_unknown, request_id: req_1767557989)
+2026/01/04 21:19:49 [INFO] guest: state transition (guest_idle → guest_requesting)
+2026/01/04 21:19:49 [INFO] request: id=req-b767760a9460cdd4 method=GET path=/api/ui/alarm/state
+2026/01/04 21:19:49 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:19:49 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] platform detected: linux
+2026/01/04 21:19:49 [INFO] config: AI disabled
+2026/01/04 21:19:49 [INFO] config: Guest access disabled
+2026/01/04 21:19:49 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:19:49 [INFO] alarm countdown created
+2026/01/04 21:19:49 [INFO] request: id=req-b7c66db076c5c232 method=POST path=/api/ui/guest/request
+2026/01/04 21:19:49 [INFO] guest: request initiated (guest_id: guest_unknown, request_id: req_1767557989)
+2026/01/04 21:19:49 [INFO] guest: state transition (guest_idle → guest_requesting)
+2026/01/04 21:19:49 [INFO] request: id=req-f329d49c20ca0724 method=POST path=/api/guest/approve
+2026/01/04 21:19:49 [ERROR] error: id=req-f329d49c20ca0724 code=internal_error msg=guest approve error
+2026/01/04 21:19:49 [INFO] request: id=req-3f4101ac79e82bc7 method=GET path=/api/ui/guest/state
+2026/01/04 21:19:49 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:19:49 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] platform detected: linux
+2026/01/04 21:19:49 [INFO] config: AI disabled
+2026/01/04 21:19:49 [INFO] config: Guest access disabled
+2026/01/04 21:19:49 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:19:49 [INFO] alarm countdown created
+2026/01/04 21:19:49 [INFO] request: id=req-68f406c4bcb16851 method=POST path=/api/ui/guest/request
+2026/01/04 21:19:49 [INFO] guest: request initiated (guest_id: guest_unknown, request_id: req_1767557989)
+2026/01/04 21:19:49 [INFO] guest: state transition (guest_idle → guest_requesting)
+2026/01/04 21:19:49 [INFO] request: id=req-8064e2e99cb35a01 method=POST path=/api/guest/approve
+2026/01/04 21:19:49 [ERROR] error: id=req-8064e2e99cb35a01 code=internal_error msg=guest approve error
+2026/01/04 21:19:49 [INFO] request: id=req-e0209b194bb80ce2 method=POST path=/api/guest/exit
+2026/01/04 21:19:49 [INFO] guest: guest exited manually (guest_id: guest_unknown)
+2026/01/04 21:19:49 [INFO] guest: state transition (guest_requesting → guest_exit)
+2026/01/04 21:19:49 [INFO] request: id=req-db0d01bb3e3b8a72 method=GET path=/api/ui/alarm/state
+2026/01/04 21:19:49 [INFO] alarm: screen mode transition (disarmed → armed, trigger: alarm_state:ARMED)
+2026/01/04 21:19:49 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:19:49 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] platform detected: linux
+2026/01/04 21:19:49 [INFO] config: AI disabled
+2026/01/04 21:19:49 [INFO] config: Guest access disabled
+2026/01/04 21:19:49 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:19:49 [INFO] alarm countdown created
+2026/01/04 21:19:49 [INFO] request: id=req-79dd6e97b4fd6b7a method=POST path=/api/ui/guest/request
+2026/01/04 21:19:49 [INFO] guest: request initiated (guest_id: guest_unknown, request_id: req_1767557989)
+2026/01/04 21:19:49 [INFO] guest: state transition (guest_idle → guest_requesting)
+2026/01/04 21:19:49 [INFO] request: id=req-2dbfe833e50f512f method=POST path=/api/guest/approve
+2026/01/04 21:19:49 [ERROR] error: id=req-2dbfe833e50f512f code=internal_error msg=guest approve error
+2026/01/04 21:19:49 [INFO] request: id=req-714ec1f0a420f498 method=GET path=/api/ui/alarm/state
+2026/01/04 21:19:49 [INFO] alarm: screen mode transition (disarmed → triggered, trigger: alarm_triggered)
+2026/01/04 21:19:49 [INFO] request: id=req-a92df48f745e86cd method=POST path=/api/guest/exit
+2026/01/04 21:19:49 [INFO] guest: guest exited manually (guest_id: guest_unknown)
+2026/01/04 21:19:49 [INFO] guest: state transition (guest_requesting → guest_exit)
+2026/01/04 21:19:49 [INFO] request: id=req-e96dd405b0effcb9 method=GET path=/api/ui/guest/state
+2026/01/04 21:19:49 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:19:49 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] platform detected: linux
+2026/01/04 21:19:49 [INFO] config: AI disabled
+2026/01/04 21:19:49 [INFO] config: Guest access disabled
+2026/01/04 21:19:49 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:19:49 [INFO] request: id=req-c4c908cecdc85494 method=GET path=/api/ui/alarm/state
+2026/01/04 21:19:49 [INFO] alarm: screen mode transition (disarmed → arming, trigger: countdown_active)
+2026/01/04 21:19:49 [INFO] request: id=req-d5f27292c870489f method=GET path=/api/ui/alarm/state
+2026/01/04 21:19:49 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:19:49 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:19:49 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:19:49 [INFO] platform detected: linux
+2026/01/04 21:19:49 [INFO] config: AI disabled
+2026/01/04 21:19:49 [INFO] config: Guest access disabled
+2026/01/04 21:19:49 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:19:49 [INFO] request: id=req-7374faeeeaf28081 method=GET path=/api/ui/alarm/state
+2026/01/04 21:19:49 [INFO] alarm: screen mode transition (disarmed → arming, trigger: countdown_active)
+2026/01/04 21:20:43 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:20:43 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] platform detected: linux
+2026/01/04 21:20:43 [INFO] config: AI disabled
+2026/01/04 21:20:43 [INFO] config: Guest access disabled
+2026/01/04 21:20:43 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:20:43 [INFO] alarm countdown created
+2026/01/04 21:20:43 [INFO] request: id=req-db0533c8025988b3 method=GET path=/health
+2026/01/04 21:20:43 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:20:43 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] platform detected: linux
+2026/01/04 21:20:43 [INFO] config: AI disabled
+2026/01/04 21:20:43 [INFO] config: Guest access disabled
+2026/01/04 21:20:43 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:20:43 [INFO] request: id=req-303930dc0bfb2a40 method=GET path=/api/admin/telemetry/optin
+2026/01/04 21:20:43 [INFO] error: id=req-303930dc0bfb2a40 code=method_not_allowed msg=POST required
+2026/01/04 21:20:43 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:20:43 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] platform detected: linux
+2026/01/04 21:20:43 [INFO] config: AI disabled
+2026/01/04 21:20:43 [INFO] config: Guest access disabled
+2026/01/04 21:20:43 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:20:43 [INFO] request: id=req-5c461e15149bc2c4 method=GET path=/api/admin/telemetry/summary
+2026/01/04 21:20:43 [INFO] error: id=req-5c461e15149bc2c4 code=forbidden msg=admin required
+2026/01/04 21:20:43 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:20:43 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] platform detected: linux
+2026/01/04 21:20:43 [INFO] config: AI disabled
+2026/01/04 21:20:43 [INFO] config: Guest access disabled
+2026/01/04 21:20:43 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:20:43 [INFO] request: id=req-5d513d934641b9dd method=GET path=/api/admin/telemetry/summary
+2026/01/04 21:20:43 [INFO] error: id=req-5d513d934641b9dd code=forbidden msg=admin required
+2026/01/04 21:20:43 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:20:43 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] platform detected: linux
+2026/01/04 21:20:43 [INFO] config: AI disabled
+2026/01/04 21:20:43 [INFO] config: Guest access disabled
+2026/01/04 21:20:43 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:20:43 [INFO] request: id=req-82a3c09755cf6826 method=GET path=/api/admin/telemetry/summary
+2026/01/04 21:20:43 [INFO] error: id=req-82a3c09755cf6826 code=forbidden msg=admin required
+2026/01/04 21:20:43 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:20:43 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] platform detected: linux
+2026/01/04 21:20:43 [INFO] config: AI disabled
+2026/01/04 21:20:43 [INFO] config: Guest access disabled
+2026/01/04 21:20:43 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:20:43 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:20:43 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] platform detected: linux
+2026/01/04 21:20:43 [INFO] config: AI disabled
+2026/01/04 21:20:43 [INFO] config: Guest access disabled
+2026/01/04 21:20:43 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:20:43 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] platform detected: linux
+2026/01/04 21:20:43 [INFO] config: AI disabled
+2026/01/04 21:20:43 [INFO] config: Guest access disabled
+2026/01/04 21:20:43 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:20:43 [INFO] request: id=req-ad424e3d7368956d method=GET path=/health
+2026/01/04 21:20:43 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:20:43 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] platform detected: linux
+2026/01/04 21:20:43 [INFO] config: AI disabled
+2026/01/04 21:20:43 [INFO] config: Guest access disabled
+2026/01/04 21:20:43 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:20:43 [INFO] request: id=req-9f197d0e85a7b2a8 method=GET path=/health
+2026/01/04 21:20:43 [INFO] request: id=req-0024a0f7284d89df method=GET path=/health
+2026/01/04 21:20:43 [INFO] request: id=req-e9bb85ff3fb08280 method=GET path=/health
+2026/01/04 21:20:43 [INFO] request: id=req-5438a980425312cd method=GET path=/health
+2026/01/04 21:20:43 [INFO] request: id=req-99b57f0f30a80e05 method=GET path=/health
+2026/01/04 21:20:43 [INFO] request: id=req-f9a4e6c2441f7204 method=GET path=/health
+2026/01/04 21:20:43 [INFO] request: id=req-ebb8c48ea933be8a method=GET path=/health
+2026/01/04 21:20:43 [INFO] request: id=req-78149877e7ce242e method=GET path=/health
+2026/01/04 21:20:43 [INFO] request: id=req-7a1b09ba325013c5 method=GET path=/health
+2026/01/04 21:20:43 [INFO] request: id=req-36bdf51ede0b6d0d method=GET path=/health
+2026/01/04 21:20:43 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:20:43 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] platform detected: linux
+2026/01/04 21:20:43 [INFO] config: AI disabled
+2026/01/04 21:20:43 [INFO] config: Guest access disabled
+2026/01/04 21:20:43 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:20:43 [INFO] request: id=req-24487b7a9ae54ad1 method=GET path=/api/admin/smoke
+2026/01/04 21:20:43 [INFO] error: id=req-24487b7a9ae54ad1 code=method_not_allowed msg=POST required
+2026/01/04 21:20:43 [INFO] request: id=req-629d1227e636490a method=GET path=/api/ui/home/state
+2026/01/04 21:20:43 [INFO] request: id=req-d7b1be66c784ee21 method=GET path=/api/ui/home/state
+2026/01/04 21:20:43 [INFO] request: id=req-595c8a086b76331c method=GET path=/api/admin/telemetry/summary
+2026/01/04 21:20:43 [INFO] error: id=req-595c8a086b76331c code=forbidden msg=admin required
+2026/01/04 21:20:43 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:20:43 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] platform detected: linux
+2026/01/04 21:20:43 [INFO] config: AI disabled
+2026/01/04 21:20:43 [INFO] config: Guest access disabled
+2026/01/04 21:20:43 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] request: id=req-594d97e846a39504 method=GET path=/api/setup/firstboot/status
+2026/01/04 21:20:43 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:20:43 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] platform detected: linux
+2026/01/04 21:20:43 [INFO] config: AI disabled
+2026/01/04 21:20:43 [INFO] config: Guest access disabled
+2026/01/04 21:20:43 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] request: id=req-94555ce51eac48a9 method=GET path=/api/ui/alarm/state
+2026/01/04 21:20:43 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:20:43 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] platform detected: linux
+2026/01/04 21:20:43 [INFO] config: AI disabled
+2026/01/04 21:20:43 [INFO] config: Guest access disabled
+2026/01/04 21:20:43 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] request: id=req-873cf199e6363d14 method=GET path=/api/guest/status
+2026/01/04 21:20:43 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:20:43 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] platform detected: linux
+2026/01/04 21:20:43 [INFO] config: AI disabled
+2026/01/04 21:20:43 [INFO] config: Guest access disabled
+2026/01/04 21:20:43 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] request: id=req-c3dbfe108a327c8d method=GET path=/api/setup/firstboot/status
+2026/01/04 21:20:43 [INFO] request: id=req-13c687cf1715f766 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:20:43 [INFO] firstboot: advanced to step 2 (language)
+2026/01/04 21:20:43 [INFO] request: id=req-2ff4097f012833ef method=GET path=/api/setup/firstboot/status
+2026/01/04 21:20:43 [INFO] request: id=req-cc41556e506bf638 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:20:43 [INFO] firstboot: advanced to step 3 (ha_check)
+2026/01/04 21:20:43 [INFO] request: id=req-f584e9159265b75b method=GET path=/api/setup/firstboot/status
+2026/01/04 21:20:43 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:20:43 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] platform detected: linux
+2026/01/04 21:20:43 [INFO] config: AI disabled
+2026/01/04 21:20:43 [INFO] config: Guest access disabled
+2026/01/04 21:20:43 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] request: id=req-eed617a9bb9f73b1 method=POST path=/api/setup/firstboot/complete
+2026/01/04 21:20:43 [INFO] error: id=req-eed617a9bb9f73b1 code=bad_request msg=firstboot: must complete all steps before finishing
+2026/01/04 21:20:43 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:20:43 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] platform detected: linux
+2026/01/04 21:20:43 [INFO] config: AI disabled
+2026/01/04 21:20:43 [INFO] config: Guest access disabled
+2026/01/04 21:20:43 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] request: id=req-1f9b0296c9b200e3 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:20:43 [INFO] firstboot: advanced to step 2 (language)
+2026/01/04 21:20:43 [INFO] request: id=req-a9ec0169cee19bf8 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:20:43 [INFO] firstboot: advanced to step 3 (ha_check)
+2026/01/04 21:20:43 [INFO] request: id=req-d7a338bc5547b676 method=GET path=/api/setup/firstboot/status
+2026/01/04 21:20:43 [INFO] request: id=req-7c6cdf644fddf5bf method=POST path=/api/setup/firstboot/back
+2026/01/04 21:20:43 [INFO] firstboot: returned to step 2 (language)
+2026/01/04 21:20:43 [INFO] request: id=req-a965bbce13bdae6d method=GET path=/api/setup/firstboot/status
+2026/01/04 21:20:43 [INFO] request: id=req-0b9b407cfc9bf774 method=POST path=/api/setup/firstboot/back
+2026/01/04 21:20:43 [INFO] firstboot: returned to step 1 (welcome)
+2026/01/04 21:20:43 [INFO] request: id=req-4c7b21e2f6b04b21 method=GET path=/api/setup/firstboot/status
+2026/01/04 21:20:43 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:20:43 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] platform detected: linux
+2026/01/04 21:20:43 [INFO] config: AI disabled
+2026/01/04 21:20:43 [INFO] config: Guest access disabled
+2026/01/04 21:20:43 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] request: id=req-7c28cb239d2f64a4 method=POST path=/api/setup/firstboot/back
+2026/01/04 21:20:43 [INFO] error: id=req-7c28cb239d2f64a4 code=bad_request msg=firstboot: already at first step
+2026/01/04 21:20:43 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:20:43 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] platform detected: linux
+2026/01/04 21:20:43 [INFO] config: AI disabled
+2026/01/04 21:20:43 [INFO] config: Guest access disabled
+2026/01/04 21:20:43 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] request: id=req-ba0b41cf752e718b method=POST path=/api/setup/firstboot/next
+2026/01/04 21:20:43 [INFO] firstboot: advanced to step 2 (language)
+2026/01/04 21:20:43 [INFO] request: id=req-54660ea14d6952df method=POST path=/api/setup/firstboot/next
+2026/01/04 21:20:43 [INFO] firstboot: advanced to step 3 (ha_check)
+2026/01/04 21:20:43 [INFO] request: id=req-48dab99afb276b03 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:20:43 [INFO] firstboot: advanced to step 4 (alarm_role)
+2026/01/04 21:20:43 [INFO] request: id=req-759d8ad4cc0fe6ac method=POST path=/api/setup/firstboot/next
+2026/01/04 21:20:43 [INFO] firstboot: advanced to step 5 (ready)
+2026/01/04 21:20:43 [INFO] request: id=req-3b83df31faac844d method=GET path=/api/setup/firstboot/status
+2026/01/04 21:20:43 [INFO] request: id=req-c8d9593a99c35d85 method=POST path=/api/setup/firstboot/complete
+2026/01/04 21:20:43 [INFO] firstboot: wizard completed, exiting first-boot mode
+2026/01/04 21:20:43 [INFO] firstboot: wizard_completed flag saved to config
+2026/01/04 21:20:43 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:20:43 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] platform detected: linux
+2026/01/04 21:20:43 [INFO] config: AI disabled
+2026/01/04 21:20:43 [INFO] config: Guest access disabled
+2026/01/04 21:20:43 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] request: id=req-c1248f3b18823e24 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:20:43 [INFO] firstboot: advanced to step 2 (language)
+2026/01/04 21:20:43 [INFO] request: id=req-02564796c934fb5d method=POST path=/api/setup/firstboot/complete
+2026/01/04 21:20:43 [INFO] error: id=req-02564796c934fb5d code=bad_request msg=firstboot: must complete all steps before finishing
+2026/01/04 21:20:43 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:20:43 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] platform detected: linux
+2026/01/04 21:20:43 [INFO] config: AI disabled
+2026/01/04 21:20:43 [INFO] config: Guest access disabled
+2026/01/04 21:20:43 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] request: id=req-c5f5d4281ec160d5 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:20:43 [INFO] firstboot: advanced to step 2 (language)
+2026/01/04 21:20:43 [INFO] request: id=req-8cc2209374a4220b method=POST path=/api/setup/firstboot/next
+2026/01/04 21:20:43 [INFO] firstboot: advanced to step 3 (ha_check)
+2026/01/04 21:20:43 [INFO] request: id=req-2017dfe6516bee04 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:20:43 [INFO] firstboot: advanced to step 4 (alarm_role)
+2026/01/04 21:20:43 [INFO] request: id=req-c1307535ae24fdcf method=POST path=/api/setup/firstboot/next
+2026/01/04 21:20:43 [INFO] firstboot: advanced to step 5 (ready)
+2026/01/04 21:20:43 [INFO] request: id=req-96692a836c6f4924 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:20:43 [INFO] error: id=req-96692a836c6f4924 code=bad_request msg=firstboot: already at final step
+2026/01/04 21:20:43 [INFO] request: id=req-400459397ee0168e method=GET path=/api/setup/firstboot/status
+2026/01/04 21:20:43 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:20:43 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] platform detected: linux
+2026/01/04 21:20:43 [INFO] config: AI disabled
+2026/01/04 21:20:43 [INFO] config: Guest access disabled
+2026/01/04 21:20:43 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] request: id=req-f51aa0f4066415ba method=POST path=/api/setup/firstboot/next
+2026/01/04 21:20:43 [INFO] firstboot: advanced to step 2 (language)
+2026/01/04 21:20:43 [INFO] request: id=req-779038edaef69e66 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:20:43 [INFO] firstboot: advanced to step 3 (ha_check)
+2026/01/04 21:20:43 [INFO] request: id=req-3f63f078553f1ad8 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:20:43 [INFO] firstboot: advanced to step 4 (alarm_role)
+2026/01/04 21:20:43 [INFO] request: id=req-e114dbc2f3dbd62a method=POST path=/api/setup/firstboot/next
+2026/01/04 21:20:43 [INFO] firstboot: advanced to step 5 (ready)
+2026/01/04 21:20:43 [INFO] request: id=req-6908cbc4fef266b7 method=POST path=/api/setup/firstboot/complete
+2026/01/04 21:20:43 [INFO] firstboot: wizard completed, exiting first-boot mode
+2026/01/04 21:20:43 [INFO] firstboot: wizard_completed flag saved to config
+2026/01/04 21:20:43 [INFO] request: id=req-fb33f073fb10829a method=POST path=/api/alarm/arm
+2026/01/04 21:20:43 [INFO] alarm countdown created
+2026/01/04 21:20:43 [INFO] request: id=req-a83200735fb0de0c method=GET path=/api/ui/home/state
+2026/01/04 21:20:43 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:20:43 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] platform detected: linux
+2026/01/04 21:20:43 [INFO] config: AI disabled
+2026/01/04 21:20:43 [INFO] config: Guest access disabled
+2026/01/04 21:20:43 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] request: id=req-a41a11e56e6ced29 method=GET path=/api/setup/firstboot/status
+2026/01/04 21:20:43 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:20:43 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] platform detected: linux
+2026/01/04 21:20:43 [INFO] config: AI disabled
+2026/01/04 21:20:43 [INFO] config: Guest access disabled
+2026/01/04 21:20:43 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:20:43 [INFO] request: id=req-36b7fe9de4fa7253 method=GET path=/api/setup/firstboot/status
+2026/01/04 21:20:43 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:20:43 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] platform detected: linux
+2026/01/04 21:20:43 [INFO] config: AI disabled
+2026/01/04 21:20:43 [INFO] config: Guest access disabled
+2026/01/04 21:20:43 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] request: id=req-5ed929d10eee3e87 method=GET path=/api/setup/firstboot/status
+2026/01/04 21:20:43 [INFO] request: id=req-96d39ed8eb090f95 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:20:43 [INFO] firstboot: advanced to step 2 (language)
+2026/01/04 21:20:43 [INFO] request: id=req-56377a9e80eefa76 method=GET path=/api/setup/firstboot/status
+2026/01/04 21:20:43 [INFO] request: id=req-88408608b151f102 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:20:43 [INFO] firstboot: advanced to step 3 (ha_check)
+2026/01/04 21:20:43 [INFO] request: id=req-dfb7ea3e30d0e7ab method=GET path=/api/setup/firstboot/status
+2026/01/04 21:20:43 [INFO] request: id=req-8f2882e49a7f9184 method=POST path=/api/setup/firstboot/back
+2026/01/04 21:20:43 [INFO] firstboot: returned to step 2 (language)
+2026/01/04 21:20:43 [INFO] request: id=req-ff437360a5a9827e method=GET path=/api/setup/firstboot/status
+2026/01/04 21:20:43 [INFO] request: id=req-5275d1aa569c7aa1 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:20:43 [INFO] firstboot: advanced to step 3 (ha_check)
+2026/01/04 21:20:43 [INFO] request: id=req-d797c2c1882e8143 method=GET path=/api/setup/firstboot/status
+2026/01/04 21:20:43 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:20:43 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] platform detected: linux
+2026/01/04 21:20:43 [INFO] config: AI disabled
+2026/01/04 21:20:43 [INFO] config: Guest access disabled
+2026/01/04 21:20:43 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] request: id=req-64bcf07e3e0f3b25 method=POST path=/api/setup/firstboot/complete
+2026/01/04 21:20:43 [INFO] error: id=req-64bcf07e3e0f3b25 code=bad_request msg=firstboot: must complete all steps before finishing
+2026/01/04 21:20:43 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:20:43 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] platform detected: linux
+2026/01/04 21:20:43 [INFO] config: AI disabled
+2026/01/04 21:20:43 [INFO] config: Guest access disabled
+2026/01/04 21:20:43 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:20:43 [INFO] request: id=req-cae23442a0553d54 method=GET path=/api/ui/menu
+2026/01/04 21:20:43 [INFO] menu: resolved for role=admin (sections=6, first_boot=false, failsafe=false, guest_active=false)
+2026/01/04 21:20:43 [INFO] request: id=req-86c15640cf717704 method=GET path=/api/ui/settings
+2026/01/04 21:20:43 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:20:43 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] platform detected: linux
+2026/01/04 21:20:43 [INFO] config: AI disabled
+2026/01/04 21:20:43 [INFO] config: Guest access disabled
+2026/01/04 21:20:43 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:20:43 [INFO] menu: role changed (admin → user)
+2026/01/04 21:20:43 [INFO] request: id=req-10b75438fb1d5848 method=GET path=/api/ui/menu
+2026/01/04 21:20:43 [INFO] menu: resolved for role=user (sections=5, first_boot=false, failsafe=false, guest_active=false)
+2026/01/04 21:20:43 [INFO] request: id=req-84932283a07309c5 method=GET path=/api/ui/settings
+2026/01/04 21:20:43 [INFO] error: id=req-84932283a07309c5 code=forbidden msg=admin required
+2026/01/04 21:20:43 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:20:43 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] platform detected: linux
+2026/01/04 21:20:43 [INFO] config: AI disabled
+2026/01/04 21:20:43 [INFO] config: Guest access disabled
+2026/01/04 21:20:43 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:20:43 [INFO] menu: role changed (admin → guest)
+2026/01/04 21:20:43 [INFO] request: id=req-128f4c78340f761c method=GET path=/api/ui/menu
+2026/01/04 21:20:43 [INFO] menu: resolved for role=guest (sections=5, first_boot=false, failsafe=false, guest_active=false)
+2026/01/04 21:20:43 [INFO] request: id=req-e0118f6f39016992 method=GET path=/api/ui/logbook
+2026/01/04 21:20:43 [INFO] logbook: entries retrieved by role guest (count: 0, filtered)
+2026/01/04 21:20:43 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:20:43 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] platform detected: linux
+2026/01/04 21:20:43 [INFO] config: AI disabled
+2026/01/04 21:20:43 [INFO] config: Guest access disabled
+2026/01/04 21:20:43 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] request: id=req-c84dba23ef5b72b5 method=GET path=/api/ui/menu
+2026/01/04 21:20:43 [INFO] menu: resolved for role=admin (sections=3, first_boot=true, failsafe=false, guest_active=false)
+2026/01/04 21:20:43 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:20:43 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] platform detected: linux
+2026/01/04 21:20:43 [INFO] config: AI disabled
+2026/01/04 21:20:43 [INFO] config: Guest access disabled
+2026/01/04 21:20:43 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:20:43 [INFO] request: id=req-6c199fcc2b8c6334 method=GET path=/api/ui/alarm/state
+2026/01/04 21:20:43 [INFO] request: id=req-2e3bc058df65efb3 method=POST path=/api/ui/guest/request
+2026/01/04 21:20:43 [INFO] guest: request initiated (guest_id: guest_unknown, request_id: req_1767558043)
+2026/01/04 21:20:43 [INFO] guest: state transition (guest_idle → guest_requesting)
+2026/01/04 21:20:43 [INFO] request: id=req-4477d541c07e9295 method=GET path=/api/ui/alarm/state
+2026/01/04 21:20:43 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:20:43 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] platform detected: linux
+2026/01/04 21:20:43 [INFO] config: AI disabled
+2026/01/04 21:20:43 [INFO] config: Guest access disabled
+2026/01/04 21:20:43 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:20:43 [INFO] alarm countdown created
+2026/01/04 21:20:43 [INFO] request: id=req-c4f60dc5a3624e5c method=POST path=/api/ui/guest/request
+2026/01/04 21:20:43 [INFO] guest: request initiated (guest_id: guest_unknown, request_id: req_1767558043)
+2026/01/04 21:20:43 [INFO] guest: state transition (guest_idle → guest_requesting)
+2026/01/04 21:20:43 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:20:43 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] platform detected: linux
+2026/01/04 21:20:43 [INFO] config: AI disabled
+2026/01/04 21:20:43 [INFO] config: Guest access disabled
+2026/01/04 21:20:43 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:20:43 [INFO] alarm countdown created
+2026/01/04 21:20:43 [INFO] request: id=req-3dea1d8a28df3544 method=POST path=/api/ui/guest/request
+2026/01/04 21:20:43 [INFO] guest: request initiated (guest_id: guest_unknown, request_id: req_1767558043)
+2026/01/04 21:20:43 [INFO] guest: state transition (guest_idle → guest_requesting)
+2026/01/04 21:20:43 [INFO] request: id=req-60adac200a55662d method=POST path=/api/guest/approve
+2026/01/04 21:20:43 [ERROR] error: id=req-60adac200a55662d code=internal_error msg=guest approve error
+2026/01/04 21:20:43 [INFO] request: id=req-f5b698a29561eb31 method=POST path=/api/guest/exit
+2026/01/04 21:20:43 [INFO] guest: guest exited manually (guest_id: guest_unknown)
+2026/01/04 21:20:43 [INFO] guest: state transition (guest_requesting → guest_exit)
+2026/01/04 21:20:43 [INFO] request: id=req-d71210e87b1ffb92 method=GET path=/api/ui/alarm/state
+2026/01/04 21:20:43 [INFO] alarm: screen mode transition (disarmed → armed, trigger: alarm_state:ARMED)
+2026/01/04 21:20:43 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:20:43 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] platform detected: linux
+2026/01/04 21:20:43 [INFO] config: AI disabled
+2026/01/04 21:20:43 [INFO] config: Guest access disabled
+2026/01/04 21:20:43 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:20:43 [INFO] alarm countdown created
+2026/01/04 21:20:43 [INFO] request: id=req-0fb070e66f39a683 method=POST path=/api/ui/guest/request
+2026/01/04 21:20:43 [INFO] guest: request initiated (guest_id: guest_unknown, request_id: req_1767558043)
+2026/01/04 21:20:43 [INFO] guest: state transition (guest_idle → guest_requesting)
+2026/01/04 21:20:43 [INFO] request: id=req-5d2b540c81d1fce6 method=POST path=/api/guest/approve
+2026/01/04 21:20:43 [ERROR] error: id=req-5d2b540c81d1fce6 code=internal_error msg=guest approve error
+2026/01/04 21:20:43 [INFO] request: id=req-7256da066a0933dc method=GET path=/api/ui/alarm/state
+2026/01/04 21:20:43 [INFO] alarm: screen mode transition (disarmed → triggered, trigger: alarm_triggered)
+2026/01/04 21:20:43 [INFO] request: id=req-1e74468143b19123 method=POST path=/api/guest/exit
+2026/01/04 21:20:43 [INFO] guest: guest exited manually (guest_id: guest_unknown)
+2026/01/04 21:20:43 [INFO] guest: state transition (guest_requesting → guest_exit)
+2026/01/04 21:20:43 [INFO] request: id=req-f77b34b05a6ed00a method=GET path=/api/ui/guest/state
+2026/01/04 21:20:43 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:20:43 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] platform detected: linux
+2026/01/04 21:20:43 [INFO] config: AI disabled
+2026/01/04 21:20:43 [INFO] config: Guest access disabled
+2026/01/04 21:20:43 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:20:43 [INFO] request: id=req-f511e6ed1d2988a0 method=GET path=/api/ui/alarm/state
+2026/01/04 21:20:43 [INFO] alarm: screen mode transition (disarmed → arming, trigger: countdown_active)
+2026/01/04 21:20:43 [INFO] request: id=req-c2e5820b50c4f5c5 method=GET path=/api/ui/alarm/state
+2026/01/04 21:20:43 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:20:43 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:20:43 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:20:43 [INFO] platform detected: linux
+2026/01/04 21:20:43 [INFO] config: AI disabled
+2026/01/04 21:20:43 [INFO] config: Guest access disabled
+2026/01/04 21:20:43 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:20:43 [INFO] request: id=req-54cddc1eb838e098 method=GET path=/api/ui/alarm/state
+2026/01/04 21:20:43 [INFO] alarm: screen mode transition (disarmed → arming, trigger: countdown_active)
+2026/01/04 21:22:54 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:22:54 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:22:54 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:54 [INFO] platform detected: linux
+2026/01/04 21:22:54 [INFO] config: AI disabled
+2026/01/04 21:22:54 [INFO] config: Guest access disabled
+2026/01/04 21:22:54 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:22:54 [INFO] alarm countdown created
+2026/01/04 21:22:54 [INFO] request: id=req-3ad1d0870e7c8c69 method=GET path=/health
+2026/01/04 21:22:54 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:22:54 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:22:54 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:54 [INFO] platform detected: linux
+2026/01/04 21:22:54 [INFO] config: AI disabled
+2026/01/04 21:22:54 [INFO] config: Guest access disabled
+2026/01/04 21:22:54 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:22:54 [INFO] request: id=req-0567a28351b8b0fe method=GET path=/api/admin/telemetry/optin
+2026/01/04 21:22:54 [INFO] error: id=req-0567a28351b8b0fe code=method_not_allowed msg=POST required
+2026/01/04 21:22:54 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:22:54 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:22:54 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:54 [INFO] platform detected: linux
+2026/01/04 21:22:54 [INFO] config: AI disabled
+2026/01/04 21:22:54 [INFO] config: Guest access disabled
+2026/01/04 21:22:54 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:22:54 [INFO] request: id=req-0744b400ee99eb31 method=GET path=/api/admin/telemetry/summary
+2026/01/04 21:22:54 [INFO] error: id=req-0744b400ee99eb31 code=forbidden msg=admin required
+2026/01/04 21:22:54 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:22:54 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:22:54 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:54 [INFO] platform detected: linux
+2026/01/04 21:22:54 [INFO] config: AI disabled
+2026/01/04 21:22:54 [INFO] config: Guest access disabled
+2026/01/04 21:22:54 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:22:54 [INFO] request: id=req-5a1cf9567eb72229 method=GET path=/api/admin/telemetry/summary
+2026/01/04 21:22:54 [INFO] error: id=req-5a1cf9567eb72229 code=forbidden msg=admin required
+2026/01/04 21:22:54 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:22:54 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:22:54 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:54 [INFO] platform detected: linux
+2026/01/04 21:22:54 [INFO] config: AI disabled
+2026/01/04 21:22:54 [INFO] config: Guest access disabled
+2026/01/04 21:22:54 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:22:54 [INFO] request: id=req-4099b12219b1154c method=GET path=/api/admin/telemetry/summary
+2026/01/04 21:22:54 [INFO] error: id=req-4099b12219b1154c code=forbidden msg=admin required
+2026/01/04 21:22:54 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:22:54 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:22:54 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:54 [INFO] platform detected: linux
+2026/01/04 21:22:54 [INFO] config: AI disabled
+2026/01/04 21:22:54 [INFO] config: Guest access disabled
+2026/01/04 21:22:54 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:22:54 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:22:54 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:22:54 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:54 [INFO] platform detected: linux
+2026/01/04 21:22:54 [INFO] config: AI disabled
+2026/01/04 21:22:54 [INFO] config: Guest access disabled
+2026/01/04 21:22:54 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:22:54 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:54 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:22:54 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:22:54 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:54 [INFO] platform detected: linux
+2026/01/04 21:22:54 [INFO] config: AI disabled
+2026/01/04 21:22:54 [INFO] config: Guest access disabled
+2026/01/04 21:22:54 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:22:55 [INFO] request: id=req-358437501866c70b method=GET path=/health
+2026/01/04 21:22:55 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:22:55 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:22:55 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:55 [INFO] platform detected: linux
+2026/01/04 21:22:55 [INFO] config: AI disabled
+2026/01/04 21:22:55 [INFO] config: Guest access disabled
+2026/01/04 21:22:55 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:22:55 [INFO] request: id=req-f1474fdb9648e9a1 method=GET path=/health
+2026/01/04 21:22:55 [INFO] request: id=req-254073981e215fd1 method=GET path=/health
+2026/01/04 21:22:55 [INFO] request: id=req-a06df3dc2ba3ba5b method=GET path=/health
+2026/01/04 21:22:55 [INFO] request: id=req-34210a71833566b1 method=GET path=/health
+2026/01/04 21:22:55 [INFO] request: id=req-0113917329ac073d method=GET path=/health
+2026/01/04 21:22:55 [INFO] request: id=req-03394ed2611f0374 method=GET path=/health
+2026/01/04 21:22:55 [INFO] request: id=req-dbad714cd83c6442 method=GET path=/health
+2026/01/04 21:22:55 [INFO] request: id=req-b8891c95e229933f method=GET path=/health
+2026/01/04 21:22:55 [INFO] request: id=req-1844ca0ec699910e method=GET path=/health
+2026/01/04 21:22:55 [INFO] request: id=req-eb3deaa8af28e381 method=GET path=/health
+2026/01/04 21:22:55 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:22:55 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:22:55 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:55 [INFO] platform detected: linux
+2026/01/04 21:22:55 [INFO] config: AI disabled
+2026/01/04 21:22:55 [INFO] config: Guest access disabled
+2026/01/04 21:22:55 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:22:55 [INFO] request: id=req-c2fb5d2be83c348d method=GET path=/api/admin/smoke
+2026/01/04 21:22:55 [INFO] error: id=req-c2fb5d2be83c348d code=method_not_allowed msg=POST required
+2026/01/04 21:22:55 [INFO] request: id=req-b32d41973a21bd96 method=GET path=/api/ui/home/state
+2026/01/04 21:22:55 [INFO] request: id=req-3acbe1000f7bd652 method=GET path=/api/ui/home/state
+2026/01/04 21:22:55 [INFO] request: id=req-d23d832301e9dda0 method=GET path=/api/admin/telemetry/summary
+2026/01/04 21:22:55 [INFO] error: id=req-d23d832301e9dda0 code=forbidden msg=admin required
+2026/01/04 21:22:55 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:22:55 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:22:55 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:55 [INFO] platform detected: linux
+2026/01/04 21:22:55 [INFO] config: AI disabled
+2026/01/04 21:22:55 [INFO] config: Guest access disabled
+2026/01/04 21:22:55 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:22:55 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:55 [INFO] request: id=req-43edfa00b3374880 method=GET path=/api/setup/firstboot/status
+2026/01/04 21:22:55 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:22:55 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:22:55 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:55 [INFO] platform detected: linux
+2026/01/04 21:22:55 [INFO] config: AI disabled
+2026/01/04 21:22:55 [INFO] config: Guest access disabled
+2026/01/04 21:22:55 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:22:55 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:55 [INFO] request: id=req-23b0184c8dbd339f method=GET path=/api/ui/alarm/state
+2026/01/04 21:22:55 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:22:55 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:22:55 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:55 [INFO] platform detected: linux
+2026/01/04 21:22:55 [INFO] config: AI disabled
+2026/01/04 21:22:55 [INFO] config: Guest access disabled
+2026/01/04 21:22:55 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:22:55 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:55 [INFO] request: id=req-1ece658925c7dc3a method=GET path=/api/guest/status
+2026/01/04 21:22:55 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:22:55 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:22:55 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:55 [INFO] platform detected: linux
+2026/01/04 21:22:55 [INFO] config: AI disabled
+2026/01/04 21:22:55 [INFO] config: Guest access disabled
+2026/01/04 21:22:55 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:22:55 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:55 [INFO] request: id=req-1ca0611d7939a16e method=GET path=/api/setup/firstboot/status
+2026/01/04 21:22:55 [INFO] request: id=req-af839e25aab6dff9 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:22:55 [INFO] firstboot: advanced to step 2 (language)
+2026/01/04 21:22:55 [INFO] request: id=req-de441d90dbde0ddb method=GET path=/api/setup/firstboot/status
+2026/01/04 21:22:55 [INFO] request: id=req-784665e22fcf8e46 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:22:55 [INFO] firstboot: advanced to step 3 (ha_check)
+2026/01/04 21:22:55 [INFO] request: id=req-2b20a80f4afd2166 method=GET path=/api/setup/firstboot/status
+2026/01/04 21:22:55 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:22:55 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:22:55 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:55 [INFO] platform detected: linux
+2026/01/04 21:22:55 [INFO] config: AI disabled
+2026/01/04 21:22:55 [INFO] config: Guest access disabled
+2026/01/04 21:22:55 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:22:55 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:55 [INFO] request: id=req-3dd6380ad61719b2 method=POST path=/api/setup/firstboot/complete
+2026/01/04 21:22:55 [INFO] error: id=req-3dd6380ad61719b2 code=bad_request msg=firstboot: must complete all steps before finishing
+2026/01/04 21:22:55 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:22:55 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:22:55 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:55 [INFO] platform detected: linux
+2026/01/04 21:22:55 [INFO] config: AI disabled
+2026/01/04 21:22:55 [INFO] config: Guest access disabled
+2026/01/04 21:22:55 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:22:55 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:55 [INFO] request: id=req-e8846c6f5a7283b8 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:22:55 [INFO] firstboot: advanced to step 2 (language)
+2026/01/04 21:22:55 [INFO] request: id=req-9a7469d08d4a2ea0 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:22:55 [INFO] firstboot: advanced to step 3 (ha_check)
+2026/01/04 21:22:55 [INFO] request: id=req-425e29775301fd7e method=GET path=/api/setup/firstboot/status
+2026/01/04 21:22:55 [INFO] request: id=req-c235f2b8432cced7 method=POST path=/api/setup/firstboot/back
+2026/01/04 21:22:55 [INFO] firstboot: returned to step 2 (language)
+2026/01/04 21:22:55 [INFO] request: id=req-974cf1643fcc2984 method=GET path=/api/setup/firstboot/status
+2026/01/04 21:22:55 [INFO] request: id=req-685f0a35c8eefca7 method=POST path=/api/setup/firstboot/back
+2026/01/04 21:22:55 [INFO] firstboot: returned to step 1 (welcome)
+2026/01/04 21:22:55 [INFO] request: id=req-dc31979a6819102c method=GET path=/api/setup/firstboot/status
+2026/01/04 21:22:55 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:22:55 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:22:55 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:55 [INFO] platform detected: linux
+2026/01/04 21:22:55 [INFO] config: AI disabled
+2026/01/04 21:22:55 [INFO] config: Guest access disabled
+2026/01/04 21:22:55 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:22:55 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:55 [INFO] request: id=req-cb994ab6f58f958f method=POST path=/api/setup/firstboot/back
+2026/01/04 21:22:55 [INFO] error: id=req-cb994ab6f58f958f code=bad_request msg=firstboot: already at first step
+2026/01/04 21:22:55 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:22:55 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:22:55 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:55 [INFO] platform detected: linux
+2026/01/04 21:22:55 [INFO] config: AI disabled
+2026/01/04 21:22:55 [INFO] config: Guest access disabled
+2026/01/04 21:22:55 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:22:55 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:55 [INFO] request: id=req-9649c4fd412228e0 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:22:55 [INFO] firstboot: advanced to step 2 (language)
+2026/01/04 21:22:55 [INFO] request: id=req-072f9d85283463e5 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:22:55 [INFO] firstboot: advanced to step 3 (ha_check)
+2026/01/04 21:22:55 [INFO] request: id=req-b92164adf2a87e71 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:22:55 [INFO] firstboot: advanced to step 4 (alarm_role)
+2026/01/04 21:22:55 [INFO] request: id=req-9601685d8a3d9e19 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:22:55 [INFO] firstboot: advanced to step 5 (ready)
+2026/01/04 21:22:55 [INFO] request: id=req-72907324b0a04182 method=GET path=/api/setup/firstboot/status
+2026/01/04 21:22:55 [INFO] request: id=req-19da8d33a1e4d6dc method=POST path=/api/setup/firstboot/complete
+2026/01/04 21:22:55 [INFO] firstboot: wizard completed, exiting first-boot mode
+2026/01/04 21:22:55 [INFO] firstboot: wizard_completed flag saved to config
+2026/01/04 21:22:55 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:22:55 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:22:55 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:55 [INFO] platform detected: linux
+2026/01/04 21:22:55 [INFO] config: AI disabled
+2026/01/04 21:22:55 [INFO] config: Guest access disabled
+2026/01/04 21:22:55 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:22:55 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:55 [INFO] request: id=req-0f6612a10b9cf75e method=POST path=/api/setup/firstboot/next
+2026/01/04 21:22:55 [INFO] firstboot: advanced to step 2 (language)
+2026/01/04 21:22:55 [INFO] request: id=req-af6f076abd6fc20d method=POST path=/api/setup/firstboot/complete
+2026/01/04 21:22:55 [INFO] error: id=req-af6f076abd6fc20d code=bad_request msg=firstboot: must complete all steps before finishing
+2026/01/04 21:22:55 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:22:55 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:22:55 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:55 [INFO] platform detected: linux
+2026/01/04 21:22:55 [INFO] config: AI disabled
+2026/01/04 21:22:55 [INFO] config: Guest access disabled
+2026/01/04 21:22:55 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:22:55 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:55 [INFO] request: id=req-860aa9c1e1ed45da method=POST path=/api/setup/firstboot/next
+2026/01/04 21:22:55 [INFO] firstboot: advanced to step 2 (language)
+2026/01/04 21:22:55 [INFO] request: id=req-f21001a24e21ea37 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:22:55 [INFO] firstboot: advanced to step 3 (ha_check)
+2026/01/04 21:22:55 [INFO] request: id=req-b002e79932636156 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:22:55 [INFO] firstboot: advanced to step 4 (alarm_role)
+2026/01/04 21:22:55 [INFO] request: id=req-45cdf12a5a137e9e method=POST path=/api/setup/firstboot/next
+2026/01/04 21:22:55 [INFO] firstboot: advanced to step 5 (ready)
+2026/01/04 21:22:55 [INFO] request: id=req-8fc2d26eab737e45 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:22:55 [INFO] error: id=req-8fc2d26eab737e45 code=bad_request msg=firstboot: already at final step
+2026/01/04 21:22:55 [INFO] request: id=req-0d305fdaca161643 method=GET path=/api/setup/firstboot/status
+2026/01/04 21:22:55 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:22:55 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:22:55 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:55 [INFO] platform detected: linux
+2026/01/04 21:22:55 [INFO] config: AI disabled
+2026/01/04 21:22:55 [INFO] config: Guest access disabled
+2026/01/04 21:22:55 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:22:55 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:55 [INFO] request: id=req-fbf755ecbe412fa8 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:22:55 [INFO] firstboot: advanced to step 2 (language)
+2026/01/04 21:22:55 [INFO] request: id=req-66e9e8953ba163cc method=POST path=/api/setup/firstboot/next
+2026/01/04 21:22:55 [INFO] firstboot: advanced to step 3 (ha_check)
+2026/01/04 21:22:55 [INFO] request: id=req-180c46b1dc244422 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:22:55 [INFO] firstboot: advanced to step 4 (alarm_role)
+2026/01/04 21:22:55 [INFO] request: id=req-55991177a11d8860 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:22:55 [INFO] firstboot: advanced to step 5 (ready)
+2026/01/04 21:22:55 [INFO] request: id=req-5ccc83bae1e0f6f2 method=POST path=/api/setup/firstboot/complete
+2026/01/04 21:22:55 [INFO] firstboot: wizard completed, exiting first-boot mode
+2026/01/04 21:22:55 [INFO] firstboot: wizard_completed flag saved to config
+2026/01/04 21:22:55 [INFO] request: id=req-87bc31c5f86cb92a method=POST path=/api/alarm/arm
+2026/01/04 21:22:55 [INFO] alarm countdown created
+2026/01/04 21:22:55 [INFO] request: id=req-9806f0d21065d1d1 method=GET path=/api/ui/home/state
+2026/01/04 21:22:55 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:22:55 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:22:55 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:55 [INFO] platform detected: linux
+2026/01/04 21:22:55 [INFO] config: AI disabled
+2026/01/04 21:22:55 [INFO] config: Guest access disabled
+2026/01/04 21:22:55 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:22:55 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:55 [INFO] request: id=req-5eb7790e33046fd8 method=GET path=/api/setup/firstboot/status
+2026/01/04 21:22:55 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:22:55 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:22:55 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:55 [INFO] platform detected: linux
+2026/01/04 21:22:55 [INFO] config: AI disabled
+2026/01/04 21:22:55 [INFO] config: Guest access disabled
+2026/01/04 21:22:55 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:22:55 [INFO] request: id=req-a914fd41f9e6e3ec method=GET path=/api/setup/firstboot/status
+2026/01/04 21:22:55 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:22:55 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:22:55 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:55 [INFO] platform detected: linux
+2026/01/04 21:22:55 [INFO] config: AI disabled
+2026/01/04 21:22:55 [INFO] config: Guest access disabled
+2026/01/04 21:22:55 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:22:55 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:55 [INFO] request: id=req-48e168e1b93a70a0 method=GET path=/api/setup/firstboot/status
+2026/01/04 21:22:55 [INFO] request: id=req-a83a3f276dfcd636 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:22:55 [INFO] firstboot: advanced to step 2 (language)
+2026/01/04 21:22:55 [INFO] request: id=req-7e09640a0b861f78 method=GET path=/api/setup/firstboot/status
+2026/01/04 21:22:55 [INFO] request: id=req-e3f7982a657fa340 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:22:55 [INFO] firstboot: advanced to step 3 (ha_check)
+2026/01/04 21:22:55 [INFO] request: id=req-6088b407028a6ed4 method=GET path=/api/setup/firstboot/status
+2026/01/04 21:22:55 [INFO] request: id=req-d27ede4b7b0f81c4 method=POST path=/api/setup/firstboot/back
+2026/01/04 21:22:55 [INFO] firstboot: returned to step 2 (language)
+2026/01/04 21:22:55 [INFO] request: id=req-bdbd349255571e37 method=GET path=/api/setup/firstboot/status
+2026/01/04 21:22:55 [INFO] request: id=req-7e663bc8fcf7cb25 method=POST path=/api/setup/firstboot/next
+2026/01/04 21:22:55 [INFO] firstboot: advanced to step 3 (ha_check)
+2026/01/04 21:22:55 [INFO] request: id=req-ef46eb42806204d0 method=GET path=/api/setup/firstboot/status
+2026/01/04 21:22:55 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:22:55 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:22:55 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:55 [INFO] platform detected: linux
+2026/01/04 21:22:55 [INFO] config: AI disabled
+2026/01/04 21:22:55 [INFO] config: Guest access disabled
+2026/01/04 21:22:55 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:22:55 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:55 [INFO] request: id=req-40006e03102005c4 method=POST path=/api/setup/firstboot/complete
+2026/01/04 21:22:55 [INFO] error: id=req-40006e03102005c4 code=bad_request msg=firstboot: must complete all steps before finishing
+2026/01/04 21:22:55 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:22:55 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:22:55 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:55 [INFO] platform detected: linux
+2026/01/04 21:22:55 [INFO] config: AI disabled
+2026/01/04 21:22:55 [INFO] config: Guest access disabled
+2026/01/04 21:22:55 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:22:55 [INFO] request: id=req-5804ddbfbeea1fd3 method=GET path=/api/ui/menu
+2026/01/04 21:22:55 [INFO] menu: resolved for role=admin (sections=6, first_boot=false, failsafe=false, guest_active=false)
+2026/01/04 21:22:55 [INFO] request: id=req-5f34588870959a95 method=GET path=/api/ui/settings
+2026/01/04 21:22:55 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:22:55 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:22:55 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:55 [INFO] platform detected: linux
+2026/01/04 21:22:55 [INFO] config: AI disabled
+2026/01/04 21:22:55 [INFO] config: Guest access disabled
+2026/01/04 21:22:55 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:22:55 [INFO] menu: role changed (admin → user)
+2026/01/04 21:22:55 [INFO] request: id=req-ceea9e2d3da07443 method=GET path=/api/ui/menu
+2026/01/04 21:22:55 [INFO] menu: resolved for role=user (sections=5, first_boot=false, failsafe=false, guest_active=false)
+2026/01/04 21:22:55 [INFO] request: id=req-004fb5309b9c07be method=GET path=/api/ui/settings
+2026/01/04 21:22:55 [INFO] error: id=req-004fb5309b9c07be code=forbidden msg=admin required
+2026/01/04 21:22:55 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:22:55 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:22:55 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:55 [INFO] platform detected: linux
+2026/01/04 21:22:55 [INFO] config: AI disabled
+2026/01/04 21:22:55 [INFO] config: Guest access disabled
+2026/01/04 21:22:55 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:22:55 [INFO] menu: role changed (admin → guest)
+2026/01/04 21:22:55 [INFO] request: id=req-4f42b21bd4aee9b9 method=GET path=/api/ui/menu
+2026/01/04 21:22:55 [INFO] menu: resolved for role=guest (sections=5, first_boot=false, failsafe=false, guest_active=false)
+2026/01/04 21:22:55 [INFO] request: id=req-1726e8c5513270c3 method=GET path=/api/ui/logbook
+2026/01/04 21:22:55 [INFO] logbook: entries retrieved by role guest (count: 0, filtered)
+2026/01/04 21:22:55 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:22:55 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:22:55 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:55 [INFO] platform detected: linux
+2026/01/04 21:22:55 [INFO] config: AI disabled
+2026/01/04 21:22:55 [INFO] config: Guest access disabled
+2026/01/04 21:22:55 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:22:55 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:55 [INFO] request: id=req-30982e15dec089ba method=GET path=/api/ui/menu
+2026/01/04 21:22:55 [INFO] menu: resolved for role=admin (sections=3, first_boot=true, failsafe=false, guest_active=false)
+2026/01/04 21:22:55 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:22:55 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:22:55 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:55 [INFO] platform detected: linux
+2026/01/04 21:22:55 [INFO] config: AI disabled
+2026/01/04 21:22:55 [INFO] config: Guest access disabled
+2026/01/04 21:22:55 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:22:55 [INFO] request: id=req-71eff785441972b0 method=GET path=/api/ui/alarm/state
+2026/01/04 21:22:55 [INFO] request: id=req-087b1004c312a11b method=POST path=/api/ui/guest/request
+2026/01/04 21:22:55 [INFO] guest: request initiated (guest_id: guest_unknown, request_id: req_1767558175)
+2026/01/04 21:22:55 [INFO] guest: state transition (guest_idle → guest_requesting)
+2026/01/04 21:22:55 [INFO] request: id=req-35bfda0f330e314a method=GET path=/api/ui/alarm/state
+2026/01/04 21:22:55 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:22:55 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:22:55 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:55 [INFO] platform detected: linux
+2026/01/04 21:22:55 [INFO] config: AI disabled
+2026/01/04 21:22:55 [INFO] config: Guest access disabled
+2026/01/04 21:22:55 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:22:55 [INFO] alarm countdown created
+2026/01/04 21:22:55 [INFO] request: id=req-2f93980cfe160a9d method=POST path=/api/ui/guest/request
+2026/01/04 21:22:55 [INFO] guest: request initiated (guest_id: guest_unknown, request_id: req_1767558175)
+2026/01/04 21:22:55 [INFO] guest: state transition (guest_idle → guest_requesting)
+2026/01/04 21:22:55 [INFO] guest: request approved (guest_id: guest_unknown, expires_at: 2026-01-04T21:52:55+01:00)
+2026/01/04 21:22:55 [INFO] request: id=req-745c506a38427854 method=GET path=/api/ui/guest/state
+2026/01/04 21:22:55 [INFO] guest: state transition (guest_requesting → guest_approved)
+2026/01/04 21:22:55 [INFO] request: id=req-2592db0e365c0a83 method=GET path=/api/ui/alarm/state
+2026/01/04 21:22:55 [INFO] alarm: screen mode transition (disarmed → armed, trigger: alarm_state:ARMED)
+2026/01/04 21:22:55 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:22:55 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:22:55 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:55 [INFO] platform detected: linux
+2026/01/04 21:22:55 [INFO] config: AI disabled
+2026/01/04 21:22:55 [INFO] config: Guest access disabled
+2026/01/04 21:22:55 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:22:55 [INFO] alarm countdown created
+2026/01/04 21:22:55 [INFO] request: id=req-1bafd88ac62063be method=POST path=/api/ui/guest/request
+2026/01/04 21:22:55 [INFO] guest: request initiated (guest_id: guest_unknown, request_id: req_1767558175)
+2026/01/04 21:22:55 [INFO] guest: state transition (guest_idle → guest_requesting)
+2026/01/04 21:22:55 [INFO] request: id=req-44b9b6ee4369a88f method=POST path=/api/guest/approve
+2026/01/04 21:22:55 [ERROR] error: id=req-44b9b6ee4369a88f code=internal_error msg=guest approve error
+2026/01/04 21:22:55 [INFO] request: id=req-89f10f725159be97 method=POST path=/api/guest/exit
+2026/01/04 21:22:55 [INFO] guest: guest exited manually (guest_id: guest_unknown)
+2026/01/04 21:22:55 [INFO] guest: state transition (guest_requesting → guest_exit)
+2026/01/04 21:22:55 [INFO] request: id=req-edc90d5a0dd7cfcb method=GET path=/api/ui/alarm/state
+2026/01/04 21:22:55 [INFO] alarm: screen mode transition (disarmed → armed, trigger: alarm_state:ARMED)
+2026/01/04 21:22:55 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:22:55 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:22:55 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:55 [INFO] platform detected: linux
+2026/01/04 21:22:55 [INFO] config: AI disabled
+2026/01/04 21:22:55 [INFO] config: Guest access disabled
+2026/01/04 21:22:55 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:22:55 [INFO] alarm countdown created
+2026/01/04 21:22:55 [INFO] request: id=req-dfbfb14054fd48e3 method=POST path=/api/ui/guest/request
+2026/01/04 21:22:55 [INFO] guest: request initiated (guest_id: guest_unknown, request_id: req_1767558175)
+2026/01/04 21:22:55 [INFO] guest: state transition (guest_idle → guest_requesting)
+2026/01/04 21:22:55 [INFO] request: id=req-d0df7157c1174d7e method=POST path=/api/guest/approve
+2026/01/04 21:22:55 [ERROR] error: id=req-d0df7157c1174d7e code=internal_error msg=guest approve error
+2026/01/04 21:22:55 [INFO] request: id=req-d994d94e36b72e50 method=GET path=/api/ui/alarm/state
+2026/01/04 21:22:55 [INFO] alarm: screen mode transition (disarmed → triggered, trigger: alarm_triggered)
+2026/01/04 21:22:55 [INFO] request: id=req-a37c32b06722cc07 method=POST path=/api/guest/exit
+2026/01/04 21:22:55 [INFO] guest: guest exited manually (guest_id: guest_unknown)
+2026/01/04 21:22:55 [INFO] guest: state transition (guest_requesting → guest_exit)
+2026/01/04 21:22:55 [INFO] request: id=req-2f2eb1ccc0fbd5d3 method=GET path=/api/ui/guest/state
+2026/01/04 21:22:55 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:22:55 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:22:55 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:55 [INFO] platform detected: linux
+2026/01/04 21:22:55 [INFO] config: AI disabled
+2026/01/04 21:22:55 [INFO] config: Guest access disabled
+2026/01/04 21:22:55 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:22:55 [INFO] request: id=req-bb0d43aed2f6e896 method=GET path=/api/ui/alarm/state
+2026/01/04 21:22:55 [INFO] alarm: screen mode transition (disarmed → arming, trigger: countdown_active)
+2026/01/04 21:22:55 [INFO] request: id=req-4bda21862fc0f872 method=GET path=/api/ui/alarm/state
+2026/01/04 21:22:55 [INFO] home: state manager initialized (state: idle)
+2026/01/04 21:22:55 [INFO] logbook: initialized (retention: 30 days, retention_safety: 90 days)
+2026/01/04 21:22:55 [INFO] firstboot: mode activated (wizard_completed=false)
+2026/01/04 21:22:55 [INFO] platform detected: linux
+2026/01/04 21:22:55 [INFO] config: AI disabled
+2026/01/04 21:22:55 [INFO] config: Guest access disabled
+2026/01/04 21:22:55 [INFO] config: AI disabled, skipping insight generation
+2026/01/04 21:22:55 [INFO] request: id=req-7f187c0497d7c586 method=GET path=/api/ui/alarm/state
+2026/01/04 21:22:55 [INFO] alarm: screen mode transition (disarmed → arming, trigger: countdown_active)

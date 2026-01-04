@@ -42,13 +42,6 @@
                         });
                     }
                     
-                    // Update alarm state if included
-                    if (response.alarmState) {
-                        window.SmartDisplay.store.setState({
-                            alarmState: response.alarmState
-                        });
-                    }
-
                     return response;
                 })
                 .catch(function(err) {

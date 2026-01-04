@@ -392,14 +392,15 @@
             
             // Update alarm status
             if (data.alarmState) {
+                var alarmStateLabel = this._formatAlarmLabel(data.alarmState);
                 var alarmStatusEl = document.getElementById('status-alarm');
                 if (alarmStatusEl) {
-                    alarmStatusEl.textContent = data.alarmState.status || '--';
+                    alarmStatusEl.textContent = alarmStateLabel;
                 }
                 
                 var idleAlarmEl = document.getElementById('idle-alarm');
                 if (idleAlarmEl) {
-                    idleAlarmEl.textContent = 'Alarm: ' + (data.alarmState.status || '--');
+                    idleAlarmEl.textContent = 'Alarm: ' + alarmStateLabel;
                 }
             }
         },
@@ -539,6 +540,37 @@
             }
         },
 
+        _formatAlarmLabel: function(alarmState) {
+            if (!alarmState) {
+                return '--';
+            }
+
+            var state = (alarmState.state || 'unknown').toLowerCase();
+
+            if (alarmState.triggered || state === 'triggered') {
+                return 'Triggered';
+            }
+
+            if (state === 'disarmed') {
+                return 'Disarmed';
+            }
+
+            if (state.startsWith('armed_')) {
+                var mode = state.split('_')[1];
+                return 'Armed (' + mode.charAt(0).toUpperCase() + mode.slice(1) + ')';
+            }
+
+            if (state === 'pending') {
+                return 'Pending';
+            }
+
+            if (state === 'arming') {
+                return 'Arming';
+            }
+
+            return state.charAt(0).toUpperCase() + state.slice(1);
+        },
+
         _showIdleScreen: function() {
             console.log('[HomeView] Showing idle screen');
             
@@ -567,57 +599,44 @@
     var AlarmView = {
         id: 'alarm',
         name: 'Alarm',
-        countdownInterval: null,
 
         mount: function() {
             console.log('[View] Mounting AlarmView');
             var container = document.getElementById('app');
-            
+
+            if (!container) {
+                return;
+            }
+
             container.innerHTML = '';
             var viewElement = document.createElement('div');
             viewElement.id = this.id;
             viewElement.className = 'view view-alarm';
-            
+
             viewElement.innerHTML = [
                 '<div class="alarm-container">',
                 '  <div class="alarm-header" id="alarm-header">',
                 '    <div class="alarm-mode" id="alarm-mode">--</div>',
-                '    <div class="alarm-message" id="alarm-message">--</div>',
-                '    <div class="alarm-context" id="alarm-context">--</div>',
+                '    <div class="alarm-message" id="alarm-message">Waiting for alarm data...</div>',
+                '    <div class="alarm-context" id="alarm-context">Waiting...</div>',
                 '  </div>',
                 '  <div class="alarm-countdown" id="alarm-countdown-container" style="display:none;">',
                 '    <div class="countdown-label" id="countdown-label">--</div>',
                 '    <div class="countdown-value" id="countdown-value">--</div>',
                 '  </div>',
-                '  <div class="alarm-zones" id="alarm-zones" style="display:none;">',
-                '    <div class="zones-label">Zones</div>',
-                '    <div class="zones-list" id="zones-list"></div>',
-                '  </div>',
-                '  <div class="alarm-actions" id="alarm-actions">',
-                '    <!-- Actions rendered here -->',
-                '  </div>',
                 '  <div class="alarm-error" id="alarm-error" style="display:none;"></div>',
                 '</div>'
             ].join('\n');
-            
+
             container.appendChild(viewElement);
-            
-            // Setup event listeners
+
             this._setupEventListeners();
-            
-            // Initialize controller
             this._initController();
         },
 
         unmount: function() {
             console.log('[View] Unmounting AlarmView');
-            
-            // Cleanup countdown interval
-            if (this.countdownInterval) {
-                clearInterval(this.countdownInterval);
-                this.countdownInterval = null;
-            }
-            
+
             var element = document.getElementById(this.id);
             if (element) {
                 element.remove();
@@ -626,28 +645,18 @@
 
         update: function(data) {
             console.log('[View] Updating AlarmView', data);
-            
+
             var alarmState = data.alarmState || {};
-            
-            if (!alarmState.mode) {
-                return; // No mode data yet
+
+            if (!alarmState.isHydrated) {
+                this._renderLoading();
+                return;
             }
 
-            // Render mode-specific UI
+            this._clearError();
             this._renderModeUI(alarmState);
-            
-            // Render actions
-            this._renderActions(alarmState);
-            
-            // Update countdown if present
-            if (alarmState.countdown !== undefined && alarmState.countdown > 0) {
-                this._renderCountdown(alarmState.countdown);
-            }
-            
-            // Update zones if present
-            if (alarmState.zones && Array.isArray(alarmState.zones) && alarmState.zones.length > 0) {
-                this._renderZones(alarmState.zones);
-            }
+            this._renderDelay(alarmState.delay);
+            this._renderMeta(alarmState);
         },
 
         // ====================================================================
@@ -655,29 +664,15 @@
         // ====================================================================
 
         _setupEventListeners: function() {
-            var self = this;
-            var container = document.getElementById(this.id);
-
-            if (!container) return;
-
-            // Delegate click to action buttons
-            container.addEventListener('click', function(e) {
-                var actionBtn = e.target.closest('[data-action]');
-                if (actionBtn) {
-                    self._handleActionClick(actionBtn);
-                }
-            });
+            // No interactive controls on this view; placeholder for future
         },
 
         _initController: function() {
-            var self = this;
-
             if (!window.SmartDisplay.alarmController) {
                 console.error('[AlarmView] Alarm controller not initialized');
                 return;
             }
 
-            // Initialize if not done
             if (!window.SmartDisplay.alarmController.currentState) {
                 window.SmartDisplay.alarmController.init()
                     .catch(function(err) {
@@ -686,192 +681,172 @@
             }
         },
 
-        _renderModeUI: function(alarmState) {
-            var mode = alarmState.mode || 'unknown';
-            
+        _renderLoading: function() {
             var modeEl = document.getElementById('alarm-mode');
             var messageEl = document.getElementById('alarm-message');
             var contextEl = document.getElementById('alarm-context');
+            var countdownEl = document.getElementById('alarm-countdown-container');
 
-            // Update mode indicator with styling
             if (modeEl) {
-                modeEl.textContent = this._formatModeName(mode);
-                modeEl.className = 'alarm-mode mode-' + mode;
+                modeEl.textContent = 'Connecting...';
+                modeEl.className = 'alarm-mode mode-unknown';
             }
 
-            // Update primary message
-            if (messageEl && alarmState.message) {
-                messageEl.textContent = alarmState.message;
+            if (messageEl) {
+                messageEl.textContent = 'Waiting for Alarmo state...';
             }
 
-            // Update secondary context
-            if (contextEl && alarmState.context) {
-                contextEl.textContent = alarmState.context;
-                contextEl.style.display = 'block';
-            } else if (contextEl) {
-                contextEl.style.display = 'none';
+            if (contextEl) {
+                contextEl.textContent = 'Fetching latest data';
+            }
+
+            if (countdownEl) {
+                countdownEl.style.display = 'none';
             }
         },
 
-        _renderCountdown: function(seconds) {
+        _renderModeUI: function(alarmState) {
+            var stateKey = (alarmState.state || 'unknown').toLowerCase();
+            var modeEl = document.getElementById('alarm-mode');
+            var messageEl = document.getElementById('alarm-message');
+
+            if (modeEl) {
+                modeEl.textContent = this._formatModeName(stateKey, alarmState.triggered);
+                modeEl.className = 'alarm-mode mode-' + stateKey.replace(/[^a-z0-9_]/g, '-');
+            }
+
+            if (messageEl) {
+                messageEl.textContent = this._renderMessage(alarmState);
+            }
+        },
+
+        _renderDelay: function(delay) {
             var containerEl = document.getElementById('alarm-countdown-container');
             var labelEl = document.getElementById('countdown-label');
             var valueEl = document.getElementById('countdown-value');
 
-            if (!containerEl) return;
+            if (!containerEl) {
+                return;
+            }
 
-            // Check for reduced motion preference
-            var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (!delay || typeof delay.remaining !== 'number') {
+                containerEl.style.display = 'none';
+                return;
+            }
 
-            // Show container
             containerEl.style.display = 'flex';
 
-            // Update label
             if (labelEl) {
-                labelEl.textContent = seconds > 60 ? 'Time remaining' : 'Seconds remaining';
+                labelEl.textContent = this._formatDelayLabel(delay);
             }
 
-            // Update value
             if (valueEl) {
-                if (seconds > 60) {
-                    var minutes = Math.ceil(seconds / 60);
-                    valueEl.textContent = minutes + 'm';
-                } else {
-                    valueEl.textContent = seconds + 's';
-                }
+                valueEl.textContent = this._formatDelayValue(delay);
             }
+        },
 
-            // For reduced motion, just update once instead of animating
-            if (prefersReducedMotion) {
-                if (this.countdownInterval) {
-                    clearInterval(this.countdownInterval);
-                    this.countdownInterval = null;
-                }
+        _renderMeta: function(alarmState) {
+            var contextEl = document.getElementById('alarm-context');
+
+            if (!contextEl) {
                 return;
             }
 
-            // Update countdown every second for dynamic display
-            if (this.countdownInterval) {
-                clearInterval(this.countdownInterval);
+            if (alarmState.triggered || alarmState.state === 'triggered') {
+                contextEl.textContent = 'Triggered at ' + this._formatLastUpdated(alarmState.lastUpdated);
+            } else {
+                contextEl.textContent = 'Last updated ' + this._formatLastUpdated(alarmState.lastUpdated);
+            }
+        },
+
+        _renderMessage: function(alarmState) {
+            var state = (alarmState.state || 'unknown').toLowerCase();
+
+            if (alarmState.triggered || state === 'triggered') {
+                return 'ALARM LOCKDOWN IN EFFECT';
             }
 
-            this.countdownInterval = setInterval(function() {
-                seconds--;
-                if (seconds < 0) {
-                    clearInterval(this.countdownInterval);
-                    this.countdownInterval = null;
-                    return;
-                }
-
-                if (valueEl) {
-                    if (seconds > 60) {
-                        var minutes = Math.ceil(seconds / 60);
-                        valueEl.textContent = minutes + 'm';
-                    } else {
-                        valueEl.textContent = seconds + 's';
-                    }
-                }
-            }.bind(this), 1000);
-        },
-
-        _renderZones: function(zones) {
-            var containerEl = document.getElementById('alarm-zones');
-            var listEl = document.getElementById('zones-list');
-
-            if (!containerEl || !listEl) return;
-
-            // Clear previous zones
-            listEl.innerHTML = '';
-
-            // Add zone items
-            zones.forEach(function(zone) {
-                var zoneEl = document.createElement('div');
-                zoneEl.className = 'zone-item';
-                
-                var zoneText = zone.name || zone;
-                var status = zone.status || 'unknown';
-                
-                zoneEl.innerHTML = [
-                    '<span class="zone-name">' + zoneText + '</span>',
-                    '<span class="zone-status status-' + status + '">' + status + '</span>'
-                ].join('');
-                
-                listEl.appendChild(zoneEl);
-            });
-
-            // Show container
-            containerEl.style.display = 'block';
-        },
-
-        _renderActions: function(alarmState) {
-            var actionsEl = document.getElementById('alarm-actions');
-            if (!actionsEl) return;
-
-            // Clear previous actions
-            actionsEl.innerHTML = '';
-
-            // Render actions from backend
-            if (!alarmState.availableActions || !Array.isArray(alarmState.availableActions)) {
-                return;
+            if (state === 'arming') {
+                return 'Arming in progress';
             }
 
-            var self = this;
-
-            alarmState.availableActions.forEach(function(action) {
-                var btn = document.createElement('button');
-                btn.className = 'alarm-action-btn action-' + (action.id || action);
-                btn.setAttribute('data-action', action.id || action);
-                btn.textContent = self._formatActionName(action.label || action.id || action);
-                
-                // Set button style if provided
-                if (action.style) {
-                    btn.className += ' action-style-' + action.style;
-                }
-                
-                // Disable if specified
-                if (action.disabled) {
-                    btn.disabled = true;
-                }
-
-                actionsEl.appendChild(btn);
-            });
-        },
-
-        _handleActionClick: function(btn) {
-            var self = this;
-            var action = btn.getAttribute('data-action');
-
-            if (!action) return;
-
-            console.log('[AlarmView] Action clicked:', action);
-
-            var controller = window.SmartDisplay.alarmController;
-            if (!controller) {
-                console.error('[AlarmView] Controller not available');
-                return;
+            if (state === 'pending') {
+                return 'Entry/exit pending';
             }
 
-            // Disable all buttons
-            this._setActionsDisabled(true);
-            this._clearError();
+            if (state.startsWith('armed_')) {
+                var mode = state.split('_')[1];
+                return 'System armed (' + mode + ')';
+            }
 
-            controller.performAction(action)
-                .then(function() {
-                    console.log('[AlarmView] Action completed:', action);
-                    // Re-enable buttons when done (update will handle this)
-                })
-                .catch(function(err) {
-                    console.error('[AlarmView] Action failed:', action, err);
-                    self._showError(err.message || 'Action failed');
-                    self._setActionsDisabled(false);
-                });
+            if (state === 'disarmed') {
+                return 'System disarmed';
+            }
+
+            return 'System state: ' + state;
         },
 
-        _setActionsDisabled: function(disabled) {
-            var buttons = document.querySelectorAll('.alarm-action-btn');
-            buttons.forEach(function(btn) {
-                btn.disabled = disabled || btn.hasAttribute('data-disabled');
-            });
+        _formatModeName: function(mode, triggered) {
+            var modeNames = {
+                'disarmed': 'Disarmed',
+                'arming': 'Arming...',
+                'pending': 'Pending',
+                'triggered': 'ALARM TRIGGERED'
+            };
+
+            if (triggered) {
+                return 'ALARM TRIGGERED';
+            }
+
+            if (modeNames[mode]) {
+                return modeNames[mode];
+            }
+
+            if (mode.indexOf('armed_') === 0) {
+                var suffix = mode.split('_')[1];
+                return 'Armed (' + suffix.charAt(0).toUpperCase() + suffix.slice(1) + ')';
+            }
+
+            return mode.charAt(0).toUpperCase() + mode.slice(1);
+        },
+
+        _formatDelayLabel: function(delay) {
+            if (!delay || !delay.type) {
+                return 'Delay remaining';
+            }
+
+            return delay.type === 'entry' ? 'Entry delay' : 'Exit delay';
+        },
+
+        _formatDelayValue: function(delay) {
+            if (!delay || typeof delay.remaining !== 'number') {
+                return '--';
+            }
+
+            var seconds = Math.max(0, Math.floor(delay.remaining));
+
+            if (seconds > 60) {
+                return Math.ceil(seconds / 60) + 'm';
+            }
+
+            return seconds + 's';
+        },
+
+        _formatLastUpdated: function(timestamp) {
+            if (!timestamp) {
+                return '--';
+            }
+
+            var date = new Date(timestamp);
+            if (isNaN(date.getTime())) {
+                return '--';
+            }
+
+            var hours = String(date.getHours()).padStart(2, '0');
+            var minutes = String(date.getMinutes()).padStart(2, '0');
+            var seconds = String(date.getSeconds()).padStart(2, '0');
+
+            return hours + ':' + minutes + ':' + seconds;
         },
 
         _showError: function(message) {
@@ -888,32 +863,6 @@
                 errorEl.style.display = 'none';
                 errorEl.textContent = '';
             }
-        },
-
-        _formatModeName: function(mode) {
-            var modeNames = {
-                'disarmed': 'Disarmed',
-                'arming': 'Arming...',
-                'armed_home': 'Armed (Home)',
-                'armed_away': 'Armed (Away)',
-                'triggered': 'ALARM TRIGGERED',
-                'blocked': 'System Blocked'
-            };
-
-            return modeNames[mode] || (mode.charAt(0).toUpperCase() + mode.slice(1));
-        },
-
-        _formatActionName: function(action) {
-            var actionNames = {
-                'arm-home': 'Arm Home',
-                'arm-away': 'Arm Away',
-                'disarm': 'Disarm',
-                'dismiss': 'Dismiss',
-                'acknowledge': 'Acknowledge',
-                'panic': 'Panic'
-            };
-
-            return actionNames[action] || action;
         }
     };
 
@@ -1719,6 +1668,11 @@
 
             if (!viewId) return;
 
+            if (window.SmartDisplay.viewManager && window.SmartDisplay.viewManager.isAlarmLocked()) {
+                console.log('[MenuView] Alarm lock active, ignoring menu navigation');
+                return;
+            }
+
             console.log('[MenuView] Menu item clicked:', viewId);
 
             // Update store and trigger navigation
@@ -1828,47 +1782,38 @@
          * @returns {string} - View ID to display
          */
         getNextView: function(state) {
-            // Priority 1: First boot
             if (state.firstBoot) {
                 console.log('[ViewManager] Route: FirstBoot');
                 return 'first-boot';
             }
 
-            // Priority 2: Menu request
+            var alarmState = state.alarmState || {};
+
+            if (!alarmState.isHydrated || this._shouldLockToAlarm(alarmState)) {
+                console.log('[ViewManager] Route: Alarm (locked state)');
+                return 'alarm';
+            }
+
             if (state.menu && state.menu.currentView === 'menu') {
                 console.log('[ViewManager] Route: Menu');
                 return 'menu';
             }
 
-            // Priority 3: Guest active (non-admin)
             if (state.guestState && state.guestState.isGuestActive) {
                 console.log('[ViewManager] Route: Guest');
                 return 'guest';
             }
 
-            // Priority 4: Alarm alert or critical state
-            if (state.alarmState && 
-                (state.alarmState.status === 'alert' || 
-                 state.alarmState.status === 'alarm_triggered' ||
-                 state.alarmState.status === 'arming' ||
-                 state.alarmState.status === 'disarming')) {
-                console.log('[ViewManager] Route: Alarm (critical state)');
-                return 'alarm';
-            }
-
-            // Priority 5: Settings (if menu requests it)
             if (state.menu && state.menu.currentView === 'settings') {
                 console.log('[ViewManager] Route: Settings');
                 return 'settings';
             }
 
-            // Priority 6: Alarm view if explicitly requested
             if (state.menu && state.menu.currentView === 'alarm') {
                 console.log('[ViewManager] Route: Alarm (user view)');
                 return 'alarm';
             }
 
-            // Default: Home view
             console.log('[ViewManager] Route: Home (default)');
             return 'home';
         },
@@ -1886,6 +1831,8 @@
             var state = window.SmartDisplay.store.getState();
             var nextViewId = this.getNextView(state);
 
+            this._applyAlarmLock(state.alarmState || {});
+
             // Switch view if different
             if (!this.currentView || this.currentView.id !== nextViewId) {
                 this.switchToView(nextViewId, state);
@@ -1893,6 +1840,53 @@
                 // Same view, update with new state
                 this.updateCurrentView(state);
             }
+        },
+
+        _shouldLockToAlarm: function(alarmState) {
+            if (!alarmState || !alarmState.state) {
+                return false;
+            }
+
+            var normalized = alarmState.state.toLowerCase();
+
+            if (alarmState.triggered || normalized === 'triggered') {
+                return true;
+            }
+
+            if (normalized === 'arming' || normalized === 'pending') {
+                return true;
+            }
+
+            if (normalized.startsWith('armed_')) {
+                return true;
+            }
+
+            return false;
+        },
+
+        _applyAlarmLock: function(alarmState) {
+            var locked = !alarmState || !alarmState.isHydrated || this._shouldLockToAlarm(alarmState);
+            var overlay = document.getElementById('menu-overlay');
+
+            if (document && document.body) {
+                document.body.classList.toggle('alarm-locked', locked);
+            }
+
+            if (overlay) {
+                overlay.classList.toggle('menu-locked', locked);
+                if (locked) {
+                    this.closeMenu();
+                }
+            }
+        },
+
+        isAlarmLocked: function() {
+            if (!window.SmartDisplay || !window.SmartDisplay.store) {
+                return false;
+            }
+
+            var alarmState = window.SmartDisplay.store.getState().alarmState;
+            return !alarmState || !alarmState.isHydrated || this._shouldLockToAlarm(alarmState);
         },
 
         // ====================================================================
@@ -1934,6 +1928,11 @@
             document.addEventListener('click', function(e) {
                 var navBtn = e.target.closest('[data-view]');
                 if (navBtn) {
+                    if (self.isAlarmLocked()) {
+                        console.log('[ViewManager] Navigation blocked while alarm lock is active');
+                        return;
+                    }
+
                     var viewId = navBtn.getAttribute('data-view');
                     console.log('[ViewManager] Navigation clicked: ' + viewId);
                     
@@ -1957,6 +1956,11 @@
          * Show menu overlay
          */
         openMenu: function() {
+            if (this.isAlarmLocked()) {
+                console.log('[ViewManager] Menu locked by alarm state');
+                return;
+            }
+
             console.log('[ViewManager] Opening menu');
             var overlay = document.getElementById('menu-overlay');
             if (overlay) {

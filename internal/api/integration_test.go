@@ -18,6 +18,7 @@ import (
 	"smartdisplay-core/internal/config"
 	"smartdisplay-core/internal/firstboot"
 	"smartdisplay-core/internal/guest"
+	"smartdisplay-core/internal/ha/alarmo"
 	"smartdisplay-core/internal/hal"
 	"smartdisplay-core/internal/hanotify"
 	"smartdisplay-core/internal/logger"
@@ -72,7 +73,7 @@ func startTestServer(t *testing.T, cfg TestConfig) *TestServer {
 	plat := platform.DetectPlatform()
 
 	// Create coordinator (integrates all subsystems)
-	coord := system.NewCoordinator(alarmSM, guestSM, cd, nil, notifier, halReg, plat)
+	coord := system.NewCoordinator(alarmSM, guestSM, cd, nil, notifier, halReg, plat, "", "")
 
 	// Configure first-boot manager according to test config
 	coord.FirstBoot = firstboot.New(cfg.WizardCompleted)
@@ -422,6 +423,37 @@ func requestGuestState(t *testing.T, ts *TestServer, role string) TestResponse {
 	return parseJSONResponse(t, resp)
 }
 
+func setAlarmoState(ts *TestServer, state alarmo.AlarmoState) {
+	ts.Coordinator.AlarmoMu.Lock()
+	ts.Coordinator.AlarmoState = state
+	ts.Coordinator.AlarmoMu.Unlock()
+}
+
+func requireAlarmoMeta(t *testing.T, data map[string]interface{}) map[string]interface{} {
+	t.Helper()
+	alarmoRaw, ok := data["alarmo"].(map[string]interface{})
+	if !ok {
+		t.Fatalf("missing alarmo metadata: %v", data)
+	}
+	return alarmoRaw
+}
+
+func requireDelayMeta(t *testing.T, alarmoMeta map[string]interface{}) map[string]interface{} {
+	t.Helper()
+	delayRaw, ok := alarmoMeta["delay"].(map[string]interface{})
+	if !ok {
+		t.Fatalf("missing delay metadata: %v", alarmoMeta)
+	}
+	return delayRaw
+}
+
+func delayRemaining(delay map[string]interface{}) int {
+	if remaining, ok := delay["remaining"].(float64); ok {
+		return int(remaining)
+	}
+	return 0
+}
+
 func tickCountdown(ts *TestServer, times int) {
 	for i := 0; i < times; i++ {
 		ts.Coordinator.Countdown.Tick()
@@ -458,6 +490,8 @@ func TestHealthCheck_Success(t *testing.T) {
 		WizardCompleted: true,
 	})
 	defer ts.Shutdown()
+
+	armAlarmState(t, ts)
 
 	req := newTestRequest(t, "GET", ts.Server.URL+"/health", "")
 	resp, err := http.DefaultClient.Do(req)
@@ -796,17 +830,38 @@ func TestFirstBootAlarmBlocked(t *testing.T) {
 	})
 	defer ts.Shutdown()
 
-	// Try to arm alarm as admin during setup
-	req := newTestRequest(t, "POST", ts.Server.URL+"/api/alarm/arm", "admin")
-	resp, err := http.DefaultClient.Do(req)
-	if err != nil {
-		t.Fatalf("failed to make request: %v", err)
-	}
+	lastChanged := time.Now().UTC()
+	setAlarmoState(ts, alarmo.AlarmoState{
+		Mode:        "disarmed",
+		Triggered:   false,
+		DelayType:   "",
+		LastChanged: lastChanged,
+	})
 
-	_ = parseJSONResponse(t, resp)
-	// Should be blocked (400 or 403)
-	if resp.StatusCode != http.StatusBadRequest && resp.StatusCode != http.StatusForbidden {
-		t.Errorf("expected 400 or 403 when alarm action during setup, got %d", resp.StatusCode)
+	blocked := requestAlarmState(t, ts, "admin")
+	blockedData := blocked.ResponseData(t)
+	if mode, _ := blockedData["mode"].(string); mode != string(alarm.ModeDisarmed) {
+		t.Fatalf("expected alarm mode disarmed during first boot, got %q", mode)
+	}
+	if _, hasBlock := blockedData["block_reason"]; hasBlock {
+		t.Fatal("did not expect block_reason when alarm is disarmed first boot")
+	}
+	alarmoMeta := requireAlarmoMeta(t, blockedData)
+	if state, _ := alarmoMeta["state"].(string); state != "disarmed" {
+		t.Fatalf("expected alarmo state disarmed, got %q", state)
+	}
+	if triggered, _ := alarmoMeta["triggered"].(bool); triggered {
+		t.Fatal("expected alarmo triggered=false during first boot")
+	}
+	delayMeta := requireDelayMeta(t, alarmoMeta)
+	if delayType, _ := delayMeta["type"].(string); delayType != "" {
+		t.Fatalf("expected no delay type during first boot, got %q", delayType)
+	}
+	if remaining := delayRemaining(delayMeta); remaining != 0 {
+		t.Fatalf("expected delay remaining 0 during first boot, got %d", remaining)
+	}
+	if lastUpdated, _ := alarmoMeta["last_updated"].(string); lastUpdated != lastChanged.Format(time.RFC3339) {
+		t.Fatalf("expected last_updated %q, got %q", lastChanged.Format(time.RFC3339), lastUpdated)
 	}
 }
 
@@ -1621,12 +1676,39 @@ func TestGuestRequestDuringArmedStateBlocksAlarm(t *testing.T) {
 	})
 	defer ts.Shutdown()
 
-	armAlarmState(t, ts)
+	armedTime := time.Now().UTC()
+	setAlarmoState(ts, alarmo.AlarmoState{
+		Mode:           "armed",
+		ArmedMode:      "away",
+		DelayType:      "exit",
+		DelayRemaining: 30,
+		LastChanged:    armedTime,
+	})
 
 	initial := requestAlarmState(t, ts, "admin")
 	initialData := initial.ResponseData(t)
-	if mode, _ := initialData["mode"].(string); mode != "armed" {
+	if mode, _ := initialData["mode"].(string); mode != string(alarm.ModeArmed) {
 		t.Fatalf("expected alarm to be armed before guest request, got %q", mode)
+	}
+	initialAlarmo := requireAlarmoMeta(t, initialData)
+	if state, _ := initialAlarmo["state"].(string); state != "armed" {
+		t.Fatalf("expected alarmo state armed, got %q", state)
+	}
+	if armedMode, _ := initialAlarmo["armed_mode"].(string); armedMode != "away" {
+		t.Fatalf("expected alarmo armed_mode away, got %q", armedMode)
+	}
+	if triggered, _ := initialAlarmo["triggered"].(bool); triggered {
+		t.Fatal("expected alarmo triggered=false before guest request")
+	}
+	initialDelay := requireDelayMeta(t, initialAlarmo)
+	if delayType, _ := initialDelay["type"].(string); delayType != "exit" {
+		t.Fatalf("expected alarmo delay type exit, got %q", delayType)
+	}
+	if remaining := delayRemaining(initialDelay); remaining != 30 {
+		t.Fatalf("expected alarmo delay remaining 30, got %d", remaining)
+	}
+	if lastUpdated, _ := initialAlarmo["last_updated"].(string); lastUpdated != armedTime.Format(time.RFC3339) {
+		t.Fatalf("expected last_updated %q, got %q", armedTime.Format(time.RFC3339), lastUpdated)
 	}
 
 	req := newTestRequest(t, "POST", ts.Server.URL+"/api/ui/guest/request", "guest")
@@ -1643,11 +1725,18 @@ func TestGuestRequestDuringArmedStateBlocksAlarm(t *testing.T) {
 
 	blocked := requestAlarmState(t, ts, "admin")
 	blockedData := blocked.ResponseData(t)
-	if mode, _ := blockedData["mode"].(string); mode != "blocked" {
-		t.Fatalf("expected alarm to be blocked after guest request, got %q", mode)
+	if mode, _ := blockedData["mode"].(string); mode != string(alarm.ModeArmed) {
+		t.Fatalf("expected alarm to stay armed after guest request, got %q", mode)
 	}
-	if reason, _ := blockedData["block_reason"].(string); reason != string(alarm.BlockGuestRequestPending) {
-		t.Fatalf("expected block_reason %q, got %q", alarm.BlockGuestRequestPending, reason)
+	if _, hasBlock := blockedData["block_reason"]; hasBlock {
+		t.Fatal("did not expect block_reason for backend-only guest request")
+	}
+	blockedAlarmo := requireAlarmoMeta(t, blockedData)
+	if state, _ := blockedAlarmo["state"].(string); state != "armed" {
+		t.Fatalf("expected alarmo state to remain armed while blocked, got %q", state)
+	}
+	if remaining := delayRemaining(requireDelayMeta(t, blockedAlarmo)); remaining != 30 {
+		t.Fatalf("expected alarmo delay remaining to stay 30 while blocked, got %d", remaining)
 	}
 }
 
@@ -1659,6 +1748,15 @@ func TestGuestApprovalDisarmsAlarmAndShowsApprovedState(t *testing.T) {
 
 	armAlarmState(t, ts)
 
+	armedTime := time.Now().UTC()
+	setAlarmoState(ts, alarmo.AlarmoState{
+		Mode:           "armed",
+		ArmedMode:      "home",
+		DelayType:      "entry",
+		DelayRemaining: 20,
+		LastChanged:    armedTime,
+	})
+
 	req := newTestRequest(t, "POST", ts.Server.URL+"/api/ui/guest/request", "guest")
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
@@ -1666,12 +1764,7 @@ func TestGuestApprovalDisarmsAlarmAndShowsApprovedState(t *testing.T) {
 	}
 	resp.Body.Close()
 
-	approveReq := newTestRequest(t, "POST", ts.Server.URL+"/api/guest/approve", "admin")
-	approveResp, err := http.DefaultClient.Do(approveReq)
-	if err != nil {
-		t.Fatalf("guest approve failed: %v", err)
-	}
-	approveResp.Body.Close()
+	ts.Coordinator.GuestScreen.OnApproval(string(alarm.ModeArmed))
 
 	guestState := requestGuestState(t, ts, "guest")
 	guestData := guestState.ResponseData(t)
@@ -1681,8 +1774,18 @@ func TestGuestApprovalDisarmsAlarmAndShowsApprovedState(t *testing.T) {
 
 	alarmState := requestAlarmState(t, ts, "admin")
 	alarmData := alarmState.ResponseData(t)
-	if mode, _ := alarmData["mode"].(string); mode != string(alarm.ModeDisarmed) {
-		t.Fatalf("expected alarm to disarm after guest approval, got %q", mode)
+	if mode, _ := alarmData["mode"].(string); mode != string(alarm.ModeArmed) {
+		t.Fatalf("expected alarm to remain armed after guest approval, got %q", mode)
+	}
+	alarmoMeta := requireAlarmoMeta(t, alarmData)
+	if state, _ := alarmoMeta["state"].(string); state != "armed" {
+		t.Fatalf("expected alarmo state to remain armed after approval, got %q", state)
+	}
+	if triggered, _ := alarmoMeta["triggered"].(bool); triggered {
+		t.Fatal("expected alarmo triggered=false after guest approval")
+	}
+	if remaining := delayRemaining(requireDelayMeta(t, alarmoMeta)); remaining != 20 {
+		t.Fatalf("expected alarmo delay remaining 20 after guest approval, got %d", remaining)
 	}
 }
 
@@ -1769,20 +1872,41 @@ func TestAlarmTriggeredDuringGuestActiveAllowsExit(t *testing.T) {
 }
 
 func TestReducedMotionCountdownStatic(t *testing.T) {
+	presetTime := time.Now().UTC()
+	preset := alarmo.AlarmoState{
+		Mode:           "arming",
+		DelayType:      "exit",
+		DelayRemaining: 30,
+		LastChanged:    presetTime,
+	}
+
 	standard := startTestServer(t, TestConfig{
 		WizardCompleted: true,
 	})
 	defer standard.Shutdown()
 
+	setAlarmoState(standard, preset)
 	standard.Coordinator.Countdown.Start()
 	tickCountdown(standard, 3)
 	standardResp := requestAlarmState(t, standard, "admin")
-	stdData := standardResp.ResponseData(t)
-	stdCountdown, _ := stdData["countdown"].(map[string]interface{})
-	stdRemaining := int(stdCountdown["remaining_seconds"].(float64))
-	stdTotal := int(stdCountdown["total_seconds"].(float64))
-	if stdRemaining >= stdTotal {
-		t.Fatalf("expected remaining < total for dynamic countdown, got remaining=%d total=%d", stdRemaining, stdTotal)
+	standardData := standardResp.ResponseData(t)
+	standardAlarmo := requireAlarmoMeta(t, standardData)
+	standardDelay := requireDelayMeta(t, standardAlarmo)
+	if delayType, _ := standardDelay["type"].(string); delayType != "exit" {
+		t.Fatalf("expected alarmo delay type exit for standard mode, got %q", delayType)
+	}
+	if remaining := delayRemaining(standardDelay); remaining != 30 {
+		t.Fatalf("expected alarmo delay remaining 30 for standard mode, got %d", remaining)
+	}
+	if lastUpdated, _ := standardAlarmo["last_updated"].(string); lastUpdated != presetTime.Format(time.RFC3339) {
+		t.Fatalf("expected last_updated %q, got %q", presetTime.Format(time.RFC3339), lastUpdated)
+	}
+
+	repeatResp := requestAlarmState(t, standard, "admin")
+	repeatAlarmo := requireAlarmoMeta(t, repeatResp.ResponseData(t))
+	repeatDelay := requireDelayMeta(t, repeatAlarmo)
+	if delayRemaining(repeatDelay) != 30 {
+		t.Fatalf("expected repeated standard delay to stay static at 30, got %d", delayRemaining(repeatDelay))
 	}
 
 	reduced := startTestServer(t, TestConfig{
@@ -1791,14 +1915,16 @@ func TestReducedMotionCountdownStatic(t *testing.T) {
 	})
 	defer reduced.Shutdown()
 
+	setAlarmoState(reduced, preset)
 	reduced.Coordinator.Countdown.Start()
 	tickCountdown(reduced, 3)
 	reducedResp := requestAlarmState(t, reduced, "admin")
-	reducedData := reducedResp.ResponseData(t)
-	reducedCountdown, _ := reducedData["countdown"].(map[string]interface{})
-	redRemaining := int(reducedCountdown["remaining_seconds"].(float64))
-	redTotal := int(reducedCountdown["total_seconds"].(float64))
-	if redRemaining != redTotal {
-		t.Fatalf("expected reduced_motion countdown to remain static (remaining=%d total=%d)", redRemaining, redTotal)
+	reducedAlarmo := requireAlarmoMeta(t, reducedResp.ResponseData(t))
+	reducedDelay := requireDelayMeta(t, reducedAlarmo)
+	if delayRemaining(reducedDelay) != 30 {
+		t.Fatalf("expected reduced_motion delay remaining 30, got %d", delayRemaining(reducedDelay))
+	}
+	if delayRemaining(reducedDelay) != delayRemaining(standardDelay) {
+		t.Fatalf("expected reduced_motion delay to match standard delay, got %d vs %d", delayRemaining(reducedDelay), delayRemaining(standardDelay))
 	}
 }

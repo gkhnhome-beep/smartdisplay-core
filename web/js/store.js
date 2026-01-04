@@ -11,7 +11,7 @@
     // ========================================================================
     var DEFAULT_POLL_INTERVAL = 5000; // 5 seconds
     var DEFAULT_FAST_POLL_INTERVAL = 1000; // 1 second during critical states
-    var CRITICAL_STATES = ['alarm_arming', 'alarm_disarming', 'guest_requesting'];
+    var CRITICAL_STATES = ['arming', 'pending', 'triggered'];
 
     // ========================================================================
     // State Store
@@ -34,11 +34,11 @@
 
             // Alarm subsystem state
             alarmState: {
-                status: 'disarmed', // 'disarmed', 'armed_home', 'armed_away', 'arming', 'disarming'
-                countdown: 0,
-                entryDelay: null,
-                exitDelay: null,
-                zones: []
+                state: 'unknown',
+                triggered: false,
+                delay: null,
+                lastUpdated: null,
+                isHydrated: false
             },
 
             // Guest access state
@@ -269,7 +269,7 @@
          * @private
          */
         _isInCriticalState: function() {
-            var alarmStatus = this.state.alarmState.status;
+            var alarmStatus = this.state.alarmState.state;
             var guestPending = this.state.guestState.requestPending;
 
             return CRITICAL_STATES.indexOf(alarmStatus) > -1 || guestPending;
