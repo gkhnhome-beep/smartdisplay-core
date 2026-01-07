@@ -30,11 +30,21 @@
 
             return window.SmartDisplay.api.client.get('/ui/alarm/state')
                 .then(function(response) {
-                    var normalized = self._normalizeState(response);
+                    // API wraps payload in { response: { ok, data }, failsafe: {...} }
+                    var payload = response && response.response && response.response.data
+                        ? response.response.data
+                        : (response && response.data) ? response.data : response;
+
+                    var normalized = self._normalizeState(payload);
                     console.log('[Alarm] State updated');
                     self.currentState = normalized;
                     self.error = null;
                     self.lastUpdateTime = Date.now();
+
+                    // Push to global store immediately for UI bindings
+                    window.SmartDisplay.store.setState({
+                        alarmState: normalized
+                    });
                     
                     // A5.3: Reset poll failure tracking on success
                     if (self.pollFailureCount > 0) {
@@ -68,11 +78,15 @@
          * @private
          */
         _normalizeState: function(response) {
+            // Response structure: { ok: true, data: { ...ScreenState, alarmo: { state, triggered, delay } } }
+            // API client returns the 'data' object, so response has alarmo nested inside
+            var alarmo = response && response.alarmo ? response.alarmo : {};
+            
             return {
-                state: (response && response.state) || 'unknown',
-                triggered: Boolean(response && response.triggered),
-                delay: this._normalizeDelay(response && response.delay),
-                lastUpdated: (response && response.last_updated) || new Date().toISOString(),
+                state: (alarmo && alarmo.state) || 'unknown',
+                triggered: Boolean(alarmo && alarmo.triggered),
+                delay: this._normalizeDelay(alarmo && alarmo.delay),
+                lastUpdated: (alarmo && alarmo.last_updated) || new Date().toISOString(),
                 isHydrated: true
             };
         },

@@ -147,9 +147,38 @@ body.long-idle {
     min-height: 60px;
     background-color: #f5f5f5;
     border-bottom: 1px solid #e0e0e0;
-    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
     touch-action: manipulation;
     -webkit-user-select: none;
+    cursor: default;
+}
+
+.home-menu-btn {
+    width: 48px;
+    height: 48px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #333;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+    padding: 0;
+    margin: -8px 0 -8px -8px;
+}
+
+.home-menu-btn:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.home-menu-btn:active {
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 .home-container {
@@ -613,6 +642,43 @@ body.long-idle {
     margin: 10px 0;
 }
 
+/* HA setup prompt */
+.alarm-ha-setup-prompt {
+    background-color: #e3f2fd;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    margin: 20px 0;
+    border: 2px solid #2196f3;
+}
+
+.ha-setup-message {
+    color: #1565c0;
+    font-size: 1.1em;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+.ha-setup-btn {
+    padding: 12px 30px;
+    font-size: 1.1em;
+    background-color: #2196f3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+
+.ha-setup-btn:hover {
+    background-color: #1976d2;
+}
+
+.ha-setup-btn:active {
+    background-color: #0d47a1;
+}
+
 /* Error display */
 #alarm-error {
     background-color: #ffebee;
@@ -832,10 +898,13 @@ body.long-idle {
     display: none !important;
     flex-direction: column;
     overflow: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
 .menu-overlay.menu-open {
     display: flex !important;
+    opacity: 1;
 }
 
 .menu-overlay.menu-locked {
@@ -856,11 +925,49 @@ body.alarm-locked .menu-overlay {
 }
 
 .menu-overlay .view-menu {
+    width: 100%;
+    height: 100%;
+    max-height: 100vh;
+    background-color: transparent;
+    box-shadow: none;
+    transform: none;
+    transition: none;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+}
+
+.menu-overlay.menu-open .view-menu {
+    transform: none;
+}
+
+.menu-split-layout {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.menu-sidebar {
     width: 80%;
     max-width: 400px;
     height: 100%;
     background-color: #fff;
-    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.menu-content-area {
+    flex: 1;
+    height: 100%;
+    background-color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
 }
 
 /* ============================================================================
@@ -878,12 +985,14 @@ body.alarm-locked .menu-overlay {
     width: 100%;
     height: 100%;
     background-color: #fff;
+    overflow: hidden;
 }
 
 .menu-header {
     padding: 20px;
     border-bottom: 1px solid #e0e0e0;
     background-color: #f5f5f5;
+    flex-shrink: 0;
 }
 
 .menu-title {
@@ -896,7 +1005,9 @@ body.alarm-locked .menu-overlay {
 .menu-content {
     flex: 1;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     padding: 0;
+    min-height: 0;
 }
 
 .menu-section {
@@ -915,6 +1026,24 @@ body.alarm-locked .menu-overlay {
     background-color: #fafafa;
     text-transform: uppercase;
     letter-spacing: 0.05em;
+    width: 100%;
+    text-align: left;
+}
+
+.menu-section-button {
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s ease;
+}
+
+.menu-section-button:hover {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.menu-section-button:active {
+    background-color: #e8e8e8;
 }
 
 .menu-items {
@@ -1003,6 +1132,58 @@ body.alarm-locked .menu-overlay {
     background-color: #4caf50;
 }
 
+/* Submenu styling */
+.menu-subsections {
+    background-color: #fafafa;
+    border-left: 3px solid #e0e0e0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
+}
+
+.menu-subsections.menu-subsections-open {
+    max-height: 1000px;
+    opacity: 1;
+}
+
+.menu-subitem {
+    padding-left: 40px !important;
+    font-size: 1em;
+    background-color: #fafafa;
+    border-bottom-color: #e8e8e8;
+    min-height: 48px;
+}
+
+.menu-subitem:hover {
+    background-color: #f0f0f0;
+}
+
+.menu-subitem:active {
+    background-color: #e8e8e8;
+}
+
+.menu-section-expandable {
+    position: relative;
+    padding-right: 50px;
+}
+
+.menu-section-expandable::after {
+    content: '›';
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.4em;
+    transition: transform 0.2s ease;
+    opacity: 0.6;
+}
+
+.menu-section-expandable.menu-section-expanded::after {
+    transform: translateY(-50%) rotate(90deg);
+    opacity: 1;
+}
+
 .menu-error {
     padding: 15px 20px;
     background-color: #ffebee;
@@ -1015,6 +1196,7 @@ body.alarm-locked .menu-overlay {
     padding: 15px 20px;
     border-top: 1px solid #e0e0e0;
     background-color: #f5f5f5;
+    flex-shrink: 0;
 }
 
 .menu-close-btn {
@@ -1370,20 +1552,42 @@ body.alarm-locked .menu-overlay {
     font-size: 0.95em;
 }
 
-.settings-save-btn {
+.form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.settings-save-btn,
+.settings-test-btn,
+.settings-sync-btn {
+    flex: 1;
     padding: 12px 20px;
-    background-color: #007acc;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 1.1em;
+    font-size: 1em;
     font-weight: 500;
     min-height: 44px;
     transition: background-color 0.2s;
 }
 
-.settings-save-btn:active {
+.settings-save-btn {
+    background-color: #007acc;
+}
+
+.settings-test-btn {
+    background-color: #28a745;
+}
+
+.settings-sync-btn {
+    background-color: #ff8c00;
+}
+
+.settings-save-btn:active,
+.settings-test-btn:active,
+.settings-sync-btn:active {
     opacity: 0.8;
 }
 
@@ -1425,5 +1629,1816 @@ body.alarm-locked .menu-overlay {
         transition: none;
     }
 }
+
+/* ============================================================================
+   Login View (FAZ L1: PIN-based authentication)
+   ============================================================================ */
+
+.view-login {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-container {
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 40px 30px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.login-container.error {
+    animation: shake 0.4s;
+}
+
+.login-container.validating {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
+
+.login-header h1 {
+    font-size: 2em;
+    font-weight: 600;
+    color: #667eea;
+    margin-bottom: 10px;
+}
+
+.login-header p {
+    font-size: 1em;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.login-pin-display {
+    margin-bottom: 30px;
+}
+
+.pin-dots {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.pin-dot {
+    font-size: 2.5em;
+    color: #ccc;
+    transition: color 0.2s;
+}
+
+.pin-dot.filled {
+    color: #667eea;
+}
+
+.login-keypad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.key-btn {
+    min-height: 60px;
+    min-width: 60px;
+    font-size: 1.5em;
+    font-weight: 600;
+    background: #f5f5f5;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: #333;
+}
+
+.key-btn:hover {
+    background: #e8e8e8;
+    transform: translateY(-2px);
+}
+
+.key-btn:active {
+    transform: translateY(0);
+    background: #ddd;
+}
+
+.key-btn-clear,
+.key-btn-back {
+    font-size: 1.2em;
+    background: #ffeaa7;
+    border-color: #fdcb6e;
+}
+
+.key-btn-clear:hover,
+.key-btn-back:hover {
+    background: #fdcb6e;
+}
+
+.login-footer {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.login-hint {
+    font-size: 0.85em;
+    color: #999;
+}
+
+.btn-guest-access {
+    display: block;
+    width: 100%;
+    padding: 12px 16px;
+    margin-top: 12px;
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.95em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-guest-access:hover {
+    background: linear-gradient(135deg, #45a049, #3d8b40);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn-guest-access:active {
+    transform: scale(0.98);
+}
+
+/* Guest Request View */
+.view-guest-request {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.guest-request-container {
+    background: white;
+    border-radius: 12px;
+    padding: 32px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 90%;
+}
+
+.guest-request-header {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.guest-request-header h1 {
+    font-size: 1.8em;
+    margin: 0 0 8px 0;
+    color: #333;
+}
+
+.guest-request-header p {
+    font-size: 0.95em;
+    color: #666;
+    margin: 0;
+}
+
+.guest-request-header p.error {
+    color: #d32f2f;
+}
+
+.guest-request-header p.success {
+    color: #4CAF50;
+}
+
+.guest-request-content {
+    margin: 24px 0;
+    min-height: 200px;
+}
+
+.user-selection {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.user-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    background: #f5f5f5;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.user-option:hover {
+    background: #e8f5e9;
+    border-color: #4CAF50;
+    transform: translateX(4px);
+}
+
+.user-name {
+    font-weight: 500;
+    color: #333;
+}
+
+.user-arrow {
+    color: #4CAF50;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.approval-waiting {
+    text-align: center;
+    padding: 24px 0;
+}
+
+.waiting-spinner {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 16px;
+    border: 4px solid #e0e0e0;
+    border-top: 4px solid #667eea;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.waiting-text {
+    font-size: 1.1em;
+    color: #333;
+    margin: 16px 0;
+}
+
+.waiting-text strong {
+    color: #667eea;
+}
+
+.countdown-timer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0;
+    padding: 16px;
+    background: #f5f5f5;
+    border-radius: 8px;
+}
+
+.countdown-seconds {
+    font-size: 2em;
+    font-weight: bold;
+    color: #667eea;
+}
+
+.countdown-label {
+    font-size: 0.85em;
+    color: #999;
+    margin-top: 4px;
+}
+
+.waiting-help {
+    font-size: 0.9em;
+    color: #999;
+    margin-top: 16px;
+}
+
+.guest-request-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.btn-secondary {
+    flex: 1;
+    padding: 12px 16px;
+    background: #e0e0e0;
+    color: #333;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.95em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background: #d0d0d0;
+}
+
+.btn-secondary:active {
+    transform: scale(0.98);
+}
+
+/* Guest Session Indicator and Controls (FAZ L2) */
+.guest-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #FF9800, #F57C00);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75em;
+    font-weight: 600;
+    margin-left: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Guest Mode Persistent Indicator (subtle badge on all screens) */
+.guest-mode-indicator {
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    z-index: 999;
+    background: rgba(255, 152, 0, 0.9);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.75em;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.guest-mode-indicator .guest-icon {
+    font-size: 1em;
+}
+
+.guest-mode-indicator .guest-text {
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.menu-end-guest-btn {
+    width: 100%;
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, #F44336, #E53935);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.95em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.menu-end-guest-btn:hover {
+    background: linear-gradient(135deg, #E53935, #D32F2F);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.menu-end-guest-btn:active {
+    transform: scale(0.98);
+}
+
+/* Auth state menu hiding */
+body.auth-hidden #menu-overlay {
+    display: none !important;
+}
+
+/* ============================================================================
+   FAZ L4: Admin AI Advisor Styles
+   ============================================================================ */
+
+.advisor-bubble {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    max-width: 280px;
+    background-color: rgba(33, 150, 243, 0.95);
+    color: white;
+    padding: 12px 16px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    font-size: 0.9em;
+    line-height: 1.4;
+    pointer-events: auto;
+    opacity: 0.85;
+    transition: opacity 0.3s ease;
+}
+
+.advisor-bubble:hover {
+    opacity: 1;
+}
+
+.advisor-bubble-text {
+    font-weight: 400;
+    letter-spacing: 0.3px;
+}
+
+/* Reduced motion: no animation */
+@media (prefers-reduced-motion: reduce) {
+    .advisor-bubble {
+        transition: none;
+    }
+}
+
+/* ============================================================================
+   FAZ L5: First Boot Premium Intro Styles
+   ============================================================================ */
+
+.intro-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1a237e 0%, #0d47a1 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.intro-content {
+    text-align: center;
+    color: white;
+}
+
+.intro-logo-wrapper {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.intro-glow {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.2), transparent);
+    animation: intro-glow-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes intro-glow-pulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 0 20px rgba(255, 255, 255, 0);
+    }
+}
+
+.intro-logo {
+    position: relative;
+    z-index: 1;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    font-weight: bold;
+    color: white;
+}
+
+.intro-logo svg {
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.intro-title {
+    font-size: 3em;
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.intro-subtitle {
+    font-size: 1.2em;
+    font-weight: 300;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0.9;
+}
+
+/* Reduced motion: no animation */
+@media (prefers-reduced-motion: reduce) {
+    .intro-glow {
+        animation: none;
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.2);
+    }
+
+    .intro-container {
+        transition: none;
+    }
+}
+
+/* ============================================================================
+   FAZ L6: Admin Trace UX Styles
+   ============================================================================ */
+
+.admin-trace {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    max-width: 300px;
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    z-index: 900;
+    pointer-events: none;
+}
+
+.trace-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.trace-entry {
+    background-color: rgba(76, 175, 80, 0.1);
+    border-left: 3px solid rgba(76, 175, 80, 0.6);
+    padding: 10px 12px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    color: #2e7d32;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    transition: opacity 0.3s ease;
+    backdrop-filter: blur(4px);
+}
+
+.trace-label {
+    font-weight: 500;
+    flex: 1;
+    word-break: break-word;
+}
+
+.trace-time {
+    font-size: 0.75em;
+    opacity: 0.8;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* Dark mode trace (if user prefers) */
+@media (prefers-color-scheme: dark) {
+    .trace-entry {
+        background-color: rgba(129, 199, 132, 0.15);
+        border-left-color: rgba(165, 214, 167, 0.6);
+        color: #81c784;
+    }
+}
+
+/* Reduced motion: no transitions */
+@media (prefers-reduced-motion: reduce) {
+    .trace-entry {
+        transition: none;
+    }
+}
+
+/* ============================================================================
+   Alarmo Settings View Styles
+   ============================================================================ */
+
+.view-alarmo-settings {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+}
+
+.alarmo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.alarmo-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+    color: #333;
+}
+
+.alarmo-back-btn {
+    background-color: transparent;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.alarmo-back-btn:active {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.alarmo-container {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Status Panel */
+.alarmo-status-panel {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.status-box {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.status-indicator {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    transition: background-color 0.3s ease;
+}
+
+.status-indicator.status-ok {
+    background-color: #4caf50;
+    box-shadow: 0 0 0 8px rgba(76, 175, 80, 0.15);
+}
+
+.status-indicator.status-warning {
+    background-color: #ff9800;
+    box-shadow: 0 0 0 8px rgba(255, 152, 0, 0.15);
+}
+
+.status-indicator.status-error {
+    background-color: #f44336;
+    box-shadow: 0 0 0 8px rgba(244, 67, 54, 0.15);
+}
+
+.status-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.status-label {
+    font-size: 14px;
+    color: #999;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-value {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+.status-timestamp {
+    font-size: 12px;
+    color: #999;
+}
+
+.status-note {
+    font-size: 13px;
+    color: #999;
+    font-style: italic;
+    margin: 0;
+}
+
+/* Sections */
+.alarmo-section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+    padding: 8px 0;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+/* Sensor Grid */
+.sensor-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 12px;
+}
+
+@media (max-width: 800px) {
+    .sensor-grid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    }
+}
+
+.sensor-card {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.2s ease;
+}
+
+.sensor-card:active {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+.sensor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.sensor-name {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+    flex: 1;
+    word-wrap: break-word;
+}
+
+.health-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.health-ok {
+    background-color: #4caf50;
+}
+
+.health-warning {
+    background-color: #ff9800;
+}
+
+.health-error {
+    background-color: #f44336;
+}
+
+.sensor-body {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.sensor-type {
+    font-size: 12px;
+    color: #999;
+    text-transform: capitalize;
+    margin: 0;
+}
+
+.sensor-state {
+    font-size: 14px;
+    font-weight: bold;
+    color: #2196f3;
+    margin: 0;
+}
+
+.sensor-footer {
+    border-top: 1px solid #f0f0f0;
+    padding-top: 8px;
+}
+
+.sensor-timestamp {
+    font-size: 11px;
+    color: #bbb;
+    margin: 0;
+}
+
+.placeholder {
+    text-align: center;
+    color: #999;
+    padding: 20px;
+    font-size: 14px;
+    margin: 0;
+}
+
+/* Event List */
+.event-filters {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    color: #666;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-height: auto;
+    min-width: auto;
+}
+
+.filter-btn:active {
+    background-color: #e8e8e8;
+}
+
+.filter-btn-active {
+    background-color: #2196f3;
+    color: white;
+    border-color: #1976d2;
+}
+
+.event-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.event-item {
+    display: grid;
+    grid-template-columns: 140px 1fr 80px;
+    gap: 12px;
+    align-items: center;
+    padding: 12px;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 13px;
+}
+
+.event-item:last-child {
+    border-bottom: none;
+}
+
+.event-time {
+    color: #999;
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+}
+
+.event-entity {
+    color: #333;
+    font-weight: 500;
+    word-break: break-word;
+}
+
+.event-chip {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    text-align: center;
+    word-wrap: break-word;
+}
+
+.event-chip-alert {
+    background-color: #ffebee;
+    color: #c62828;
+}
+
+.event-chip-status {
+    background-color: #e3f2fd;
+    color: #1565c0;
+}
+
+.event-chip-clear {
+    background-color: #f1f8e9;
+    color: #558b2f;
+}
+
+.event-chip-info {
+    background-color: #f5f5f5;
+    color: #666;
+}
+
+/* Event Actions */
+.event-actions {
+    display: flex;
+    justify-content: center;
+    padding: 12px 0;
+}
+
+.refresh-btn {
+    background-color: #2196f3;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    min-width: 160px;
+}
+
+.refresh-btn:active {
+    background-color: #1976d2;
+}
+
+.refresh-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* Settings Divider */
+.settings-divider {
+    height: 1px;
+    background-color: #e0e0e0;
+    margin: 12px 0;
+}
+
+/* Error Message */
+.alarmo-error {
+    background-color: #ffebee;
+    color: #c62828;
+    padding: 12px 16px;
+    border-radius: 4px;
+    border-left: 4px solid #f44336;
+    font-size: 14px;
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    .status-indicator,
+    .sensor-card,
+    .filter-btn,
+    .refresh-btn,
+    .alarmo-back-btn {
+        transition: none;
+    }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: more) {
+    .alarmo-header {
+        border-bottom-width: 2px;
+    }
+
+    .sensor-card,
+    .alarmo-status-panel,
+    .event-list {
+        border-width: 2px;
+    }
+
+    .status-indicator {
+        box-shadow: 0 0 0 3px currentColor;
+    }
+}
+
+/* ============================================================================
+   ALARM VIEW - Modern Glass Glow Premium Design
+   Complete redesign with premium glass morphism and glow effects
+   ============================================================================ */
+
+/* Alarm Overlay System - Fullscreen blur + pulse for pending/arming/triggered */
+.alarm-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9998;
+    backdrop-filter: blur(8px);
+    background: rgba(255, 255, 255, 0.12);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    display: none;
+}
+
+.alarm-overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+/* Pulse effect layer */
+.alarm-overlay::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(255, 0, 0, 0.25) 0%, rgba(255, 0, 0, 0.05) 50%, transparent 70%);
+    animation: alarm-pulse var(--pulse-speed, 2.5s) ease-in-out infinite;
+    opacity: 0.8;
+}
+
+.alarm-overlay.triggered::before {
+    background: radial-gradient(circle at center, rgba(255, 0, 0, 0.4) 0%, rgba(255, 0, 0, 0.15) 50%, transparent 70%);
+}
+
+@keyframes alarm-pulse {
+    0%, 100% {
+        opacity: 0.6;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+}
+
+/* ==========================
+   Alarm Control Compact UI (scoped)
+   ========================== */
+
+.alarm-container.compact .alarm-modes-section .alarm-modes {
+    gap: 6px;
+}
+
+.alarm-container.compact .alarm-mode-btn {
+    padding: 8px 10px;
+    min-width: 88px;
+    border-radius: 10px;
+}
+
+.alarm-container.compact .alarm-mode-btn .mode-icon { font-size: 18px; }
+.alarm-container.compact .alarm-mode-btn .mode-label { font-size: 12px; }
+
+.alarm-container.compact .alarm-code-section {
+    margin-top: 10px;
+}
+
+.alarm-container.compact .alarm-code-section .alarm-code-input {
+    height: 34px;
+    font-size: 16px;
+}
+
+.alarm-container.compact .alarm-numpad {
+    display: grid;
+    grid-template-columns: repeat(3, 64px);
+    grid-gap: 8px;
+    margin-top: 10px;
+}
+
+.alarm-container.compact .numpad-btn {
+    width: 64px;
+    height: 44px;
+    font-size: 16px;
+    border-radius: 8px;
+}
+
+.alarm-container.compact .numpad-btn.clear { background: #eee; }
+
+/* Sensor cards under PIN pad (scoped) */
+.alarm-container.compact .sensor-cards-section {
+    margin-top: 14px;
+}
+
+.alarm-container.compact .sensor-card-grid {
+    display: grid;
+    grid-template-columns: repeat( auto-fit, minmax(180px, 1fr) );
+    gap: 10px;
+}
+
+.alarm-container.compact .sensor-card {
+    background: rgba(255,255,255,0.65);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(0,0,0,0.06);
+    border-radius: 12px;
+    padding: 10px;
+}
+
+.alarm-container.compact .sensor-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.alarm-container.compact .sensor-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+}
+.alarm-container.compact .dot-online { background: #2e7d32; }
+.alarm-container.compact .dot-offline { background: #c62828; }
+
+.alarm-container.compact .sensor-name { font-weight: 600; font-size: 13px; }
+
+.alarm-container.compact .sensor-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.alarm-container.compact .sensor-oc {
+    font-size: 12px;
+    padding: 2px 6px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+}
+.alarm-container.compact .state-open { color: #c62828; border-color: rgba(198,40,40,0.25); background: rgba(198,40,40,0.08); }
+.alarm-container.compact .state-closed { color: #2e7d32; border-color: rgba(46,125,50,0.25); background: rgba(46,125,50,0.08); }
+
+.alarm-container.compact .sensor-battery { font-size: 12px; color: rgba(0,0,0,0.7); }
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .alarm-overlay::before {
+        animation: none !important;
+        opacity: 0.7;
+        background: radial-gradient(circle at center, rgba(255, 0, 0, 0.3) 0%, rgba(255, 0, 0, 0.1) 60%, transparent 80%);
+    }
+}
+
+/* Countdown Overlay - Centered display for exit/entry delay */
+.alarm-countdown-overlay {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    text-align: center;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    display: none;
+}
+
+.alarm-countdown-overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+.alarm-countdown-label {
+    font-size: 18px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.alarm-countdown-value {
+    font-size: 96px;
+    font-weight: 700;
+    color: #fff;
+    font-family: 'Courier New', monospace;
+    text-shadow: 
+        0 0 40px rgba(255, 100, 100, 0.6),
+        0 4px 12px rgba(0, 0, 0, 0.8);
+    line-height: 1;
+}
+
+.alarm-countdown-overlay.warning .alarm-countdown-value {
+    color: #ff5555;
+    animation: countdown-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes countdown-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .alarm-countdown-value {
+        animation: none !important;
+    }
+}
+
+/* Triggered State PIN Overlay - Fullscreen emergency disarm */
+.alarm-triggered-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background: rgba(10, 10, 20, 0.95);
+    backdrop-filter: blur(12px);
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    padding: 40px 20px;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+.alarm-triggered-overlay.active {
+    display: flex;
+    opacity: 1;
+}
+
+.triggered-header {
+    text-align: center;
+}
+
+.triggered-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #ff5555;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+    text-shadow: 0 0 30px rgba(255, 85, 85, 0.5);
+}
+
+.triggered-subtitle {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 500;
+}
+
+.triggered-pin-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    max-width: 400px;
+    width: 100%;
+}
+
+.triggered-pin-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.8);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+.triggered-pin-input {
+    width: 100%;
+    max-width: 320px;
+    padding: 20px;
+    font-size: 36px;
+    letter-spacing: 16px;
+    text-align: center;
+    border: 2px solid rgba(255, 85, 85, 0.5);
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    font-weight: 700;
+    font-family: 'Courier New', monospace;
+    box-shadow: 
+        inset 0 2px 8px rgba(0, 0, 0, 0.6),
+        0 0 30px rgba(255, 85, 85, 0.2);
+}
+
+.triggered-pin-input:focus {
+    outline: none;
+    border-color: rgba(255, 85, 85, 0.8);
+    box-shadow: 
+        inset 0 2px 8px rgba(0, 0, 0, 0.6),
+        0 0 40px rgba(255, 85, 85, 0.4);
+}
+
+.triggered-numpad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    max-width: 280px;
+    width: 100%;
+}
+
+.triggered-numpad-btn {
+    padding: 20px;
+    font-size: 24px;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.triggered-numpad-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 85, 85, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(255, 85, 85, 0.2);
+}
+
+.triggered-numpad-btn:active {
+    transform: scale(0.96);
+}
+
+.triggered-numpad-btn.clear {
+    background: rgba(255, 100, 100, 0.12);
+    border-color: rgba(255, 100, 100, 0.4);
+    color: rgba(255, 150, 150, 0.95);
+}
+
+.triggered-disarm-btn {
+    padding: 18px 48px;
+    font-size: 16px;
+    font-weight: 700;
+    background: linear-gradient(135deg, rgba(255, 85, 85, 0.3) 0%, rgba(200, 50, 50, 0.2) 100%);
+    border: 2px solid rgba(255, 85, 85, 0.6);
+    border-radius: 12px;
+    cursor: pointer;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 85, 85, 0.3);
+}
+
+.triggered-disarm-btn:hover {
+    background: linear-gradient(135deg, rgba(255, 85, 85, 0.4) 0%, rgba(200, 50, 50, 0.3) 100%);
+    border-color: rgba(255, 85, 85, 0.8);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(255, 85, 85, 0.4);
+}
+
+.triggered-countdown {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.triggered-countdown-label {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+.triggered-countdown-value {
+    font-size: 48px;
+    font-weight: 700;
+    color: #ff5555;
+    font-family: 'Courier New', monospace;
+    text-shadow: 0 0 30px rgba(255, 85, 85, 0.5);
+}
+
+.triggered-guest-warning {
+    text-align: center;
+    padding: 24px 32px;
+    background: rgba(255, 180, 50, 0.15);
+    border: 2px solid rgba(255, 180, 50, 0.4);
+    border-radius: 12px;
+    max-width: 400px;
+}
+
+.triggered-guest-warning p {
+    font-size: 15px;
+    color: rgba(255, 220, 150, 0.95);
+    font-weight: 600;
+    margin: 0;
+    line-height: 1.6;
+}
+
+.alarm-container {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    padding: 20px;
+    height: 100%;
+    overflow-y: auto;
+    background: linear-gradient(135deg, rgba(20, 20, 40, 0.95) 0%, rgba(30, 15, 50, 0.95) 100%);
+}
+
+/* State Indicator */
+.alarm-state-indicator {
+    text-align: center;
+    padding: 20px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.alarm-state-indicator h3 {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+.alarm-state-indicator .state-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 0 0 20px rgba(100, 200, 255, 0.3);
+}
+
+/* Mode Buttons Section */
+.alarm-modes-section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.alarm-modes-label {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    font-weight: 600;
+    padding: 0 4px;
+}
+
+.alarm-modes {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.alarm-mode-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 16px 12px;
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(12px);
+    border: 1.5px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.8);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.alarm-mode-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(100, 200, 255, 0.2) 0%, rgba(150, 100, 255, 0.1) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.alarm-mode-btn:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(100, 200, 255, 0.4);
+    transform: translateY(-3px);
+    box-shadow: 
+        0 8px 24px rgba(100, 200, 255, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2),
+        0 0 20px rgba(100, 200, 255, 0.15);
+    color: #fff;
+}
+
+.alarm-mode-btn:hover::before {
+    opacity: 1;
+}
+
+.alarm-mode-btn:active {
+    transform: translateY(-1px);
+    box-shadow: 
+        0 4px 12px rgba(100, 200, 255, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.alarm-mode-btn.selected {
+    background: rgba(100, 200, 255, 0.2);
+    border-color: rgba(100, 200, 255, 0.6);
+    color: #fff;
+    box-shadow: 
+        0 8px 24px rgba(100, 200, 255, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2),
+        0 0 30px rgba(100, 200, 255, 0.25);
+}
+
+.mode-icon {
+    font-size: 24px;
+    line-height: 1;
+}
+
+.mode-label {
+    text-align: center;
+    font-size: 11px;
+    line-height: 1.2;
+}
+
+/* PIN Input Section */
+.alarm-code-section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(12px);
+    border: 1.5px solid rgba(255, 255, 255, 0.12);
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.alarm-code-section label {
+    font-size: 12px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+}
+
+.alarm-code-input {
+    width: 100%;
+    padding: 16px;
+    font-size: 28px;
+    letter-spacing: 12px;
+    text-align: center;
+    border: 1.5px solid rgba(100, 200, 255, 0.3);
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.3);
+    color: #fff;
+    font-weight: 700;
+    font-family: 'Courier New', monospace;
+    transition: all 0.3s ease;
+    box-shadow: 
+        inset 0 2px 8px rgba(0, 0, 0, 0.4),
+        0 0 15px rgba(100, 200, 255, 0.1);
+}
+
+.alarm-code-input:focus {
+    outline: none;
+    border-color: rgba(100, 200, 255, 0.6);
+    background: rgba(0, 0, 0, 0.4);
+    box-shadow: 
+        inset 0 2px 8px rgba(0, 0, 0, 0.4),
+        0 0 25px rgba(100, 200, 255, 0.25),
+        0 0 40px rgba(100, 200, 255, 0.15);
+}
+
+/* Numpad Grid */
+.alarm-numpad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.numpad-btn {
+    padding: 18px 12px;
+    font-size: 18px;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(12px);
+    border: 1.5px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.numpad-btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(100, 200, 255, 0.3) 0%, transparent 100%);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+}
+
+.numpad-btn:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(100, 200, 255, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 
+        0 6px 18px rgba(100, 200, 255, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15),
+        0 0 15px rgba(100, 200, 255, 0.15);
+    color: #fff;
+}
+
+.numpad-btn:hover::after {
+    opacity: 1;
+}
+
+.numpad-btn:active {
+    transform: scale(0.96);
+    box-shadow: 
+        inset 0 2px 4px rgba(0, 0, 0, 0.3),
+        0 2px 6px rgba(100, 200, 255, 0.1);
+}
+
+.numpad-btn.clear {
+    background: rgba(255, 100, 100, 0.08);
+    border-color: rgba(255, 100, 100, 0.3);
+    color: rgba(255, 150, 150, 0.9);
+}
+
+.numpad-btn.clear:hover {
+    background: rgba(255, 100, 100, 0.15);
+    border-color: rgba(255, 100, 100, 0.5);
+    box-shadow: 
+        0 6px 18px rgba(255, 100, 100, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        0 0 15px rgba(255, 100, 100, 0.15);
+    color: #fff;
+}
+
+/* Action Buttons */
+.alarm-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 0 4px;
+}
+
+.alarm-action-btn {
+    padding: 16px;
+    font-size: 14px;
+    font-weight: 700;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    position: relative;
+    overflow: hidden;
+}
+
+.alarm-action-btn.confirm {
+    background: linear-gradient(135deg, rgba(100, 200, 255, 0.25) 0%, rgba(150, 100, 255, 0.15) 100%);
+    border: 1.5px solid rgba(100, 200, 255, 0.4);
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(100, 200, 255, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.alarm-action-btn.confirm:hover {
+    background: linear-gradient(135deg, rgba(100, 200, 255, 0.35) 0%, rgba(150, 100, 255, 0.25) 100%);
+    border-color: rgba(100, 200, 255, 0.6);
+    box-shadow: 
+        0 8px 24px rgba(100, 200, 255, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2),
+        0 0 20px rgba(100, 200, 255, 0.25);
+    transform: translateY(-2px);
+}
+
+.alarm-action-btn.cancel {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1.5px solid rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.7);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.alarm-action-btn.cancel:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.3);
+    color: #fff;
+    box-shadow: 
+        0 6px 18px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+}
+
+.alarm-action-btn:active {
+    transform: scale(0.98);
+}
+
+/* Messages */
+.alarm-message {
+    padding: 14px 18px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: none;
+    text-align: center;
+    backdrop-filter: blur(12px);
+}
+
+.alarm-message.show {
+    display: block;
+}
+
+.alarm-message.error {
+    background: rgba(255, 100, 100, 0.15);
+    border: 1px solid rgba(255, 100, 100, 0.35);
+    color: rgba(255, 180, 180, 0.95);
+    box-shadow: 0 0 20px rgba(255, 100, 100, 0.12);
+}
+
+.alarm-message.success {
+    background: rgba(100, 220, 100, 0.15);
+    border: 1px solid rgba(100, 220, 100, 0.35);
+    color: rgba(180, 255, 180, 0.95);
+    box-shadow: 0 0 20px rgba(100, 220, 100, 0.12);
+}
+
+.alarm-message.info {
+    background: rgba(100, 180, 255, 0.15);
+    border: 1px solid rgba(100, 180, 255, 0.35);
+    color: rgba(180, 220, 255, 0.95);
+    box-shadow: 0 0 20px rgba(100, 180, 255, 0.12);
+}
+
+/* Responsive Design for Alarm View */
+@media (max-width: 768px) {
+    .alarm-modes {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .alarm-state-indicator {
+        padding: 16px;
+    }
+
+    .alarm-state-indicator .state-value {
+        font-size: 24px;
+    }
+
+    .alarm-code-section {
+        padding: 16px;
+    }
+
+    .numpad-btn {
+        padding: 14px 10px;
+        font-size: 16px;
+    }
+
+    .alarm-action-btn {
+        padding: 14px;
+        font-size: 13px;
+    }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    .alarm-mode-btn,
+    .numpad-btn,
+    .alarm-action-btn {
+        transition: none;
+    }
+
+    .alarm-mode-btn::before,
+    .numpad-btn::after {
+        transition: none;
+    }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: more) {
+    .alarm-mode-btn,
+    .numpad-btn,
+    .alarm-action-btn {
+        border-width: 2px;
+    }
+
+    .alarm-code-input {
+        border-width: 2px;
+    }
+}
+
 
 

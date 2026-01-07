@@ -98,7 +98,7 @@ func startTestServer(t *testing.T, cfg TestConfig) *TestServer {
 	}
 
 	// Create API server
-	server := NewServer(coord)
+	server := NewServer(coord, runtimeCfg)
 
 	// Build handler manually for testing (without real listen port)
 	mux := server.registerRoutes()

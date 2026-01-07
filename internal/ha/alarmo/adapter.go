@@ -44,8 +44,9 @@ type haStateResponse struct {
 // baseURL: Home Assistant REST API base URL (e.g., "http://localhost:8123")
 // decryptedToken: Bearer token (already decrypted from secure storage)
 func New(baseURL string, decryptedToken string) *Adapter {
+	cleanBase := strings.TrimRight(baseURL, "/")
 	return &Adapter{
-		baseURL: baseURL,
+		baseURL: cleanBase,
 		token:   decryptedToken,
 		client: &http.Client{
 			Timeout: 5 * time.Second,

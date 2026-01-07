@@ -19,6 +19,7 @@ import (
 	"smartdisplay-core/internal/i18n"
 	"smartdisplay-core/internal/logger"
 	"smartdisplay-core/internal/platform"
+	"smartdisplay-core/internal/settings"
 	"smartdisplay-core/internal/system"
 	"smartdisplay-core/internal/version"
 	"strconv"
@@ -61,6 +62,20 @@ func main() {
 	// 7. Coordinator and subsystems (HA adapter, alarm, guest, etc.)
 	coord := initializeCoordinator(cfg, runtimeCfg)
 
+	// 7.5 FAZ S4: Initialize global HA connection state from stored config
+	// If HA is configured but no test has been run yet, state is disconnected
+	// If HA is configured and was previously tested, restore last known state
+	haConfig, err := settings.LoadHAConfig()
+	if err == nil && haConfig != nil {
+		// HA is configured - state was already set during load, nothing to do
+		logger.Info("ha connection state initialized: connected=" + (map[bool]string{true: "yes", false: "no"})[runtimeCfg.HaConnected])
+	} else {
+		// HA not configured - mark as disconnected
+		runtimeCfg.HaConnected = false
+		runtimeCfg.HaLastTestedAt = nil
+		logger.Info("ha not configured, connection state set to disconnected")
+	}
+
 	// 8. Health monitoring startup
 	coord.StartHealthMonitor()
 	health.SetCoordinator(coord)
@@ -70,13 +85,51 @@ func main() {
 	pollCtx, pollCancel := context.WithCancel(context.Background())
 	coord.StartAlarmPolling(pollCtx)
 
+	// 8.7 FAZ S6: Initialize HA health monitor for runtime failure detection
+	settings.InitGlobalHealthMonitor()
+
 	// 9. HTTP server startup
-	apiServer := api.NewServer(coord)
+	apiServer := api.NewServer(coord, runtimeCfg)
 	if err := apiServer.Start(8090); err != nil {
 		logger.Error("failed to start API server: " + err.Error())
 		os.Exit(1)
 	}
 	logger.Info("ui api ready")
+
+	// 9.5 FAZ S5: Perform initial HA synchronization if not done yet and HA is connected
+	if runtimeCfg.HaConnected && !runtimeCfg.InitialSyncDone {
+		logger.Info("starting initial HA synchronization")
+		syncResult, err := settings.PerformInitialSync()
+		if err == nil && syncResult.Success {
+			// Update runtime config with sync results
+			runtimeCfg.InitialSyncDone = true
+			syncTime := time.Now().Format(time.RFC3339)
+			runtimeCfg.InitialSyncAt = &syncTime
+
+			if syncResult.Meta != nil {
+				runtimeCfg.HaVersion = syncResult.Meta.Version
+				runtimeCfg.HaTimeZone = syncResult.Meta.TimeZone
+				runtimeCfg.HaLocationName = syncResult.Meta.LocationName
+			}
+
+			if syncResult.Counts != nil {
+				runtimeCfg.EntityLights = syncResult.Counts.Lights
+				runtimeCfg.EntitySensors = syncResult.Counts.Sensors
+				runtimeCfg.EntitySwitches = syncResult.Counts.Switches
+				runtimeCfg.EntityOthers = syncResult.Counts.Others
+			}
+
+			// Save updated config
+			if err := config.SaveRuntimeConfig(runtimeCfg); err != nil {
+				logger.Error("failed to save initial sync state: " + err.Error())
+			}
+			logger.Info("initial HA synchronization completed")
+		} else if err != nil {
+			logger.Error("initial HA synchronization error: " + err.Error())
+		} else if !syncResult.Success {
+			logger.Error("initial HA synchronization failed: " + syncResult.Message)
+		}
+	}
 
 	// 10. Graceful shutdown handling (blocks on signal)
 	handleGracefulShutdown(apiServer, pollCancel)
@@ -143,8 +196,32 @@ func initializeCoordinator(cfg config.Config, runtimeCfg *config.RuntimeConfig) 
 
 	// Create coordinator (integrates all subsystems)
 	// A2: Pass HA connection details for Alarmo adapter
+	// FAZ S2: Load HA config from secure storage, decrypt token
 	haBaseURL := os.Getenv("HA_BASE_URL")
-	haToken := runtimeCfg.HAToken // Use decrypted token from runtime config
+	haToken := ""
+
+	// Load HA config from file if already configured by user
+	haConfig, err := settings.LoadHAConfig()
+	if err == nil && haConfig != nil && haConfig.ServerURL != "" {
+		haBaseURL = haConfig.ServerURL
+		// Decrypt token from secure storage
+		decryptedToken, err := settings.DecryptToken()
+		if err != nil {
+			logger.Error("failed to decrypt ha token at startup: " + err.Error())
+		} else if decryptedToken != "" {
+			haToken = decryptedToken
+			logger.Info("ha config loaded from secure storage at startup")
+		}
+	}
+
+	// Fallback: Try environment variables if not configured in secure storage
+	if haBaseURL == "" {
+		haBaseURL = os.Getenv("HA_BASE_URL")
+	}
+	if haToken == "" {
+		haToken = os.Getenv("HA_TOKEN")
+	}
+
 	coord := system.NewCoordinator(alarmSM, guestSM, cd, adapter, notifier, halReg, plat, haBaseURL, haToken)
 	logger.Info("system coordinator ready")
 

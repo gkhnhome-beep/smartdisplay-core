@@ -250,6 +250,29 @@
         console.log('[SmartDisplay] Application ready');
         console.log('[SmartDisplay] API Base URL:', window.SmartDisplay.api.baseUrl);
 
+        // Initialize Cinematic Alarm Scene System
+        if (window.SmartDisplay.AlarmScene) {
+            window.SmartDisplay.AlarmScene.init();
+        }
+
+        // FAZ L4: Initialize Advisor
+        if (window.SmartDisplay.advisor) {
+            window.SmartDisplay.advisor.init();
+        }
+
+        // FAZ L6: Initialize Trace
+        if (window.SmartDisplay.trace) {
+            window.SmartDisplay.trace.init();
+        }
+
+        // FAZ L5: Play intro if first boot
+        if (window.SmartDisplay.intro && window.SmartDisplay.intro.shouldShow()) {
+            console.log('[Bootstrap] First boot detected, playing intro...');
+            window.SmartDisplay.intro.play().catch(function(e) {
+                console.error('[Bootstrap] Intro error (continuing):', e);
+            });
+        }
+
         // Execute ready hooks
         if (window.SmartDisplay.hooks.onReady.length > 0) {
             window.SmartDisplay.hooks.onReady.forEach(function(hook) {
@@ -293,6 +316,11 @@
     // Cleanup on Page Unload
     // ========================================================================
     window.addEventListener('beforeunload', function() {
+        // Cleanup AlarmScene
+        if (window.SmartDisplay.AlarmScene) {
+            window.SmartDisplay.AlarmScene.destroy();
+        }
+
         window.SmartDisplay.hooks.onDestroy.forEach(function(hook) {
             try {
                 hook();
@@ -390,5 +418,98 @@
             });
         }
     });
+
+    // ========================================================================
+    // TURKISH COUNTDOWN TEST - Debug function for user issue
+    // ========================================================================
+    window.testTurkishCountdown = function(seconds) {
+        seconds = seconds || 30; // Default 30 seconds as user requested
+        console.log('[Bootstrap] 🇹🇷 Starting Turkish countdown test with', seconds, 'seconds');
+        
+        // Get AlarmControlView directly
+        var alarmView = window.SmartDisplay.viewManager ? window.SmartDisplay.viewManager.views.filter(function(v) { 
+            return v.id === 'alarm-control'; 
+        })[0] : null;
+        
+        if (alarmView && alarmView._showCountdownOverlay) {
+            console.log('[Bootstrap] Found AlarmControlView, showing countdown...');
+            alarmView._showCountdownOverlay(seconds);
+        } else {
+            console.error('[Bootstrap] AlarmControlView not found or no countdown method');
+            console.log('[Bootstrap] Available views:', window.SmartDisplay.viewManager ? window.SmartDisplay.viewManager.views : 'No viewManager');
+        }
+    };
+    
+    // Quick test function - just shows countdown immediately
+    window.quickCountdownTest = function() {
+        console.log('🇹🇷 Quick countdown test starting...');
+        
+        // Direct DOM manipulation test first
+        var overlay = document.getElementById('alarm-overlay');
+        var countdownOverlay = document.getElementById('alarm-countdown-overlay');
+        var countdownValue = document.getElementById('alarm-countdown-value');
+        
+        console.log('DOM elements found:', {
+            overlay: !!overlay,
+            countdownOverlay: !!countdownOverlay, 
+            countdownValue: !!countdownValue
+        });
+        
+        if (overlay && countdownOverlay && countdownValue) {
+            console.log('✅ All DOM elements found, starting direct countdown...');
+            
+            // Show overlay directly
+            overlay.classList.add('active');
+            overlay.style.setProperty('--pulse-speed', '2.5s');
+            countdownOverlay.classList.add('active');
+            
+            // Start countdown from 30
+            var remaining = 30;
+            countdownValue.textContent = String(remaining).padStart(2, '0');
+            
+            var timer = setInterval(function() {
+                remaining--;
+                console.log('⏰ Countdown:', remaining);
+                
+                if (remaining <= 0) {
+                    clearInterval(timer);
+                    overlay.classList.remove('active');
+                    countdownOverlay.classList.remove('active');
+                    console.log('⏰ Countdown finished!');
+                    return;
+                }
+                
+                // Fast pulse for last 10 seconds
+                if (remaining <= 10) {
+                    overlay.style.setProperty('--pulse-speed', '1.2s');
+                    countdownOverlay.classList.add('warning');
+                }
+                
+                countdownValue.textContent = String(remaining).padStart(2, '0');
+            }, 1000);
+            
+        } else {
+            console.error('❌ Missing DOM elements - need to be on alarm page first');
+            console.log('Current page elements:', document.querySelectorAll('[id*="alarm"]').length);
+        }
+    };
+    
+    // Force show alarm view and start countdown
+    window.forceAlarmCountdown = function() {
+        console.log('🚀 Force starting alarm countdown...');
+        
+        // Navigate to alarm view first
+        if (window.SmartDisplay && window.SmartDisplay.viewManager) {
+            window.SmartDisplay.viewManager.showView('alarm-control');
+            
+            // Wait a bit for DOM to be ready
+            setTimeout(function() {
+                console.log('📍 Now on alarm page, starting countdown...');
+                quickCountdownTest();
+            }, 500);
+        } else {
+            console.error('❌ SmartDisplay not initialized');
+        }
+    };
 
 })();

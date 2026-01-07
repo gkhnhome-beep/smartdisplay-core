@@ -28,6 +28,26 @@ type RuntimeConfig struct {
 
 	// Voice feedback (FAZ 81)
 	VoiceEnabled bool `json:"voice_enabled"` // Voice feedback hooks enabled
+
+	// Home Assistant global state (FAZ S4)
+	HaConnected    bool    `json:"ha_connected"`                // true = last test succeeded and reached stage=ok
+	HaLastTestedAt *string `json:"ha_last_tested_at,omitempty"` // RFC3339 timestamp of last successful test
+
+	// Home Assistant initial sync (FAZ S5)
+	InitialSyncDone bool    `json:"initial_sync_done"`          // true = bootstrap sync completed successfully
+	InitialSyncAt   *string `json:"initial_sync_at,omitempty"`  // RFC3339 timestamp of successful sync
+	HaVersion       string  `json:"ha_version,omitempty"`       // HA version from initial sync
+	HaTimeZone      string  `json:"ha_timezone,omitempty"`      // HA timezone from initial sync
+	HaLocationName  string  `json:"ha_location_name,omitempty"` // HA location name from initial sync
+	EntityLights    int     `json:"entity_lights,omitempty"`    // Count of light entities
+	EntitySensors   int     `json:"entity_sensors,omitempty"`   // Count of sensor entities
+	EntitySwitches  int     `json:"entity_switches,omitempty"`  // Count of switch entities
+	EntityOthers    int     `json:"entity_others,omitempty"`    // Count of other entities
+
+	// Home Assistant runtime health (FAZ S6)
+	HaRuntimeUnreachable  bool    `json:"ha_runtime_unreachable"`            // true = HA became temporarily unreachable after N failures
+	HaLastSeenAt          *string `json:"ha_last_seen_at,omitempty"`         // RFC3339 timestamp of last successful HA read
+	HaConsecutiveFailures int     `json:"ha_consecutive_failures,omitempty"` // Counter for consecutive read failures (not persisted, runtime only)
 }
 
 const RuntimeConfigPath = "data/runtime.json"
@@ -43,19 +63,26 @@ func LoadRuntimeConfig() (*RuntimeConfig, error) {
 		}
 	} else if os.IsNotExist(err) {
 		cfg = RuntimeConfig{
-			HABaseURL:       "",
-			HAToken:         "",
-			UIEnabled:       false,
-			HardwareProfile: "minimal",
-			WizardCompleted: false,
-			BindAddr:        "0.0.0.0",
-			Port:            8090,
-			TrustProxy:      false,
-			Language:        "en",
-			HighContrast:    false,
-			LargeText:       false,
-			ReducedMotion:   false,
-			VoiceEnabled:    false,
+			HABaseURL:             "",
+			HAToken:               "",
+			UIEnabled:             false,
+			HardwareProfile:       "minimal",
+			WizardCompleted:       false,
+			BindAddr:              "0.0.0.0",
+			Port:                  8090,
+			TrustProxy:            false,
+			Language:              "en",
+			HighContrast:          false,
+			LargeText:             false,
+			ReducedMotion:         false,
+			VoiceEnabled:          false,
+			HaConnected:           false,
+			HaLastTestedAt:        nil,
+			InitialSyncDone:       false,
+			InitialSyncAt:         nil,
+			HaRuntimeUnreachable:  false,
+			HaLastSeenAt:          nil,
+			HaConsecutiveFailures: 0,
 		}
 	} else {
 		return nil, err

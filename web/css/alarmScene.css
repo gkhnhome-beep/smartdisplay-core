@@ -1,0 +1,506 @@
+/* ============================================================================
+   CINEMATIC ALARM SCENE - Premium fullscreen overlay system
+   State-driven visualization of Alarmo urgency
+   ============================================================================ */
+
+/* Scene Container - Fullscreen overlay */
+.alarm-scene-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    pointer-events: none;
+}
+
+.alarm-scene-overlay.active {
+    display: flex;
+    opacity: 1;
+    pointer-events: none;  /* Default: don't block clicks */
+}
+
+/* Emergency scene blocks all clicks */
+.alarm-scene-overlay.emergency-scene.active {
+    pointer-events: auto;
+}
+
+/* ============================================================================
+   SCENE 1: COUNTDOWN SCENE (arming / pending)
+   ============================================================================ */
+
+.alarm-scene-overlay.countdown-scene {
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(20px);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 48px;
+    padding: 40px;
+}
+
+/* Countdown pulse overlay */
+.alarm-scene-overlay.countdown-scene::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        circle at center,
+        rgba(255, 0, 0, 0.08) 0%,
+        rgba(255, 0, 0, 0.02) 40%,
+        transparent 70%
+    );
+    animation: countdown-pulse var(--pulse-speed, 3s) ease-in-out infinite;
+    pointer-events: none;
+    z-index: 1;
+}
+
+@keyframes countdown-pulse {
+    0%, 100% {
+        opacity: 0.4;
+    }
+    50% {
+        opacity: 0.8;
+    }
+}
+
+/* Countdown content container */
+.countdown-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+
+.countdown-label {
+    font-size: 18px;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.7);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 24px;
+}
+
+.countdown-timer {
+    font-size: 120px;
+    font-weight: 700;
+    color: #d32f2f;
+    font-family: 'Courier New', monospace;
+    line-height: 1;
+    text-shadow: 0 4px 20px rgba(211, 47, 47, 0.3);
+    letter-spacing: 8px;
+}
+
+.countdown-timer.warning {
+    animation: timer-pulse 1s ease-in-out infinite;
+}
+
+@keyframes timer-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+/* ============================================================================
+   SCENE 2: EMERGENCY SCENE (triggered)
+   ============================================================================ */
+
+.alarm-scene-overlay.emergency-scene {
+    background: rgba(20, 20, 20, 0.95);
+    backdrop-filter: blur(30px);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 48px;
+    padding: 40px;
+}
+
+/* Aggressive red pulse */
+.alarm-scene-overlay.emergency-scene::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        circle at center,
+        rgba(211, 47, 47, 0.15) 0%,
+        rgba(211, 47, 47, 0.05) 50%,
+        transparent 80%
+    );
+    animation: emergency-pulse 1.2s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 1;
+}
+
+@keyframes emergency-pulse {
+    0%, 100% {
+        opacity: 0.6;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.08);
+    }
+}
+
+/* Subtle screen shake */
+.alarm-scene-overlay.emergency-scene.shake {
+    animation: screen-shake 0.4s ease-in-out 1;
+}
+
+@keyframes screen-shake {
+    0%, 100% { transform: translateX(0) translateY(0); }
+    25% { transform: translateX(-8px) translateY(-8px); }
+    50% { transform: translateX(8px) translateY(8px); }
+    75% { transform: translateX(-4px) translateY(4px); }
+}
+
+/* Emergency shake for wrong PIN */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    50% { transform: translateX(10px); }
+    75% { transform: translateX(-5px); }
+}
+
+/* Emergency content */
+.emergency-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+}
+
+.emergency-title {
+    font-size: 48px;
+    font-weight: 700;
+    color: #d32f2f;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 16px;
+    text-shadow: 0 0 40px rgba(211, 47, 47, 0.5);
+}
+
+.emergency-subtitle {
+    font-size: 18px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 40px;
+}
+
+/* PIN pad section */
+.emergency-pin-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    max-width: 360px;
+}
+
+.emergency-pin-input {
+    width: 100%;
+    padding: 24px;
+    font-size: 40px;
+    letter-spacing: 20px;
+    text-align: center;
+    border: 3px solid rgba(211, 47, 47, 0.5);
+    border-radius: 16px;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    font-weight: 700;
+    font-family: 'Courier New', monospace;
+    box-shadow: 
+        inset 0 4px 12px rgba(0, 0, 0, 0.8),
+        0 0 40px rgba(211, 47, 47, 0.25);
+    transition: all 0.3s ease;
+}
+
+.emergency-pin-input:focus {
+    outline: none;
+    border-color: rgba(211, 47, 47, 0.8);
+    box-shadow: 
+        inset 0 4px 12px rgba(0, 0, 0, 0.8),
+        0 0 60px rgba(211, 47, 47, 0.4);
+}
+
+/* Emergency numpad */
+.emergency-numpad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    width: 100%;
+}
+
+.emergency-numpad-btn {
+    padding: 20px;
+    font-size: 24px;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.08);
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.9);
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.emergency-numpad-btn:hover {
+    background: rgba(211, 47, 47, 0.15);
+    border-color: rgba(211, 47, 47, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(211, 47, 47, 0.25);
+}
+
+.emergency-numpad-btn:active {
+    transform: scale(0.96);
+}
+
+.emergency-numpad-btn.clear {
+    background: rgba(211, 47, 47, 0.1);
+    border-color: rgba(211, 47, 47, 0.3);
+}
+
+/* Disarm button */
+.emergency-disarm-btn {
+    padding: 18px 48px;
+    font-size: 16px;
+    font-weight: 700;
+    background: linear-gradient(135deg, rgba(211, 47, 47, 0.4) 0%, rgba(180, 30, 30, 0.3) 100%);
+    border: 2px solid rgba(211, 47, 47, 0.6);
+    border-radius: 12px;
+    cursor: pointer;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(211, 47, 47, 0.3);
+}
+
+.emergency-disarm-btn:hover {
+    background: linear-gradient(135deg, rgba(211, 47, 47, 0.5) 0%, rgba(180, 30, 30, 0.4) 100%);
+    border-color: rgba(211, 47, 47, 0.8);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(211, 47, 47, 0.4);
+}
+
+/* Guest warning */
+.emergency-guest-warning {
+    padding: 32px;
+    background: rgba(255, 152, 0, 0.12);
+    border: 2px solid rgba(255, 152, 0, 0.4);
+    border-radius: 16px;
+    text-align: center;
+    max-width: 360px;
+}
+
+.emergency-guest-warning p {
+    font-size: 16px;
+    color: rgba(255, 220, 100, 0.95);
+    font-weight: 600;
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* Emergency countdown */
+.emergency-countdown {
+    text-align: center;
+    margin-top: 24px;
+}
+
+.emergency-countdown-label {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 12px;
+}
+
+.emergency-countdown-value {
+    font-size: 48px;
+    font-weight: 700;
+    color: #d32f2f;
+    font-family: 'Courier New', monospace;
+    text-shadow: 0 0 40px rgba(211, 47, 47, 0.5);
+}
+
+/* ============================================================================
+   SCENE 3: GUARDED SCENE (armed_home / away / night)
+   ============================================================================ */
+
+.alarm-scene-overlay.guarded-scene {
+    background: rgba(20, 20, 20, 0.85);
+    backdrop-filter: blur(15px);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    padding: 40px;
+}
+
+/* Ambient glow animation */
+.alarm-scene-overlay.guarded-scene::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        circle at center,
+        rgba(100, 150, 255, 0.06) 0%,
+        rgba(150, 100, 200, 0.03) 50%,
+        transparent 80%
+    );
+    animation: ambient-glow 8s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 1;
+}
+
+@keyframes ambient-glow {
+    0%, 100% {
+        opacity: 0.5;
+    }
+    50% {
+        opacity: 0.8;
+    }
+}
+
+/* Guarded content */
+.guarded-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+
+.guarded-icon {
+    font-size: 80px;
+    margin-bottom: 24px;
+    display: none;
+}
+
+.guarded-icon::before {
+    content: '🛡️';
+}
+
+.guarded-status {
+    font-size: 32px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 12px;
+}
+
+.guarded-mode {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* ============================================================================
+   ACCESSIBILITY & REDUCED MOTION
+   ============================================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    .alarm-scene-overlay,
+    .alarm-scene-overlay::before,
+    .countdown-timer.warning,
+    .emergency-numpad-btn,
+    .emergency-disarm-btn {
+        animation: none !important;
+        transition: opacity 0.2s ease !important;
+    }
+
+    .alarm-scene-overlay.emergency-scene.shake {
+        animation: none !important;
+    }
+
+    /* Static indicators instead of animations */
+    .alarm-scene-overlay.countdown-scene::before {
+        opacity: 0.6 !important;
+    }
+
+    .alarm-scene-overlay.emergency-scene::before {
+        opacity: 0.8 !important;
+    }
+
+    .alarm-scene-overlay.guarded-scene::before {
+        opacity: 0.6 !important;
+    }
+}
+
+/* ============================================================================
+   RESPONSIVE DESIGN
+   ============================================================================ */
+
+@media (max-width: 768px) {
+    .alarm-scene-overlay.countdown-scene {
+        gap: 32px;
+        padding: 20px;
+    }
+
+    .countdown-timer {
+        font-size: 80px;
+        letter-spacing: 4px;
+    }
+
+    .alarm-scene-overlay.emergency-scene {
+        gap: 32px;
+        padding: 20px;
+    }
+
+    .emergency-title {
+        font-size: 36px;
+        letter-spacing: 2px;
+    }
+
+    .emergency-subtitle {
+        font-size: 16px;
+        margin-bottom: 24px;
+    }
+
+    .emergency-pin-input {
+        font-size: 32px;
+        letter-spacing: 16px;
+        padding: 18px;
+    }
+
+    .emergency-numpad-btn {
+        padding: 16px;
+        font-size: 20px;
+    }
+
+    .guarded-status {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .countdown-timer {
+        font-size: 64px;
+        letter-spacing: 2px;
+    }
+
+    .emergency-title {
+        font-size: 28px;
+    }
+
+    .emergency-pin-input {
+        font-size: 28px;
+        letter-spacing: 12px;
+    }
+
+    .emergency-numpad {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+    }
+
+    .emergency-numpad-btn {
+        padding: 12px;
+        font-size: 18px;
+    }
+
+    .emergency-disarm-btn {
+        padding: 14px 32px;
+        font-size: 14px;
+    }
+}

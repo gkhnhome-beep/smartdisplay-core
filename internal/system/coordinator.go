@@ -2,6 +2,7 @@ package system
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"runtime"
 	"smartdisplay-core/internal/ai"
@@ -22,6 +23,7 @@ import (
 	"smartdisplay-core/internal/platform"
 	"smartdisplay-core/internal/plugin"
 	"smartdisplay-core/internal/settings"
+	"strings"
 	"sync"
 	"time"
 )
@@ -56,16 +58,17 @@ type SelfCheckResult struct {
 // Coordinator manages system state and interactions between components
 type Coordinator struct {
 	// Core subsystems (D0-D7 design phases)
-	Alarm       *alarm.StateMachine
-	Guest       *guest.StateMachine
-	Countdown   *countdown.Countdown
-	FirstBoot   *firstboot.FirstBootManager // D0: First-boot flow manager
-	Home        *home.HomeStateManager      // D2: Home screen state machine
-	AlarmScreen *alarm.ScreenStateManager   // D3: Alarm screen state exposure
-	GuestScreen *guest.ScreenStateManager   // D4: Guest access flow state machine
-	Menu        *menu.MenuManager           // D5: Menu structure and role-based visibility
-	Logbook     *logbook.LogbookManager     // D6: History and logbook
-	Settings    *settings.SettingsManager   // D7: Settings management
+	Alarm        *alarm.StateMachine
+	Guest        *guest.StateMachine
+	Countdown    *countdown.Countdown
+	FirstBoot    *firstboot.FirstBootManager // D0: First-boot flow manager
+	Home         *home.HomeStateManager      // D2: Home screen state machine
+	AlarmScreen  *alarm.ScreenStateManager   // D3: Alarm screen state exposure
+	GuestScreen  *guest.ScreenStateManager   // D4: Guest access flow state machine
+	GuestRequest *guest.Manager              // FAZ L2: Guest approval flow
+	Menu         *menu.MenuManager           // D5: Menu structure and role-based visibility
+	Logbook      *logbook.LogbookManager     // D6: History and logbook
+	Settings     *settings.SettingsManager   // D7: Settings management
 
 	// Home automation & hardware
 	HA            *haadapter.Adapter
@@ -202,13 +205,14 @@ func NewCoordinator(a *alarm.StateMachine, g *guest.StateMachine, c *countdown.C
 		HA:             ha,
 		Notifier:       n,
 		AI:             aiEngine,
-		FirstBoot:      firstboot.New(false), // Placeholder, will be set from runtimeCfg at startup
-		Home:           homeMgr,              // D2: Home state manager
-		AlarmScreen:    alarmScreenMgr,       // D3: Alarm screen state manager
-		GuestScreen:    guestScreenMgr,       // D4: Guest screen state manager
-		Menu:           menuMgr,              // D5: Menu structure and role-based visibility
-		Logbook:        logbookMgr,           // D6: History and logbook
-		Settings:       settingsMgr,          // D7: Settings management
+		FirstBoot:      firstboot.New(false),               // Placeholder, will be set from runtimeCfg at startup
+		Home:           homeMgr,                            // D2: Home state manager
+		AlarmScreen:    alarmScreenMgr,                     // D3: Alarm screen state manager
+		GuestScreen:    guestScreenMgr,                     // D4: Guest screen state manager
+		GuestRequest:   guest.NewManager(60 * time.Second), // FAZ L2: Guest approval flow
+		Menu:           menuMgr,                            // D5: Menu structure and role-based visibility
+		Logbook:        logbookMgr,                         // D6: History and logbook
+		Settings:       settingsMgr,                        // D7: Settings management
 		DeviceStates:   []string{"online"},
 		Cfg:            cfg,
 		HALRegistry:    halReg,
@@ -216,6 +220,9 @@ func NewCoordinator(a *alarm.StateMachine, g *guest.StateMachine, c *countdown.C
 		AlarmoAdapter:  alarmoAdapter, // A2: Alarmo adapter
 		pluginRegistry: plugin.NewRegistry(),
 	}
+
+	// FAZ L3: Wire guest approval callbacks
+	coord.setupGuestApprovalCallbacks()
 
 	// A2/A3: Initialize Alarmo state from first fetch
 	if coord.AlarmoAdapter != nil {
@@ -604,7 +611,21 @@ func (c *Coordinator) StartAlarmPolling(ctx context.Context) {
 				cancel()
 
 				if err != nil {
-					// Log error but preserve last good state (fail-safe)
+					// Check if it's a 404 error (Alarmo not installed)
+					if strings.Contains(err.Error(), "http 404") {
+						// Alarmo not installed - log once and reduce noise
+						c.AlarmoMu.Lock()
+						if !c.failsafe.Active {
+							c.failsafe.Active = true
+							c.failsafe.Explanation = "Alarmo not installed in Home Assistant"
+							logger.Info("alarmo: not found (404) - alarm features disabled")
+						}
+						c.AlarmoMu.Unlock()
+						// Slow down polling when Alarmo is not installed (reduce log spam)
+						time.Sleep(58 * time.Second) // Sleep to make it ~60s total with ticker
+						continue
+					}
+					// Other errors - log and activate failsafe
 					logger.Error("alarmo: fetch error: " + err.Error())
 					c.AlarmoMu.Lock()
 					if !c.failsafe.Active {
@@ -1002,4 +1023,81 @@ func getMemoryInfo() string {
 	runtime.ReadMemStats(&m)
 	available := m.Alloc / 1024 / 1024
 	return fmt.Sprintf("%d MB", available)
+}
+
+// === GUEST APPROVAL CALLBACKS (FAZ L3) ===
+
+// setupGuestApprovalCallbacks wires guest request callbacks to HA and alarm systems
+func (c *Coordinator) setupGuestApprovalCallbacks() {
+	if c.GuestRequest == nil {
+		logger.Error("guest request manager not initialized")
+		return
+	}
+
+	// Approved callback: Disarm alarm and send HA notification
+	c.GuestRequest.SetApprovedCallback(func(req *guest.GuestRequest) error {
+		logger.Info("guest approval callback triggered: request_id=" + req.ID)
+
+		// Step 1: Disarm alarm via Alarmo
+		if c.AlarmoAdapter != nil {
+			// Request Alarmo disarm action
+			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+			err := c.AlarmoAdapter.RequestAction(ctx, "disarm")
+			cancel()
+
+			if err != nil {
+				logger.Error("guest approval: alarmo disarm failed: " + err.Error())
+				// Don't fail the approval - HA might be offline
+			} else {
+				logger.Info("guest approval: alarmo disarm requested successfully")
+			}
+		}
+
+		// Step 2: Send HA feedback notification
+		if c.HA != nil {
+			payload := map[string]interface{}{
+				"title":   "Guest Access Approved",
+				"message": "Guest access granted and alarm disarmed",
+			}
+			if err := c.sendHANotification(req.TargetUser, payload); err != nil {
+				logger.Error("guest approval: failed to send HA notification: " + err.Error())
+			}
+		}
+
+		return nil
+	})
+
+	// Rejected callback: Send HA notification
+	c.GuestRequest.SetRejectedCallback(func(req *guest.GuestRequest) error {
+		logger.Info("guest rejection callback triggered: request_id=" + req.ID)
+
+		// Send HA feedback notification
+		if c.HA != nil {
+			payload := map[string]interface{}{
+				"title":   "Guest Access Denied",
+				"message": "Guest access request was rejected",
+			}
+			if err := c.sendHANotification(req.TargetUser, payload); err != nil {
+				logger.Error("guest rejection: failed to send HA notification: " + err.Error())
+			}
+		}
+
+		return nil
+	})
+
+	logger.Info("guest approval callbacks wired successfully")
+}
+
+// sendHANotification sends a mobile notification to a specific HA user
+func (c *Coordinator) sendHANotification(targetUser string, payload map[string]interface{}) error {
+	if c.HA == nil {
+		return errors.New("HA adapter not available")
+	}
+
+	// Use HA CallService to send notification
+	// Service: notify.mobile_app_<device>
+	// For simplicity, we'll call notify.<user> and let HA route it
+	serviceName := targetUser // e.g., "mobile_app_user1" or just "user1"
+
+	return c.HA.CallService("notify", serviceName, payload)
 }

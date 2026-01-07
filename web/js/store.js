@@ -22,8 +22,25 @@
             // First boot flag
             firstBoot: false,
 
+            // Authentication state (FAZ L1: PIN-based auth)
+            authState: {
+                authenticated: false,
+                role: 'guest', // admin|user|guest
+                pin: null      // Stored in memory only, never persisted
+            },
+
+            // Guest mode state (FAZ L2: Guest approval flow)
+            guestState: {
+                active: false,           // Is guest session active?
+                requestId: null,         // Current request ID
+                targetUser: null,        // HA user who approved
+                approvalTime: null,      // When approved
+                pollingActive: false     // Is polling running?
+            },
+
             // Current user role (FAZ S0: for access control)
-            currentRole: 'admin', // admin|user|guest
+            // DEPRECATED: Use authState.role instead
+            currentRole: 'guest', // admin|user|guest
 
             // Home view state
             homeState: {
@@ -57,6 +74,70 @@
             menu: {
                 currentView: 'home', // 'home', 'alarm', 'devices', 'settings'
                 previousView: null
+            },
+
+            // Home Assistant connection state (FAZ S4)
+            haState: {
+                isConnected: false,      // true = last test reached stage=ok
+                lastTestedAt: null,      // RFC3339 timestamp or null
+                isConfigured: false,     // true = credentials exist
+                configuredAt: null,      // RFC3339 timestamp or null
+                // FAZ S5: Initial sync metadata
+                syncDone: false,         // true = bootstrap sync completed
+                syncAt: null,            // RFC3339 timestamp of sync
+                meta: {                  // Safe metadata from initial sync
+                    version: null,
+                    timeZone: null,
+                    locationName: null
+                },
+                entityCounts: {          // Aggregated entity counts
+                    lights: 0,
+                    sensors: 0,
+                    switches: 0,
+                    others: 0
+                },
+                // FAZ S6: Runtime health state
+                runtimeUnreachable: false, // true = HA became temporarily unreachable after N failures
+                lastSeenAt: null           // RFC3339 timestamp of last successful HA read
+            },
+
+            // FAZ L4: Admin AI Advisor state
+            aiAdvisorState: {
+                enabled: true,
+                lastHintAt: null,
+                currentHint: null       // { id, text } or null
+            },
+
+            // FAZ L6: Admin Trace state (recent actions)
+            adminTrace: {
+                recent: []              // max 5 entries: { label, timestamp }
+            },
+
+            // Alarmo monitoring state (read-only)
+            alarmoState: {
+                status: {
+                    alarmo_connected: false,           // true = connected & healthy
+                    ha_runtime_unreachable: false,     // true = temporarily unreachable
+                    last_seen_at: null                 // RFC3339 timestamp
+                },
+                sensors: [],                           // array of alarmoSensor
+                events: [],                            // array of alarmoEvent
+                loading: false,                        // polling in progress
+                error: null                            // error message if fetch failed
+            },
+
+            // Alarmo control state (arm/disarm)
+            alarmoControl: {
+                currentMode: 'disarmed',               // disarmed, armed_away, armed_home, armed_night
+                modes: [
+                    { id: 'disarmed', label: 'Devre Dışı', icon: 'shield-off' },
+                    { id: 'armed_away', label: 'Dışarıda', icon: 'lock' },
+                    { id: 'armed_home', label: 'Evde', icon: 'home' },
+                    { id: 'armed_night', label: 'Gece', icon: 'moon' }
+                ],
+                pinCode: '',                           // user-entered PIN
+                isArming: false,                       // request in progress
+                error: null                            // error message
             }
         },
 
@@ -123,8 +204,8 @@
                                 target[key] = source[key];
                                 hasChanges = true;
                             }
-                        } else if (typeof source[key] === 'object' && !Array.isArray(source[key])) {
-                            if (!(key in target) || typeof target[key] !== 'object') {
+                        } else if (typeof source[key] === 'object' && source[key] !== null && !Array.isArray(source[key])) {
+                            if (!(key in target) || typeof target[key] !== 'object' || target[key] === null) {
                                 target[key] = {};
                             }
                             if (deepMerge(target[key], source[key])) {

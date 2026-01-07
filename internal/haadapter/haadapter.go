@@ -114,7 +114,7 @@ func (a *Adapter) CallService(domain, service string, payload map[string]interfa
 	}
 	req.Header.Set("Authorization", "Bearer "+a.token)
 	req.Header.Set("Content-Type", "application/json")
-	client := &http.Client{Timeout: 10 * time.Second}
+	client := &http.Client{Timeout: 30 * time.Second}
 	resp, err := client.Do(req)
 	if err != nil {
 		logger.Error("callservice http error: " + err.Error())

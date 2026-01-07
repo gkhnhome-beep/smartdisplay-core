@@ -30,19 +30,30 @@
 
             return window.SmartDisplay.api.client.get('/ui/home/state')
                 .then(function(response) {
-                    console.log('[Home] Home state loaded:', response);
-                    self.currentState = response;
+                    // API responses are wrapped: { response: { ok, data }, failsafe }
+                    var payload = response && response.response && response.response.data
+                        ? response.response.data
+                        : (response && response.data) ? response.data : response;
+
+                    console.log('[Home] Home state loaded:', payload);
+                    self.currentState = payload;
                     self.error = null;
                     self.lastUpdateTime = Date.now();
                     
-                    // Update store with home data
-                    if (response.homeState) {
+                    // Update store with mapped home summary (best-effort)
+                    if (payload && payload.summary) {
+                        var summary = payload.summary;
                         window.SmartDisplay.store.setState({
-                            homeState: response.homeState
+                            homeState: {
+                                aiInsight: summary.ai_insight || '',
+                                aiSeverity: summary.countdown_active ? 'Countdown' : '',
+                                aiOneLiner: payload.message || summary.ai_insight || '',
+                                temperature: summary.temperature !== undefined ? summary.temperature : null
+                            }
                         });
                     }
                     
-                    return response;
+                    return payload;
                 })
                 .catch(function(err) {
                     console.error('[Home] Failed to fetch state:', err);

@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>SmartDisplay - Settings (Security)</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    .card { max-width:480px; margin:0 auto; border:1px solid #ddd; padding:16px; border-radius:8px; }
+    .row { margin-bottom:12px; }
+    label { display:block; font-weight:600; margin-bottom:6px; }
+    input[type=number]{ width:100%; padding:8px; font-size:16px }
+    button { padding:10px 14px; font-size:16px }
+    .hint { font-size:13px; color:#666 }
+    .msg { margin-top:12px }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Security Settings</h2>
+    <div class="row">
+      <label for="entryDelay">Entry Delay (seconds)</label>
+      <input id="entryDelay" type="number" min="0" max="600" />
+      <div class="hint">Seconds allowed to disarm after entry before alarm triggers.</div>
+    </div>
+    <div class="row">
+      <label for="exitDelay">Exit Delay (seconds)</label>
+      <input id="exitDelay" type="number" min="0" max="600" />
+      <div class="hint">Seconds allowed to leave after arming before alarm becomes active.</div>
+    </div>
+    <div class="row">
+      <button id="saveBtn">Save</button>
+      <span id="status" class="msg"></span>
+    </div>
+  </div>
+
+<script>
+(function(){
+  const entryEl = document.getElementById('entryDelay');
+  const exitEl = document.getElementById('exitDelay');
+  const saveBtn = document.getElementById('saveBtn');
+  const statusEl = document.getElementById('status');
+
+  function showStatus(msg, ok){ statusEl.textContent = msg; statusEl.style.color = ok? 'green':'red'; }
+
+  // Load current settings
+  function loadSettings(){
+    fetch('/api/ui/settings', { headers: { 'X-SmartDisplay-PIN': '1234' } })
+      .then(r => r.json())
+      .then(j => {
+        if (j && j.response && j.response.data && j.response.data.sections){
+          const sec = j.response.data.sections.security;
+          if (sec && sec.fields){
+            for (const f of sec.fields){
+              if (f.id === 'alarm_entry_delay_s') entryEl.value = f.value || '';
+              if (f.id === 'alarm_exit_delay_s') exitEl.value = f.value || '';
+            }
+          }
+        }
+      })
+      .catch(err => showStatus('Failed to load settings: '+err.message, false));
+  }
+
+  function postFieldChange(fieldId, newValue){
+    return fetch('/api/ui/settings/action', {
+      method: 'POST',
+      headers: { 'Content-Type':'application/json', 'X-SmartDisplay-PIN': '1234' },
+      body: JSON.stringify({ action: 'field_change', field_id: fieldId, new_value: newValue, confirm: true })
+    }).then(r => r.json());
+  }
+
+  saveBtn.addEventListener('click', function(){
+    const entry = parseInt(entryEl.value||'0',10);
+    const exit = parseInt(exitEl.value||'0',10);
+    showStatus('Saving...', true);
+
+    // Save both sequentially
+    postFieldChange('alarm_entry_delay_s', entry)
+      .then(() => postFieldChange('alarm_exit_delay_s', exit))
+      .then(() => showStatus('Saved successfully', true))
+      .catch(err => showStatus('Save failed: '+err.message, false));
+  });
+
+  loadSettings();
+})();
+</script>
+</body>
+</html>

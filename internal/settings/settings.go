@@ -207,6 +207,8 @@ func NewSettingsManager(
 		},
 
 		securitySettings: map[string]interface{}{
+			"alarm_entry_delay_s":         30,
+			"alarm_exit_delay_s":          30,
 			"alarm_arm_delay_s":           30,
 			"alarm_trigger_sound_enabled": true,
 			"guest_max_active":            1,
@@ -542,6 +544,28 @@ func (sm *SettingsManager) buildSecuritySection() *SectionResponse {
 		Description: "Alarm and access control",
 		Fields: []SettingsField{
 			{
+				ID:             "alarm_entry_delay_s",
+				Section:        SectionSecurity,
+				Type:           TypeInteger,
+				Value:          sm.securitySettings["alarm_entry_delay_s"],
+				DefaultValue:   30,
+				Help:           "Entry delay in seconds before alarm triggers when a protected door/window opens",
+				RequireConfirm: false,
+				MinValue:       intPtr(0),
+				MaxValue:       intPtr(600),
+			},
+			{
+				ID:             "alarm_exit_delay_s",
+				Section:        SectionSecurity,
+				Type:           TypeInteger,
+				Value:          sm.securitySettings["alarm_exit_delay_s"],
+				DefaultValue:   30,
+				Help:           "Exit delay in seconds to allow leaving before the alarm arms",
+				RequireConfirm: false,
+				MinValue:       intPtr(0),
+				MaxValue:       intPtr(600),
+			},
+			{
 				ID:             "alarm_arm_delay_s",
 				Section:        SectionSecurity,
 				Type:           TypeInteger,
@@ -761,6 +785,14 @@ func (sm *SettingsManager) ValidateSettings() error {
 	}
 
 	// Validate Security settings
+	if entryDelay, ok := sm.securitySettings["alarm_entry_delay_s"].(int); !ok || entryDelay < 0 || entryDelay > 600 {
+		return errors.New("invalid alarm_entry_delay_s")
+	}
+
+	if exitDelay, ok := sm.securitySettings["alarm_exit_delay_s"].(int); !ok || exitDelay < 0 || exitDelay > 600 {
+		return errors.New("invalid alarm_exit_delay_s")
+	}
+
 	if armDelay, ok := sm.securitySettings["alarm_arm_delay_s"].(int); !ok || armDelay < 10 || armDelay > 300 {
 		return errors.New("invalid alarm_arm_delay_s")
 	}

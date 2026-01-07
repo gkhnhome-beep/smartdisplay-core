@@ -33,13 +33,18 @@
                     'X-User-Role': 'admin'
                 }
             })
-                .then(function(response) {
-                    console.log('[Menu] Menu loaded:', response);
-                    self.menuData = response;
+                .then(function(envelope) {
+                    console.log('[Menu] Menu loaded:', envelope);
+                    // API returns { response: { ok, data }, failsafe }
+                    // Extract MenuResponse from response.data
+                    var menuData = envelope.response && envelope.response.data 
+                        ? envelope.response.data 
+                        : envelope.data || envelope;
+                    self.menuData = menuData;
                     self.error = null;
                     self.lastUpdateTime = Date.now();
 
-                    return response;
+                    return envelope;
                 })
                 .catch(function(err) {
                     console.error('[Menu] Failed to fetch menu:', err);

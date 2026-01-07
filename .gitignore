@@ -1,0 +1,105 @@
+# SmartDisplay Core - Git Ignore Rules
+
+# Compiled binaries
+/bin/smartdisplay
+/bin/smartdisplay.exe
+/release/smartdisplay*
+smartdisplay-core
+*.exe
+
+# Runtime data and logs
+/data/
+/logs/
+/tmp/
+token.txt
+
+# Configuration files with sensitive data
+configs/production.json
+configs/secrets.json
+*.key
+*.pem
+
+# Go build artifacts
+vendor/
+*.test
+*.prof
+coverage.out
+cpu.prof
+mem.prof
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# OS-specific files
+.env
+.env.local
+.env.*.local
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# Development testing files
+test_response.json
+debug_*
+*.debug
+
+# Temporary build files
+*.tmp
+*.temp
+
+# Node.js (if any tooling is added)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Python (for any development scripts)
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Git-specific
+*.orig
+*.rej
+
+# Documentation build artifacts
+docs/_build/
+docs/site/
+
+# Coverage reports
+*.cover
+.coverage
+.pytest_cache/
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+
+# Jupyter Notebook (for any analysis)
+.ipynb_checkpoints
+
+# Local development overrides
+local_*
+dev_*
+
+# Runtime service files (should be in /etc/systemd/system)
+*.service.local

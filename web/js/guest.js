@@ -105,6 +105,12 @@
                 .then(function(response) {
                     console.log('[Guest] Exit successful:', response);
                     self.isLoading = false;
+
+                    // FAZ L6: Add trace entry (only if admin ended it)
+                    var state = window.SmartDisplay.store.getState();
+                    if (state.authState.role === 'admin' && window.SmartDisplay.trace) {
+                        window.SmartDisplay.trace.add('Guest access ended');
+                    }
                     
                     // Fetch updated state
                     return self.fetchGuestState();

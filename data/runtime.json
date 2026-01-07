@@ -13,5 +13,17 @@
   "high_contrast": false,
   "large_text": false,
   "reduced_motion": false,
-  "voice_enabled": false
+  "voice_enabled": false,
+  "ha_connected": true,
+  "ha_last_tested_at": "2026-01-06T23:16:33+01:00",
+  "initial_sync_done": true,
+  "initial_sync_at": "2026-01-06T23:16:34+01:00",
+  "ha_version": "2025.12.5",
+  "ha_timezone": "Europe/Berlin",
+  "ha_location_name": "Evim",
+  "entity_lights": 40,
+  "entity_sensors": 102,
+  "entity_switches": 78,
+  "entity_others": 244,
+  "ha_runtime_unreachable": false
 }

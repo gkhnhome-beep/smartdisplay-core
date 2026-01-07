@@ -105,24 +105,8 @@ func (m *MenuManager) ResolveMenu(userID string) *MenuResponse {
 		Sections:        []MenuSection{},
 	}
 
-	// Always add Home section
-	resp.Sections = append(resp.Sections, m.buildHomeSection(firstBootActive))
-
-	// Alarm section visibility rules
+	// Alarm section
 	resp.Sections = append(resp.Sections, m.buildAlarmSection(firstBootActive))
-
-	// Guest section visibility rules
-	resp.Sections = append(resp.Sections, m.buildGuestSection(firstBootActive))
-
-	// Devices section visibility rules
-	if !firstBootActive {
-		resp.Sections = append(resp.Sections, m.buildDevicesSection())
-	}
-
-	// History section visibility rules
-	if !firstBootActive {
-		resp.Sections = append(resp.Sections, m.buildHistorySection())
-	}
 
 	// Settings section visibility rules
 	if m.userRole == RoleAdmin && !firstBootActive {
@@ -170,32 +154,17 @@ func (m *MenuManager) buildAlarmSection(firstBootActive bool) MenuSection {
 	switch m.userRole {
 	case RoleAdmin:
 		section.Actions = []MenuAction{
-			{ID: "view_state", Name: "View State", Enabled: true},
-			{ID: "arm", Name: "Arm", Enabled: !firstBootActive},
-			{ID: "disarm", Name: "Disarm", Enabled: !firstBootActive},
-			{ID: "view_history", Name: "History", Enabled: true},
-		}
-		section.SubSections = []SubSection{
-			{ID: "current_state", Name: "Current State", Visible: true},
-			{ID: "history", Name: "History", Visible: true},
+			{ID: "alarm_control", Name: "Alarm", Enabled: !firstBootActive},
 		}
 
 	case RoleUser:
 		section.Actions = []MenuAction{
-			{ID: "view_state", Name: "View State", Enabled: true},
-			{ID: "view_history", Name: "History", Enabled: true},
-		}
-		section.SubSections = []SubSection{
-			{ID: "current_state", Name: "Current State", Visible: true},
-			{ID: "history", Name: "History", Visible: true},
+			{ID: "alarm_control", Name: "Alarm", Enabled: !firstBootActive},
 		}
 
 	case RoleGuest:
-		// Guest sees Alarm only if requesting or approved
-		// For now, always include in section resolution
-		section.Actions = []MenuAction{
-			{ID: "view_state", Name: "View State", Enabled: true},
-		}
+		// Guests cannot access alarm
+		section.Actions = []MenuAction{}
 	}
 
 	return section
@@ -350,7 +319,9 @@ func (m *MenuManager) buildSettingsSection(failsafeActive bool) MenuSection {
 
 	// Admin sees settings, but actions may be disabled during failsafe
 	section.Actions = []MenuAction{
+		{ID: "homeassistant", Name: "Home Assistant", Enabled: true},
 		{ID: "alarm_config", Name: "Alarm Settings", Enabled: !failsafeActive},
+		{ID: "alarmo", Name: "Alarmo Monitoring", Enabled: !failsafeActive},
 		{ID: "user_mgmt", Name: "User Management", Enabled: !failsafeActive},
 		{ID: "device_mgmt", Name: "Device Management", Enabled: !failsafeActive},
 		{ID: "accessibility", Name: "Accessibility", Enabled: true},

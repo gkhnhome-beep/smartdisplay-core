@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
+	"path/filepath"
 	"smartdisplay-core/internal/health"
 	"smartdisplay-core/internal/logger"
 	"time"
@@ -33,6 +35,9 @@ func (s *Server) startHTTPServer(port int) error {
 
 	// Wrap with CORS middleware (dev: localhost:5500)
 	handler := corsDevMiddleware(mux)
+
+	// Wrap with auth middleware (FAZ L1: PIN-based authentication)
+	handler = authMiddleware(handler)
 
 	// Wrap with request ID middleware
 	handler = requestIDMiddleware(handler)
@@ -68,6 +73,15 @@ func (s *Server) registerRoutes() *http.ServeMux {
 	mux.HandleFunc("/health", health.HealthHandler)
 	mux.HandleFunc("/api/health", health.HealthHandler)
 
+	// Frontend static files (serve web directory)
+	// Use absolute path to find web directory reliably
+	webDir := filepath.Join(os.Getenv("PWD"), "web")
+	if _, err := os.Stat(webDir); err != nil {
+		// Fallback to relative path if PWD env var not set
+		webDir = "web"
+	}
+	mux.Handle("/", http.FileServer(http.Dir(webDir)))
+
 	// Home Endpoints (D2)
 	mux.HandleFunc("/api/ui/home/state", s.handleHomeState)
 	mux.HandleFunc("/api/ui/home/summary", s.handleHomeSummary)
@@ -77,10 +91,20 @@ func (s *Server) registerRoutes() *http.ServeMux {
 	mux.HandleFunc("/api/ui/alarm/summary", s.handleAlarmSummary)
 	mux.HandleFunc("/api/ui/alarm/action", s.handleAlarmAction) // A4: Controlled write operations
 
+	// Alarmo Monitoring (read-only)
+	mux.HandleFunc("/api/ui/alarmo/status", s.handleAlarmoStatus)
+	mux.HandleFunc("/api/ui/alarmo/sensors", s.handleAlarmoSensors)
+	mux.HandleFunc("/api/ui/alarmo/events", s.handleAlarmoEvents)
+
+	// Alarmo Control (write operations)
+	mux.HandleFunc("/api/ui/alarmo/arm", s.handleAlarmoArm)
+	mux.HandleFunc("/api/ui/alarmo/disarm", s.handleAlarmoDisarm)
+
 	// Guest Endpoints (D4)
 	mux.HandleFunc("/api/ui/guest/state", s.handleGuestState)
 	mux.HandleFunc("/api/ui/guest/summary", s.handleGuestSummary)
 	mux.HandleFunc("/api/ui/guest/request", s.handleGuestRequest)
+	mux.HandleFunc("/api/ui/guest/request/", s.handleGuestRequestStatus) // FAZ L2: Status check with dynamic request_id
 	mux.HandleFunc("/api/ui/guest/exit", s.handleGuestExit)
 
 	// Menu Endpoints (D5)
@@ -136,6 +160,16 @@ func (s *Server) registerRoutes() *http.ServeMux {
 	mux.HandleFunc("/api/admin/telemetry/optin", s.handleTelemetryOptIn)
 	mux.HandleFunc("/api/admin/update/status", s.handleUpdateStatus)
 	mux.HandleFunc("/api/admin/update/stage", s.handleUpdateStage)
+
+	// Settings - Home Assistant Integration (FAZ S2, admin-only)
+	mux.HandleFunc("/api/settings/homeassistant", s.handleHASettingsSave)
+	mux.HandleFunc("/api/settings/homeassistant/status", s.handleHASettingsStatus)
+
+	// Settings - Home Assistant Connection Test (FAZ S3, admin-only)
+	mux.HandleFunc("/api/settings/homeassistant/test", s.handleHASettingsTest)
+
+	// Settings - Home Assistant Initial Sync (FAZ S5, admin-only)
+	mux.HandleFunc("/api/settings/homeassistant/sync", s.handleHAInitialSync)
 
 	return mux
 }

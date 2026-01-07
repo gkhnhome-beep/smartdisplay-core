@@ -1,0 +1,156 @@
+# =============================================================================
+# Home Assistant Automation for SmartDisplay Guest Approval (FAZ L3)
+# =============================================================================
+#
+# This automation handles mobile notification actions for guest access requests.
+# When a guest requests access on SmartDisplay, HA sends a mobile notification
+# with Approve/Reject buttons. Tapping a button triggers this automation to
+# call back to SmartDisplay with the decision.
+#
+# SETUP INSTRUCTIONS:
+# 1. Copy this file to your Home Assistant config/automations directory
+# 2. Edit the SmartDisplay IP address and port (default: 8090)
+# 3. Replace <YOUR_HA_TOKEN> with a Home Assistant long-lived access token
+# 4. Ensure your mobile device has the Home Assistant Companion app installed
+# 5. Restart Home Assistant or reload automations
+#
+# =============================================================================
+
+automation:
+  - id: smartdisplay_guest_approval
+    alias: "SmartDisplay Guest Access - Handle Approval"
+    description: "Processes guest access approval/rejection from mobile notification"
+    
+    # Trigger: Mobile app notification action
+    trigger:
+      - platform: event
+        event_type: mobile_app_notification_action
+        event_data:
+          # Match either approve or reject actions
+          action:
+            - "SD_GUEST_APPROVE"
+            - "SD_GUEST_REJECT"
+    
+    # Condition: Ensure request_id is present
+    condition:
+      - condition: template
+        value_template: "{{ trigger.event.data.request_id is defined }}"
+    
+    # Action: Call SmartDisplay backend with decision
+    action:
+      - service: rest_command.smartdisplay_guest_decision
+        data:
+          request_id: "{{ trigger.event.data.request_id }}"
+          decision: >
+            {% if trigger.event.data.action == 'SD_GUEST_APPROVE' %}
+              approve
+            {% else %}
+              reject
+            {% endif %}
+
+# =============================================================================
+# REST Command Configuration
+# =============================================================================
+#
+# Add this to your configuration.yaml or rest_command.yaml:
+
+rest_command:
+  smartdisplay_guest_decision:
+    # IMPORTANT: Replace with your SmartDisplay device IP address
+    url: "http://192.168.1.100:8090/api/guest/approve"
+    method: POST
+    headers:
+      # IMPORTANT: Replace <YOUR_HA_TOKEN> with your actual long-lived access token
+      # Generate token in HA: Profile → Security → Long-Lived Access Tokens
+      Authorization: "Bearer <YOUR_HA_TOKEN>"
+      Content-Type: "application/json"
+    payload: >
+      {
+        "request_id": "{{ request_id }}",
+        "decision": "{{ decision }}"
+      }
+    timeout: 10
+
+# =============================================================================
+# NOTIFICATION SERVICE CONFIGURATION
+# =============================================================================
+#
+# SmartDisplay will send notifications using: notify.<target_user>
+# Ensure your target users match your HA notify service names.
+#
+# Examples:
+# - notify.mobile_app_johns_phone
+# - notify.mobile_app_marys_tablet
+#
+# When creating a guest request, use the service name after "notify."
+# For example, if the service is "notify.mobile_app_johns_phone",
+# use "mobile_app_johns_phone" as the target user in SmartDisplay.
+#
+# =============================================================================
+
+# =============================================================================
+# TESTING
+# =============================================================================
+#
+# 1. Arm your alarm system
+# 2. On SmartDisplay, tap "Request Guest Access"
+# 3. Select a target user that matches your HA notify service
+# 4. Check your mobile device for the notification with Approve/Reject buttons
+# 5. Tap either button
+# 6. Verify:
+#    - SmartDisplay receives the decision
+#    - Alarm is disarmed (if approved)
+#    - You receive a confirmation notification
+#
+# =============================================================================
+
+# =============================================================================
+# TROUBLESHOOTING
+# =============================================================================
+#
+# Issue: No notification received
+# - Check that notify service name matches target user
+# - Verify mobile app is registered: Developer Tools → States → notify.*
+# - Check HA logs for notification errors
+#
+# Issue: Buttons don't work
+# - Ensure automation ID matches (smartdisplay_guest_approval)
+# - Check automation is enabled: Settings → Automations & Scenes
+# - Verify trigger event type: Developer Tools → Events → Listen for "mobile_app_notification_action"
+#
+# Issue: SmartDisplay doesn't respond
+# - Verify SmartDisplay IP address in rest_command
+# - Check HA token is valid and not expired
+# - Test endpoint manually: curl -X POST http://<IP>:8090/api/guest/approve \
+#     -H "Authorization: Bearer <TOKEN>" \
+#     -H "Content-Type: application/json" \
+#     -d '{"request_id":"test","decision":"reject"}'
+#
+# Issue: Alarm not disarmed on approval
+# - Check SmartDisplay logs for Alarmo errors
+# - Verify Alarmo integration is configured in SmartDisplay
+# - Check HA/Alarmo is reachable from SmartDisplay
+#
+# =============================================================================
+
+# =============================================================================
+# ADVANCED: Feedback Notifications
+# =============================================================================
+#
+# Optional: Add confirmation notifications after approval/rejection
+# SmartDisplay already sends these, but you can customize them:
+
+# (Already handled by SmartDisplay callbacks - no additional config needed)
+
+# =============================================================================
+# SECURITY NOTES
+# =============================================================================
+#
+# 1. NEVER commit HA tokens to version control
+# 2. Use secrets.yaml for sensitive values:
+#    Authorization: "Bearer !secret ha_token"
+# 3. Restrict network access to SmartDisplay (firewall rules)
+# 4. Use HTTPS if SmartDisplay is exposed outside your local network
+# 5. Rotate tokens periodically
+#
+# =============================================================================

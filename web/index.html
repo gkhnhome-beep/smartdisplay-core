@@ -7,6 +7,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>SmartDisplay</title>
     <link rel="stylesheet" href="styles/main.css">
+    <!-- Cinematic Alarm Scene System -->
+    <link rel="stylesheet" href="css/alarmScene.css">
 </head>
 <body>
     <div id="app" class="app-container">
@@ -15,6 +17,12 @@
     
     <!-- Menu overlay (hidden by default) -->
     <div id="menu-overlay" class="menu-overlay"></div>
+
+    <!-- Guest Mode Indicator (FAZ L2: Shows when guest session is active) -->
+    <div id="guest-mode-indicator" class="guest-mode-indicator" style="display:none;">
+        <span class="guest-icon">👤</span>
+        <span class="guest-text">Guest</span>
+    </div>
 
     <!-- A6.A: System Status Diagnostic Overlay -->
     <div id="system-status-overlay" class="system-status-overlay" style="display:none;">
@@ -46,17 +54,29 @@
     <script src="js/api.js"></script>
     <!-- State Store -->
     <script src="js/store.js"></script>
+    <!-- Login Controller (FAZ L1: PIN-based auth) -->
+    <script src="js/login.js"></script>
     <!-- First Boot Controller -->
     <script src="js/firstboot.js"></script>
     <!-- Home Controller -->
     <script src="js/home.js"></script>
     <!-- Alarm Controller -->
     <script src="js/alarm.js"></script>
+    <!-- Cinematic Alarm Scene System -->
+    <script src="js/alarmScene.js"></script>
     <!-- Guest Controller -->
     <script src="js/guest.js"></script>
     <!-- Menu Controller -->
     <script src="js/menu.js"></script>
+    <!-- Settings Controller (FAZ S4: HA connection state) -->
+    <script src="js/settings.js"></script>
     <!-- View Manager -->
     <script src="js/viewManager.js"></script>
+    <!-- FAZ L4: Admin AI Advisor -->
+    <script src="js/advisor.js"></script>
+    <!-- FAZ L5: First Boot Premium Intro -->
+    <script src="js/intro.js"></script>
+    <!-- FAZ L6: Admin Trace UX -->
+    <script src="js/trace.js"></script>
 </body>
 </html>
