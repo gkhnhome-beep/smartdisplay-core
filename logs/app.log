@@ -26086,3 +26086,5 @@
 2026/01/08 20:32:24 [INFO] HA status retrieved: is_configured=yes
 2026/01/08 20:32:26 [INFO] request: id=req-8c88110ef4fe1c0e method=GET path=/api/ui/alarm/state
 2026/01/08 20:32:26 [INFO] auth: role=guest authenticated=false
+2026/01/08 20:32:28 [INFO] request: id=req-50d7641ddbd3592d method=GET path=/api/ui/alarm/state
+2026/01/08 20:32:28 [INFO] auth: role=guest authenticated=false
