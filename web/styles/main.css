@@ -46,6 +46,1404 @@ body {
     overflow: hidden;
 }
 
+/* ============================================================================
+   FAZ 1: UI Core Layout - Top Bar & Sidebar
+   ============================================================================ */
+
+/* Fixed Top Bar */
+.top-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    font-weight: 500;
+}
+
+.top-bar-left,
+.top-bar-center,
+.top-bar-right {
+    display: flex;
+    align-items: center;
+    min-width: 200px;
+}
+
+.top-bar-center {
+    justify-content: center;
+}
+
+.top-bar-right {
+    justify-content: flex-end;
+}
+
+.time-display {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+}
+
+#current-time {
+    font-size: 24px;
+    font-weight: 600;
+    font-feature-settings: 'tnum' on;
+}
+
+.date-text {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.weather-display {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.weather-icon {
+    font-size: 20px;
+}
+
+.weather-temp {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.network-status {
+    display: flex;
+    align-items: center;
+}
+
+.network-indicator {
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 500;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.network-indicator.connected {
+    background: rgba(34, 197, 94, 0.2);
+    border-color: rgba(34, 197, 94, 0.4);
+    color: #dcfce7;
+}
+
+.network-indicator.unstable {
+    background: rgba(251, 191, 36, 0.2);
+    border-color: rgba(251, 191, 36, 0.4);
+    color: #fef3c7;
+}
+
+.network-indicator.offline {
+    background: rgba(239, 68, 68, 0.2);
+    border-color: rgba(239, 68, 68, 0.4);
+    color: #fecaca;
+}
+
+/* Main Content Area */
+.main-content {
+    display: flex;
+    height: 100vh;
+    padding-top: 60px; /* Account for top bar */
+}
+
+/* Fixed Sidebar */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 60px;
+    bottom: 0;
+    width: 240px;
+    background: #f8fafc;
+    border-right: 1px solid #e2e8f0;
+    z-index: 900;
+    overflow-y: auto;
+}
+
+.sidebar-nav {
+    padding: 20px 0;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 24px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    background: none;
+    font-size: 16px;
+    font-weight: 500;
+    color: #475569;
+    user-select: none;
+}
+
+.nav-item:hover {
+    background: #e2e8f0;
+    color: #1e293b;
+}
+
+.nav-item.active {
+    background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+    color: white;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+.nav-item.active:hover {
+    background: linear-gradient(135deg, #1e40af, #2563eb);
+}
+
+.nav-icon {
+    font-size: 18px;
+    width: 20px;
+    text-align: center;
+}
+
+.nav-label {
+    flex: 1;
+}
+
+.nav-divider {
+    height: 1px;
+    background: #e2e8f0;
+    margin: 12px 24px;
+}
+
+.nav-logout {
+    margin-top: auto;
+    color: #dc2626;
+}
+
+.nav-logout:hover {
+    background: #fef2f2;
+    color: #b91c1c;
+}
+
+/* View Container */
+.view-container {
+    flex: 1;
+    margin-left: 240px; /* Account for sidebar */
+    padding: 24px;
+    overflow-y: auto;
+    background: #ffffff;
+}
+
+/* Hide layout elements for fullscreen views */
+.app-container.fullscreen-view .top-bar,
+.app-container.fullscreen-view .sidebar {
+    display: none;
+}
+
+.app-container.fullscreen-view .view-container {
+    margin-left: 0;
+    padding: 0;
+}
+
+/* ============================================================================
+   FAZ 2: Premium Intro & Login Styles
+   ============================================================================ */
+
+/* Intro View - Premium Animated */
+.view-intro {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.view-intro::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 50%, rgba(0, 162, 255, 0.1) 0%, transparent 70%);
+    animation: intro-pulse 3s ease-in-out infinite;
+}
+
+@keyframes intro-pulse {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.2); opacity: 0.8; }
+}
+
+.intro-content {
+    text-align: center;
+    color: white;
+    position: relative;
+    z-index: 10;
+}
+
+.intro-logo-animated {
+    position: relative;
+    margin-bottom: 3rem;
+}
+
+.smart-home-logo {
+    margin: 0 auto 2rem;
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.logo-svg {
+    animation: logo-fade-pulse 3s ease-in-out infinite;
+    filter: drop-shadow(0 0 20px rgba(0, 162, 255, 0.6));
+}
+
+.circuit-pattern .trunk {
+    animation: circuit-glow 2s ease-in-out infinite;
+}
+
+.circuit-pattern .branch {
+    animation: circuit-glow 2s ease-in-out infinite 0.2s;
+}
+
+.circuit-pattern .node {
+    animation: node-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes logo-fade-pulse {
+    0%, 100% { 
+        opacity: 0.8; 
+        transform: scale(1);
+        filter: drop-shadow(0 0 20px rgba(0, 162, 255, 0.6));
+    }
+    50% { 
+        opacity: 1; 
+        transform: scale(1.05);
+        filter: drop-shadow(0 0 30px rgba(0, 162, 255, 0.9));
+    }
+}
+
+@keyframes circuit-glow {
+    0%, 100% { 
+        stroke: #00a2ff; 
+        opacity: 0.7;
+    }
+    50% { 
+        stroke: #4fc3f7; 
+        opacity: 1;
+    }
+}
+
+@keyframes node-pulse {
+    0%, 100% { 
+        fill: #00a2ff; 
+        r: 3; 
+        opacity: 0.8;
+    }
+    50% { 
+        fill: #ffffff; 
+        r: 4; 
+        opacity: 1;
+    }
+}
+
+.logo-text {
+    font-size: 3.5rem;
+    font-weight: 800;
+    background: linear-gradient(45deg, #00a2ff, #0078d4, #005a9f);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 30px rgba(0, 162, 255, 0.5);
+    animation: logo-text-glow 2s ease-in-out infinite;
+}
+
+@keyframes logo-text-glow {
+    0%, 100% { transform: scale(1); filter: brightness(1); }
+    50% { transform: scale(1.05); filter: brightness(1.2); }
+}
+
+.intro-particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #00a2ff;
+    border-radius: 50%;
+    animation: particle-float 3s linear infinite;
+}
+
+.particle:nth-child(1) {
+    left: 20%;
+    animation-delay: 0s;
+    animation-duration: 3.5s;
+}
+
+.particle:nth-child(2) {
+    left: 40%;
+    animation-delay: 0.5s;
+    animation-duration: 3s;
+}
+
+.particle:nth-child(3) {
+    left: 60%;
+    animation-delay: 1s;
+    animation-duration: 4s;
+}
+
+.particle:nth-child(4) {
+    left: 80%;
+    animation-delay: 1.5s;
+    animation-duration: 3.2s;
+}
+
+.particle:nth-child(5) {
+    left: 30%;
+    animation-delay: 2s;
+    animation-duration: 3.8s;
+}
+
+.particle:nth-child(6) {
+    left: 70%;
+    animation-delay: 2.5s;
+    animation-duration: 3.3s;
+}
+
+@keyframes particle-float {
+    0% {
+        top: 100%;
+        opacity: 0;
+        transform: scale(0);
+    }
+    20% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        top: -10%;
+        opacity: 0;
+        transform: scale(0);
+    }
+}
+
+.intro-message-animated {
+    font-size: 1.4rem;
+    color: #ccc;
+    margin-bottom: 2rem;
+    animation: message-fade 1s ease-in-out infinite alternate;
+}
+
+@keyframes message-fade {
+    0% { opacity: 0.7; }
+    100% { opacity: 1; }
+}
+
+.intro-progress {
+    width: 350px;
+    height: 12px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 6px;
+    margin: 0 auto;
+    overflow: hidden;
+    border: 1px solid rgba(0, 162, 255, 0.3);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.progress-bar {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #00a2ff, #0078d4, #4fc3f7);
+    border-radius: 6px;
+    animation: progress-fill 4s ease-out forwards;
+    box-shadow: 
+        0 0 15px rgba(0, 162, 255, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    position: relative;
+}
+
+.progress-bar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    animation: progress-shine 2s ease-in-out infinite;
+}
+
+@keyframes progress-fill {
+    0% { width: 0%; }
+    25% { width: 30%; }
+    50% { width: 60%; }
+    75% { width: 85%; }
+    100% { width: 100%; }
+}
+
+@keyframes progress-shine {
+    0% { left: -100%; }
+    50% { left: 100%; }
+    100% { left: 100%; }
+}
+
+/* Login View - Premium Pastel Design (Intro ile uyumlu) */
+.view-login {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9998;
+    background: linear-gradient(135deg, #1e293b 0%, #334155 50%, #475569 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.login-background-effects {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+.login-particle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: rgba(0, 162, 255, 0.3);
+    border-radius: 50%;
+    animation: login-particle-float 4s linear infinite;
+}
+
+.login-particle:nth-child(1) {
+    left: 10%;
+    animation-delay: 0s;
+    animation-duration: 4s;
+}
+
+.login-particle:nth-child(2) {
+    left: 50%;
+    animation-delay: 1.5s;
+    animation-duration: 5s;
+}
+
+.login-particle:nth-child(3) {
+    left: 80%;
+    animation-delay: 3s;
+    animation-duration: 3.5s;
+}
+
+@keyframes login-particle-float {
+    0% {
+        top: 110%;
+        opacity: 0;
+    }
+    20% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        top: -10%;
+        opacity: 0;
+    }
+}
+
+.login-container {
+    background: rgba(248, 250, 252, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    padding: 3rem 2.5rem;
+    box-shadow: 
+        0 25px 50px rgba(0, 0, 0, 0.25),
+        0 0 0 1px rgba(0, 162, 255, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    position: relative;
+    animation: login-container-entrance 0.8s ease-out;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 162, 255, 0.1);
+}
+
+@keyframes login-container-entrance {
+    0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.login-container.success {
+    background: rgba(34, 197, 94, 0.95);
+    color: white;
+    border-color: rgba(34, 197, 94, 0.3);
+}
+
+.login-container.error {
+    animation: login-shake 0.5s ease-in-out;
+    background: rgba(248, 250, 252, 0.95);
+    border-color: rgba(239, 68, 68, 0.3);
+}
+
+@keyframes login-shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
+
+.login-header {
+    margin-bottom: 2.5rem;
+}
+
+.login-logo {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #0f172a;
+    animation: login-logo-pulse 2s ease-in-out infinite;
+}
+
+@keyframes login-logo-pulse {
+    0%, 100% { 
+        transform: scale(1); 
+        color: #0f172a;
+    }
+    50% { 
+        transform: scale(1.1); 
+        color: #00a2ff;
+    }
+}
+
+.login-title {
+    color: #0f172a;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(45deg, #0f172a, #00a2ff, #0078d4);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.login-subtitle {
+    color: #64748b;
+    font-size: 1rem;
+    margin-bottom: 0;
+}
+
+.pin-display {
+    margin-bottom: 2.5rem;
+}
+
+.pin-dots {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.pin-dot {
+    width: 24px;
+    height: 24px;
+    border: 3px solid #cbd5e1;
+    border-radius: 50%;
+    background: transparent;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+}
+
+.pin-dot.filled {
+    background: linear-gradient(45deg, #00a2ff, #0078d4);
+    border-color: #0078d4;
+    box-shadow: 0 0 15px rgba(0, 162, 255, 0.4);
+}
+
+.pin-dot.animate-fill {
+    transform: scale(1.3);
+}
+
+.pin-keypad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    max-width: 300px;
+    margin: 0 auto 2rem;
+}
+
+.pin-btn {
+    background: linear-gradient(145deg, #f8fafc, #f1f5f9);
+    border: 2px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 18px;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #1e293b;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    position: relative;
+    overflow: hidden;
+}
+
+.pin-btn span {
+    position: relative;
+    z-index: 2;
+}
+
+.pin-btn:hover {
+    background: linear-gradient(145deg, #f1f5f9, #e2e8f0);
+    transform: translateY(-2px);
+    box-shadow: 
+        0 8px 20px rgba(0, 162, 255, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    border-color: rgba(0, 162, 255, 0.3);
+}
+
+.pin-btn:active {
+    transform: translateY(0);
+    background: linear-gradient(145deg, #e2e8f0, #cbd5e1);
+    box-shadow: 
+        0 2px 6px rgba(0, 0, 0, 0.2),
+        inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.pin-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, rgba(0, 162, 255, 0.2) 0%, transparent 70%);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.3s ease;
+}
+
+.pin-btn:active::before {
+    width: 100px;
+    height: 100px;
+}
+
+.pin-clear {
+    background: linear-gradient(145deg, #fecaca, #f87171) !important;
+    color: #7f1d1d !important;
+    border-color: #f87171 !important;
+}
+
+.pin-clear:hover {
+    background: linear-gradient(145deg, #f87171, #ef4444) !important;
+    color: white !important;
+}
+
+.pin-enter {
+    background: linear-gradient(145deg, #a7f3d0, #34d399) !important;
+    color: #064e3b !important;
+    border-color: #34d399 !important;
+}
+
+.pin-enter:hover {
+    background: linear-gradient(145deg, #34d399, #10b981) !important;
+    color: white !important;
+}
+
+.pin-status {
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.status-success {
+    color: #059669;
+    font-weight: 600;
+    font-size: 1.1rem;
+    animation: status-fade-in 0.5s ease-out;
+}
+
+.status-error {
+    color: #dc2626;
+    font-weight: 600;
+    font-size: 1.1rem;
+    animation: status-fade-in 0.5s ease-out;
+}
+
+@keyframes status-fade-in {
+    0% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* ========================================================================
+   Premium Alarm View - FAZ 4 Implementation
+   ======================================================================== */
+
+/* ========================================================================
+   ALARM VIEW - Ready for new implementation
+   ======================================================================== */
+
+.view-alarm {
+    /* Placeholder - ready for new CSS */
+}
+        box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.4);
+    }
+}
+
+.intro-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    z-index: 2000;
+}
+
+.intro-logo {
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.intro-message {
+    font-size: 18px;
+    opacity: 0.9;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.intro-glow {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #3b82f6 0%, transparent 70%);
+    opacity: 0.6;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.6; }
+    50% { transform: scale(1.1); opacity: 0.8; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .intro-glow {
+        animation: none;
+    }
+}
+
+/* Enhanced Login View */
+.view-login {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    color: white;
+}
+
+.login-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 60px 40px;
+    text-align: center;
+}
+
+.login-header h1 {
+    font-size: 42px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, #3b82f6, #06b6d4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.login-header p {
+    font-size: 18px;
+    opacity: 0.8;
+    margin-bottom: 40px;
+}
+
+.login-pin-display {
+    margin-bottom: 40px;
+}
+
+.pin-dots {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.pin-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.2s ease;
+}
+
+.pin-dot.filled {
+    background: #3b82f6;
+    border-color: #3b82f6;
+    box-shadow: 0 0 12px rgba(59, 130, 246, 0.5);
+}
+
+.login-keypad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 40px;
+}
+
+.key-btn {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 24px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(10px);
+}
+
+.key-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: scale(1.05);
+}
+
+.key-btn:active {
+    transform: scale(0.95);
+}
+
+.key-btn-clear,
+.key-btn-back {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.login-error {
+    color: #f87171;
+    margin-top: 12px;
+    font-weight: 500;
+    animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    75% { transform: translateX(4px); }
+}
+
+.login-footer {
+    text-align: center;
+}
+
+.login-hint {
+    font-size: 14px;
+    opacity: 0.7;
+    margin-bottom: 20px;
+}
+
+.btn-guest-access {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(10px);
+}
+
+.btn-guest-access:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* ============================================================================
+   FAZ 3: Home Dashboard Cards
+   ============================================================================ */
+
+.view-home {
+    padding: 0;
+}
+
+.home-dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+    padding: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.dashboard-card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    border: 1px solid #f1f5f9;
+    transition: all 0.2s ease;
+}
+
+.dashboard-card:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.card-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.card-content {
+    color: #475569;
+    line-height: 1.6;
+}
+
+.card-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 8px;
+}
+
+.card-description {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+/* ============================================================================
+   Lighting View
+   ============================================================================ */
+
+.view-lighting .view-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+.view-lighting .header-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1e293b;
+}
+.view-lighting .lighting-actions { display: flex; gap: 10px; align-items: center; }
+.view-lighting .lighting-actions .btn { padding: 8px 12px; border-radius: 8px; border: 1px solid #e2e8f0; background: #f8fafc; cursor: pointer; }
+.view-lighting .lighting-actions .btn.danger { background: #fee2e2; border-color: #fecaca; color: #991b1b; }
+.view-lighting .lighting-actions .hint { color: #64748b; font-size: 14px; }
+
+.lights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+}
+.room-lights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+}
+
+.light-card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 16px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+}
+.light-card.on { border-color: #c7f9cc; box-shadow: 0 4px 14px rgba(34,197,94,0.18); }
+.light-card .light-name { font-weight: 600; color: #1e293b; margin-bottom: 8px; }
+.light-card .light-state { font-size: 14px; color: #475569; margin-bottom: 12px; }
+.light-card .light-controls { display: flex; gap: 10px; align-items: center; }
+.light-card .btn.small { padding: 6px 10px; border-radius: 8px; border: 1px solid #e2e8f0; background: #f1f5f9; cursor: pointer; }
+.light-card .dim-slider { flex: 1; }
+.light-card .color-picker { width: 36px; height: 32px; border: none; background: transparent; padding: 0; }
+.light-card .light-features { font-size: 12px; color: #64748b; margin-bottom: 8px; }
+.lighting-last-used {
+    margin-bottom: 16px;
+    padding: 12px 16px;
+    background: #f8fafc;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border: 1px solid #e2e8f0;
+}
+.lighting-last-used .last-used-title {
+    font-weight: 600;
+    color: #0f172a;
+    font-size: 14px;
+}
+.lighting-last-used .last-used-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.last-used-chip {
+    background: white;
+    border-radius: 999px;
+    padding: 6px 12px;
+    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.08);
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    font-size: 13px;
+    color: #0f172a;
+}
+.ha-lighting-section { margin-top: 24px; }
+.ha-lighting-section .button-group { gap: 10px; margin-bottom: 12px; }
+.ha-lighting-list { display: flex; flex-direction: column; gap: 12px; margin-top: 12px; }
+.ha-light-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 12px;
+}
+.ha-light-item {
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    background: white;
+    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.08);
+}
+.ha-light-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+.ha-light-name { font-weight: 600; color: #0f172a; }
+.ha-light-state { font-size: 12px; color: #475569; }
+.ha-light-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+.ha-light-controls label { font-size: 13px; color: #475569; }
+.ha-light-controls select,
+.ha-light-controls input {
+    width: 100%;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+    padding: 6px 8px;
+    font-size: 13px;
+    background: #f8fafc;
+}
+.ha-light-meta { font-size: 12px; color: #94a3b8; }
+
+/* Settings: HA Lighting */
+.ha-light-list { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
+.ha-light-item { border: 1px solid #e2e8f0; border-radius: 10px; padding: 10px; background: #fff; }
+.ha-light-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.ha-light-name { font-weight: 600; color: #1f2937; }
+.ha-light-controls { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.ha-light-controls input[type="text"] { min-width: 140px; border: 1px solid #e2e8f0; border-radius: 6px; padding: 8px; }
+.ha-light-controls select { padding: 8px; border: 1px solid #e2e8f0; border-radius: 6px; }
+.ha-light-meta { font-size: 12px; color: #94a3b8; margin-top: 6px; }
+
+/* ============================================================================
+   Cameras View
+   ============================================================================ */
+
+.view-cameras .view-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+.view-cameras .header-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #111827;
+}
+.view-cameras .camera-hint {
+    font-size: 14px;
+    color: #64748b;
+}
+
+.camera-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+}
+
+.camera-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    cursor: pointer;
+    touch-action: manipulation;
+}
+
+.camera-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.camera-name {
+    font-weight: 700;
+    color: #1f2937;
+}
+
+.camera-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    color: #475569;
+}
+
+.camera-status .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #e2e8f0;
+    display: inline-block;
+}
+
+.camera-status.online .dot { background: #22c55e; }
+.camera-status.offline .dot { background: #ef4444; }
+
+.camera-stream {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #0f172a;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.camera-stream iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    pointer-events: auto;
+}
+
+.camera-placeholder {
+    color: #cbd5e1;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background: #0f172a;
+}
+
+.camera-meta {
+    font-size: 13px;
+    color: #6b7280;
+}
+
+.camera-fullscreen {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.82);
+    z-index: 12000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.camera-fullscreen-inner {
+    background: #0b1224;
+    border-radius: 12px;
+    width: min(90vw, 1200px);
+    height: min(90vh, 700px);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+}
+
+.camera-fullscreen-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #e2e8f0;
+}
+
+.camera-fullscreen .camera-stream {
+    flex: 1;
+    background: #0f172a;
+}
+
+.camera-fullscreen .camera-stream iframe {
+    pointer-events: auto;
+}
+
+.camera-fullscreen .camera-meta {
+    color: #cbd5e1;
+}
+
+.camera-fullscreen .btn.close-btn {
+    background: #1e293b;
+    color: #e2e8f0;
+    border: 1px solid #334155;
+    padding: 8px 12px;
+    border-radius: 10px;
+}
+
+/* Home Status Card */
+.home-status-card .card-icon {
+    background: linear-gradient(135deg, #dcfdf4, #86efac);
+    color: #059669;
+}
+
+.home-status-card.armed .card-icon {
+    background: linear-gradient(135deg, #fef3c7, #fbbf24);
+    color: #d97706;
+}
+
+.home-status-card.triggered .card-icon {
+    background: linear-gradient(135deg, #fecaca, #f87171);
+    color: #dc2626;
+}
+
+/* Weather Card */
+.weather-card .card-icon {
+    background: linear-gradient(135deg, #dbeafe, #93c5fd);
+    color: #2563eb;
+}
+
+.weather-display-large {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.weather-icon-large {
+    font-size: 48px;
+}
+
+.weather-temp-large {
+    font-size: 42px;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+/* Activity Summary Card */
+.activity-card .card-icon {
+    background: linear-gradient(135deg, #f3e8ff, #c4b5fd);
+    color: #7c3aed;
+}
+
+.activity-time {
+    font-size: 14px;
+    color: #64748b;
+    margin-top: 4px;
+}
+
+/* System Message Card */
+.system-card .card-icon {
+    background: linear-gradient(135deg, #ecfdf5, #86efac);
+    color: #059669;
+}
+
+.system-message {
+    font-style: italic;
+    padding: 16px;
+    background: #f8fafc;
+    border-radius: 8px;
+    border-left: 4px solid #3b82f6;
+    margin-top: 12px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .home-dashboard {
+        grid-template-columns: 1fr;
+        padding: 16px;
+        gap: 16px;
+    }
+    
+    .dashboard-card {
+        padding: 20px;
+    }
+    
+    .view-container {
+        margin-left: 0;
+        padding: 16px;
+    }
+    
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+    
+    .sidebar.mobile-open {
+        transform: translateX(0);
+    }
+}
+
 /* Prevent context menu */
 * {
     -webkit-user-select: none;
@@ -385,311 +1783,1021 @@ body.long-idle {
     color: #333;
     font-weight: 500;
 }
-
-/* Alarm View */
-.view-alarm {
-    display: flex;
-    flex-direction: column;
-}
-
-.alarm-container {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-    background-color: #fff;
     padding: 20px;
-}
-
-.alarm-header {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.alarm-mode {
-    font-size: 2em;
-    font-weight: 600;
-    margin-bottom: 15px;
-    padding: 10px 0;
-    border-radius: 4px;
-    min-height: 1.2em;
-}
-
-/* Mode-specific styling */
-.alarm-mode.mode-disarmed {
-    color: #666;
-    background-color: #f0f0f0;
-}
-
-.alarm-mode.mode-arming {
-    color: #ff9800;
-    background-color: #fff3e0;
-}
-
-.alarm-mode.mode-armed_home,
-.alarm-mode.mode-armed_away {
-    color: #4caf50;
-    background-color: #e8f5e9;
-}
-
-.alarm-mode.mode-triggered {
-    color: #fff;
-    background-color: #d73a49;
-    animation: pulse-red 1s ease-in-out infinite;
-}
-
-.alarm-mode.mode-blocked {
-    color: #fff;
-    background-color: #999;
-}
-
-/* Pulse animation for triggered state */
-@keyframes pulse-red {
-    0%, 100% {
-        background-color: #d73a49;
-    }
-    50% {
-        background-color: #ff4444;
-    }
-}
-
-/* Respect reduced motion for pulse */
-@media (prefers-reduced-motion: reduce) {
-    .alarm-mode.mode-triggered {
-        animation: none;
-    }
-}
-
-.alarm-message {
-    font-size: 1.3em;
-    color: #333;
-    font-weight: 500;
-    margin-bottom: 10px;
-}
-
-.alarm-context {
-    font-size: 1em;
-    color: #666;
-    line-height: 1.5;
-    margin-top: 10px;
-}
-
-/* Countdown display */
-#alarm-countdown-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 20px 0 30px 0;
-    padding: 20px;
-    background-color: #f5f5f5;
-    border-radius: 4px;
-}
-
-.countdown-label {
-    font-size: 0.95em;
-    color: #666;
-    margin-bottom: 10px;
-}
-
-.countdown-value {
-    font-size: 3.5em;
-    color: #d73a49;
-    font-weight: 300;
-    font-family: 'Courier New', monospace;
-    letter-spacing: 0.1em;
-}
-
-/* Zones display */
-#alarm-zones {
-    margin: 20px 0 30px 0;
-    padding: 15px;
-    background-color: #f9f9f9;
-    border-left: 4px solid #2196f3;
-    border-radius: 4px;
-}
-
-.zones-label {
-    font-size: 0.95em;
-    color: #666;
-    font-weight: 500;
-    margin-bottom: 12px;
-}
-
-.zones-list {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.zone-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    background-color: #fff;
-    border-radius: 3px;
-    font-size: 0.95em;
-}
-
-.zone-name {
-    color: #333;
-    font-weight: 500;
-}
-
-.zone-status {
-    padding: 2px 8px;
-    border-radius: 2px;
-    font-size: 0.85em;
-    font-weight: 500;
-}
-
-.zone-status.status-ok {
-    background-color: #e8f5e9;
-    color: #2e7d32;
-}
-
-.zone-status.status-triggered {
-    background-color: #ffebee;
-    color: #c62828;
-}
-
-.zone-status.status-open {
-    background-color: #fff3e0;
-    color: #e65100;
-}
-
-/* Alarm actions */
-#alarm-actions {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    justify-content: flex-end;
-    margin-top: 20px;
-}
-
-.alarm-action-btn {
-    padding: 18px 20px;
-    font-size: 1.1em;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: 500;
-    min-height: 56px;
-    transition: opacity 0.2s ease;
-    background-color: #007acc;
-    color: white;
-}
-
-/* A5.4: Enhanced disabled state clarity */
-.alarm-action-btn:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-    background-color: #ccc;
-    color: #666;
-}
-
-.alarm-action-btn:hover:not(:disabled) {
-    opacity: 0.9;
-}
-
-.alarm-action-btn:active:not(:disabled) {
-    opacity: 0.8;
-}
-
-/* Action style variants */
-.alarm-action-btn.action-style-primary {
-    background-color: #007acc;
-}
-
-.alarm-action-btn.action-style-danger {
-    background-color: #d73a49;
-}
-
-.alarm-action-btn.action-style-success {
-    background-color: #4caf50;
-}
-
-.alarm-action-btn.action-style-warning {
-    background-color: #ff9800;
-}
-
-/* Action status message */
-.action-status {
-    background-color: #e3f2fd;
-    color: #1565c0;
-    padding: 12px;
-    border-radius: 4px;
-    font-size: 0.9em;
-    text-align: center;
-    margin-bottom: 12px;
-}
-
-/* Action buttons container */
-.action-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-/* A5.3: Connection warning */
-.alarm-connection-warning {
-    background-color: #fff3e0;
-    color: #e65100;
-    padding: 12px;
-    border-radius: 4px;
-    font-size: 0.9em;
-    text-align: center;
-    margin: 10px 0;
-}
-
-/* HA setup prompt */
-.alarm-ha-setup-prompt {
-    background-color: #e3f2fd;
-    padding: 20px;
-    border-radius: 8px;
-    text-align: center;
-    margin: 20px 0;
-    border: 2px solid #2196f3;
-}
-
-.ha-setup-message {
-    color: #1565c0;
-    font-size: 1.1em;
-    margin-bottom: 15px;
-    font-weight: 500;
-}
-
-.ha-setup-btn {
-    padding: 12px 30px;
-    font-size: 1.1em;
-    background-color: #2196f3;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: background-color 0.2s ease;
-}
-
-.ha-setup-btn:hover {
-    background-color: #1976d2;
-}
-
-.ha-setup-btn:active {
-    background-color: #0d47a1;
-}
-
-/* Error display */
-#alarm-error {
-    background-color: #ffebee;
-    color: #c62828;
-    padding: 15px;
-    border-radius: 4px;
-    font-size: 0.95em;
-    margin-top: 10px;
 }
 
 /* Guest View */
+
+/* ========================================================================
+   ALARM VIEW - CLASSIC PANEL STYLE
+   ======================================================================== */
+
+/* Base alarm view - changes based on alarm state */
+.view-alarm {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: calc(100vh - 140px); /* Account for topbar */
+}
+
+/* When alarm is active (not disarmed), go fullscreen */
+body.alarm-active .view-alarm {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    min-height: 100vh;
+    z-index: 9999;
+}
+
+/* Alarm Wrapper - Main + Sidebar Layout */
+.alarm-wrapper {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    max-width: 100%;
+    margin: 0 auto;
+    height: calc(100vh - 100px);
+    overflow: hidden;
+}
+
+.alarm-panel {
+    flex: 1;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    padding: 1rem;
+    overflow-y: auto;
+    max-height: 100%;
+}
+
+.alarm-sidebar {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    overflow-y: auto;
+    max-height: 100%;
+}
+
+/* ========================================================================
+   BLUR OVERLAY - For Armed/Triggered States
+   ======================================================================== */
+
+.alarm-overlay-blur {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+}
+
+.alarm-triggered-overlay {
+    background: rgba(139, 0, 0, 0.7);
+    animation: pulseRedBg 2s ease-in-out infinite;
+}
+
+.alarm-overlay-content {
+    text-align: center;
+    color: white;
+    max-width: 500px;
+    padding: 2rem;
+}
+
+.status-icon-large {
+    font-size: 6rem;
+    margin-bottom: 1rem;
+    animation: fadeIn 0.5s ease-in;
+}
+
+.status-icon-pulse {
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+.status-title-large {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+}
+
+.status-subtitle-large {
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 2rem;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+}
+
+.countdown-circle {
+    margin: 2rem auto;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.countdown-value-large {
+    font-size: 4rem;
+    font-weight: 700;
+    line-height: 1;
+    color: white;
+}
+
+.countdown-label-large {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin-top: 0.5rem;
+}
+
+@keyframes pulseRedBg {
+    0%, 100% { background: rgba(139, 0, 0, 0.7); }
+    50% { background: rgba(220, 38, 38, 0.8); }
+}
+
+/* Alarm text blink animation */
+@keyframes alarmBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+.alarm-blink-text {
+    animation: alarmBlink 1s ease-in-out infinite;
+    font-weight: bold;
+}
+
+/* PIN section inside overlay needs different styling */
+.alarm-overlay-blur .alarm-pin-section {
+    background: rgba(255, 255, 255, 0.15);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.alarm-overlay-blur .pin-display {
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    color: white;
+}
+
+.alarm-overlay-blur .pin-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    color: white;
+}
+
+.alarm-overlay-blur .pin-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.alarm-overlay-blur .pin-clear {
+    background: rgba(239, 68, 68, 0.8);
+    border-color: rgba(239, 68, 68, 1);
+}
+
+.alarm-overlay-blur .pin-ok {
+    background: rgba(16, 185, 129, 0.8);
+    border-color: rgba(16, 185, 129, 1);
+}
+
+/* ========================================================================
+   STATUS DISPLAY
+   ======================================================================== */
+
+.alarm-status {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: #f8fafc;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.status-icon {
+    font-size: 2rem;
+    line-height: 1;
+}
+
+.status-text {
+    flex: 1;
+}
+
+.status-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 0.25rem;
+}
+
+.status-subtitle {
+    font-size: 0.875rem;
+    color: #64748b;
+}
+
+.status-countdown {
+    position: absolute;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+}
+
+.countdown-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #f59e0b;
+    line-height: 1;
+}
+
+.countdown-label {
+    font-size: 0.75rem;
+    color: #64748b;
+    margin-top: 0.25rem;
+}
+
+.countdown-progress-bar {
+    width: 100px;
+    height: 6px;
+    background: #e2e8f0;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-top: 0.5rem;
+}
+
+.countdown-progress {
+    height: 100%;
+    background: linear-gradient(90deg, #f59e0b, #ef4444);
+    border-radius: 3px;
+    transition: width 1s linear;
+    width: 100%;
+}
+
+/* ========================================================================
+   MODE BUTTONS
+   ======================================================================== */
+
+.alarm-modes {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.mode-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    padding: 0.75rem 0.5rem;
+    background: #f8fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #475569;
+}
+
+.mode-btn:hover {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.mode-btn.active {
+    background: #3b82f6;
+    border-color: #3b82f6;
+    color: white;
+}
+
+.mode-btn.selected {
+    background: #10b981;
+    border-color: #10b981;
+    color: white;
+}
+
+.mode-icon {
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+.mode-label {
+    font-size: 0.875rem;
+}
+
+/* ========================================================================
+   PIN PAD
+   ======================================================================== */
+
+.alarm-pin-section {
+    background: #f8fafc;
+    border-radius: 8px;
+    padding: 0.75rem;
+}
+
+.pin-display {
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 0.5rem;
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 0.5rem;
+    min-height: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0.2rem;
+}
+
+.pin-pad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+}
+
+.pin-btn {
+    height: 3rem;
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #1e293b;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pin-btn:hover {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+    transform: scale(0.95);
+}
+
+.pin-btn:active {
+    transform: scale(0.9);
+}
+
+.pin-clear {
+    background: #ef4444;
+    border-color: #ef4444;
+    color: white;
+}
+
+.pin-clear:hover {
+    background: #dc2626;
+    border-color: #dc2626;
+}
+
+.pin-ok {
+    background: #10b981;
+    border-color: #10b981;
+    color: white;
+}
+
+.pin-ok:hover {
+    background: #059669;
+    border-color: #059669;
+}
+
+/* ========================================================================
+   GUEST MESSAGE
+   ======================================================================== */
+
+.alarm-guest-message {
+    text-align: center;
+    padding: 2rem;
+    color: #64748b;
+    font-size: 1.125rem;
+    background: #f8fafc;
+    border-radius: 12px;
+}
+
+/* ========================================================================
+   STATE-SPECIFIC STYLES
+   ======================================================================== */
+
+.alarm-state-triggered .alarm-panel {
+    border: 3px solid #ef4444;
+    box-shadow: 0 0 30px rgba(239, 68, 68, 0.3);
+    animation: shake 0.5s ease-in-out;
+}
+
+.alarm-state-triggered .alarm-status {
+    background: #fef2f2;
+    animation: pulseRed 1.5s ease-in-out infinite;
+}
+
+.alarm-state-pending .alarm-status {
+    background: #fffbeb;
+    animation: pulseAmber 1.5s ease-in-out infinite;
+}
+
+.alarm-state-arming .alarm-status {
+    background: #fffbeb;
+    animation: pulseAmber 2s ease-in-out infinite;
+}
+
+/* ========================================================================
+   ANIMATIONS
+   ======================================================================== */
+
+@keyframes pulseRed {
+    0%, 100% { background: #fef2f2; }
+    50% { background: #fee2e2; }
+}
+
+@keyframes pulseAmber {
+    0%, 100% { background: #fffbeb; }
+    50% { background: #fef3c7; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+/* Loading spinner */
+.alarm-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+}
+
+.alarm-loader {
+    font-size: 1.25rem;
+    color: #64748b;
+}
+
+.alarm-loader::after {
+    content: '';
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid #cbd5e1;
+    border-top-color: #3b82f6;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-left: 0.5rem;
+    vertical-align: middle;
+}
+
+/* ========================================================================
+   ACCESSIBILITY - REDUCED MOTION
+   ======================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    .alarm-state-triggered .alarm-status,
+    .alarm-state-pending .alarm-status,
+    .alarm-state-arming .alarm-status {
+        animation: none !important;
+    }
+    
+    .mode-btn:hover,
+    .pin-btn:hover {
+        transform: none;
+    }
+}
+
+/* ========================================================================
+   ALARM LOCKED STATE (Hide topbar and sidebar completely)
+   ======================================================================== */
+
+/* Hide topbar and sidebar when alarm view is active */
+body.alarm-active #top-bar,
+body.alarm-active #sidebar {
+    display: none !important;
+}
+
+/* Also disable them during triggered/pending states */
+body.alarm-locked #sidebar {
+    pointer-events: none;
+    opacity: 0.3;
+}
+
+body.alarm-locked #topbar {
+    pointer-events: none;
+}
+
+/* Sensor Cards */
+.alarm-sensors-section,
+.alarm-events-section {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.alarm-sensors-section {
+    flex: 0 0 48%;
+    max-height: 48%;
+    overflow: hidden;
+}
+
+.alarm-events-section {
+    flex: 0 0 48%;
+    max-height: 48%;
+    overflow: hidden;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    flex-shrink: 0;
+}
+
+.sensors-title,
+.events-title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.refresh-btn {
+    background: #f1f5f9;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 1rem;
+}
+
+.refresh-btn:hover {
+    background: #e2e8f0;
+    transform: scale(1.05);
+}
+
+.refresh-btn.spinning {
+    animation: spin 1s linear;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.sensor-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 0.5rem;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.sensor-card {
+    padding: 0.5rem;
+    background: #f8fafc;
+    border-radius: 8px;
+    border: 2px solid #e2e8f0;
+    text-align: center;
+    transition: all 0.3s ease;
+    animation: fadeIn 0.4s ease-out;
+}
+
+.sensor-card.active {
+    background: #fef2f2;
+    border-color: #fca5a5;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { 
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
+    }
+    50% { 
+        box-shadow: 0 0 0 8px rgba(239, 68, 68, 0);
+    }
+}
+
+.sensor-card .sensor-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+}
+
+.sensor-card .sensor-name {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 0.25rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sensor-card .sensor-state {
+    font-size: 0.65rem;
+    color: #64748b;
+    text-transform: uppercase;
+}
+
+.event-log {
+    overflow-y: auto;
+    flex: 1;
+}
+
+.event-item {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    border-bottom: 1px solid #e2e8f0;
+    font-size: 0.85rem;
+    transition: background 0.2s ease;
+    animation: fadeIn 0.4s ease-out;
+    align-items: center;
+}
+
+.event-item:hover {
+    background: #f8fafc;
+}
+
+.event-item:last-child {
+    border-bottom: none;
+}
+
+.event-icon {
+    flex-shrink: 0;
+    font-size: 1rem;
+    line-height: 1;
+}
+
+.event-time {
+    flex-shrink: 0;
+    font-size: 0.7rem;
+    color: #64748b;
+    font-weight: 500;
+    min-width: 50px;
+}
+
+.event-message {
+    flex: 1;
+    font-size: 0.8rem;
+    color: #334155;
+    font-weight: 500;
+}
+
+/* Event type specific colors */
+.event-item.triggered {
+    background: #fef2f2;
+    border-left: 3px solid #ef4444;
+}
+
+.event-item.armed {
+    background: #eff6ff;
+    border-left: 3px solid #3b82f6;
+}
+
+.event-item.disarmed {
+    background: #f0fdf4;
+    border-left: 3px solid #10b981;
+}
+
+.event-item.pending {
+    background: #fffbeb;
+    border-left: 3px solid #f59e0b;
+}
+
+.event-item.arming {
+    background: #fef9c3;
+    border-left: 3px solid #eab308;
+}
+
+.event-item.sensor-on {
+    background: #fef2f2;
+    border-left: 3px solid #fca5a5;
+}
+
+.event-item.sensor-off {
+    background: #f0fdf4;
+    border-left: 3px solid #86efac;
+}
+
+.no-data {
+    padding: 1.5rem;
+    text-align: center;
+    color: #94a3b8;
+    font-style: italic;
+    font-size: 0.9rem;
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* ========================================================================
+   END ALARM VIEW
+   ======================================================================== */
+
+/* ========================================================================
+   SETTINGS VIEW - FAZ 5 Complete Implementation
+   ======================================================================== */
+
+.view-settings {
+    display: flex;
+    gap: 0;
+    height: 100%;
+    min-height: calc(100vh - 140px);
+}
+
+/* Settings Sidebar Navigation */
+.settings-sidebar {
+    width: 250px;
+    background: #f8fafc;
+    border-right: 1px solid #e2e8f0;
+    padding: 1.5rem 0;
+}
+
+.settings-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0 1rem;
+}
+
+.settings-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 500;
+    color: #64748b;
+}
+
+.settings-nav-item:hover {
+    background: #e2e8f0;
+    color: #1e293b;
+}
+
+.settings-nav-item.active {
+    background: #3b82f6;
+    color: white;
+}
+
+.settings-nav-item .nav-icon {
+    font-size: 1.25rem;
+}
+
+.settings-nav-item .nav-label {
+    font-size: 0.95rem;
+}
+
+/* Settings Content Area */
+.settings-content {
+    flex: 1;
+    padding: 2rem;
+    overflow-y: auto;
+    background: white;
+}
+
+.settings-section h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.settings-section h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 1rem;
+}
+
+/* Settings Cards */
+.settings-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.settings-card h3:first-child {
+    margin-top: 0;
+}
+
+/* Form Elements */
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 500;
+    color: #475569;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.form-group label input[type="checkbox"] {
+    margin-right: 0.5rem;
+    cursor: pointer;
+}
+
+.form-input,
+.form-select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.2s ease;
+}
+
+.form-input:focus,
+.form-select:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.form-range {
+    width: 100%;
+}
+
+/* Buttons */
+.button-group {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+.btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-primary {
+    background: #3b82f6;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #2563eb;
+}
+
+.btn-secondary {
+    background: #64748b;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #475569;
+}
+
+.btn-danger {
+    background: #ef4444;
+    color: white;
+}
+
+.btn-danger:hover {
+    background: #dc2626;
+}
+
+/* Status Display */
+.status-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.status-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+    background: white;
+    border-radius: 8px;
+}
+
+.status-item .label {
+    font-size: 0.875rem;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.status-item .value {
+    font-size: 1.25rem;
+    color: #1e293b;
+    font-weight: 700;
+}
+
+/* Status Messages */
+.status-message {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+.status-message.success {
+    background: #d1fae5;
+    color: #065f46;
+    border: 1px solid #6ee7b7;
+}
+
+.status-message.error {
+    background: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fca5a5;
+}
+
+.status-message.info {
+    background: #dbeafe;
+    color: #1e3a8a;
+    border: 1px solid #93c5fd;
+}
+
+.settings-card small {
+    display: block;
+    margin-top: 4px;
+    font-size: 12px;
+    color: #64748b;
+    font-style: italic;
+}
+
+.status-grid .value {
+    font-weight: 600;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .view-settings {
+        flex-direction: column;
+    }
+    
+    .settings-sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #e2e8f0;
+    }
+    
+    .settings-nav {
+        flex-direction: row;
+        overflow-x: auto;
+    }
+    
+    .settings-nav-item .nav-label {
+        display: none;
+    }
+    
+    .status-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ========================================================================
+   END SETTINGS VIEW
+   ======================================================================== */
+
 .view-guest {
     display: flex;
     flex-direction: column;
@@ -2639,54 +4747,8 @@ body.auth-hidden #menu-overlay {
    Complete redesign with premium glass morphism and glow effects
    ============================================================================ */
 
-/* Alarm Overlay System - Fullscreen blur + pulse for pending/arming/triggered */
-.alarm-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 9998;
-    backdrop-filter: blur(8px);
-    background: rgba(255, 255, 255, 0.12);
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.8s ease;
-    display: none;
-}
-
-.alarm-overlay.active {
-    display: block;
-    opacity: 1;
-}
-
-/* Pulse effect layer */
-.alarm-overlay::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at center, rgba(255, 0, 0, 0.25) 0%, rgba(255, 0, 0, 0.05) 50%, transparent 70%);
-    animation: alarm-pulse var(--pulse-speed, 2.5s) ease-in-out infinite;
-    opacity: 0.8;
-}
-
-.alarm-overlay.triggered::before {
-    background: radial-gradient(circle at center, rgba(255, 0, 0, 0.4) 0%, rgba(255, 0, 0, 0.15) 50%, transparent 70%);
-}
-
-@keyframes alarm-pulse {
-    0%, 100% {
-        opacity: 0.6;
-        transform: scale(1);
-    }
-    50% {
-        opacity: 1;
-        transform: scale(1.05);
-    }
-}
-
 /* ==========================
-   Alarm Control Compact UI (scoped)
+   Alarm Control Compact UI (scoped) - DEPRECATED, DO NOT USE
    ========================== */
 
 .alarm-container.compact .alarm-modes-section .alarm-modes {

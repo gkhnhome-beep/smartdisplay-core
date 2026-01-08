@@ -123,8 +123,12 @@ func mapAlarmoState(ha haStateResponse, prev AlarmoState) AlarmoState {
 		state.Mode = "disarmed"
 		state.ArmedMode = ""
 
-	case "arming", "pending":
+	case "arming":
 		state.Mode = "arming"
+		state.ArmedMode = ""
+
+	case "pending":
+		state.Mode = "pending"
 		state.ArmedMode = ""
 
 	case "armed_home":

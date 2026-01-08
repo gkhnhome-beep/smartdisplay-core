@@ -1,6 +1,5 @@
 {
-  "server_url": "http://192.168.178.31:8123",
-  "encrypted_token": "lUhdWO0LGNbulGgx4RJ25N1ZR/lwZxOP2Cqe/fAN3YOGl6+wxEdqG0PEf0FWWyXSGGS8fwnxqpyDSngaRCOHfuaAxharp6qEtfz4f/ESPTvV1SCXybyx9D0+v6+t3L55F/cKzSJLgZT3Y68oZhpEEb0xiUov+qfVmxwk/dXTQCZi6HVwT0JKXr+kxbkDN5kqb+0KDLdVwxfXg60G3E5UrihZN5GWvf5wofDKLd0GzGaNowbzRGNPGm98mBAlicnFVGnRb+YxjG0K/InekeqAbZb4nw==",
-  "configured_at": "2026-01-06T23:16:33.8643035+01:00",
-  "last_tested_at": "2026-01-06T23:16:33.8867135+01:00"
+  "server_url": "http://192.168.178.25:8123",
+  "encrypted_token": "sZPkS/BD7e05cqRrt+obqcMsM7zwpbJ55Q3BPVk706aoOscXP2k4Oq/bqWmZ9RuYtzIUlz51WBh9HadqzR2YnH+kAUosodYYQVbDf55mFbUic83s+3M8v/pClNI1nZBP6YMCs2GUDCi/1r1G9mbtHa8DxMhi+LYxkYi5lEUYlErb8bBlKr2RWNNAY/1kbx3RcWWQzEeo7RcB/OSNByAbmfWMCZJuyRkkrpzG1aLcyg4GV/Ue+755b015rYpvnQsvEMtJ3gukm9h5cXF+ak1/FGxD3Q==",
+  "configured_at": "2026-01-08T17:54:09.1479134+01:00"
 }

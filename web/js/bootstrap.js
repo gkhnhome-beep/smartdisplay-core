@@ -220,7 +220,7 @@
         console.log('[SmartDisplay] Bootstrapping application...');
 
         // API runs on fixed backend port (localhost:8090)
-        window.SmartDisplay.api.baseUrl = 'http://localhost:8090/api';
+            window.SmartDisplay.api.baseUrl = 'http://localhost:8090';
 
         // Log resolved API base URL
         console.log('[SmartDisplay] API Base URL: ' + window.SmartDisplay.api.baseUrl);

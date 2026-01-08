@@ -73,14 +73,27 @@ func (s *Server) registerRoutes() *http.ServeMux {
 	mux.HandleFunc("/health", health.HealthHandler)
 	mux.HandleFunc("/api/health", health.HealthHandler)
 
-	// Frontend static files (serve web directory)
+	// Frontend static files (serve web directory with no-cache headers)
 	// Use absolute path to find web directory reliably
 	webDir := filepath.Join(os.Getenv("PWD"), "web")
 	if _, err := os.Stat(webDir); err != nil {
 		// Fallback to relative path if PWD env var not set
 		webDir = "web"
 	}
-	mux.Handle("/", http.FileServer(http.Dir(webDir)))
+
+	// Wrap FileServer with cache-control middleware for dynamic files
+	fs := http.FileServer(http.Dir(webDir))
+	mux.Handle("/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		// Set cache control headers for .js, .css, .html files to prevent caching versioned files
+		if filepath.Ext(r.URL.Path) == ".js" || filepath.Ext(r.URL.Path) == ".css" || filepath.Ext(r.URL.Path) == ".html" {
+			w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate, max-age=0")
+			w.Header().Set("Pragma", "no-cache")
+			w.Header().Set("Expires", "0")
+			w.Header().Del("ETag")
+			w.Header().Del("Last-Modified")
+		}
+		fs.ServeHTTP(w, r)
+	}))
 
 	// Home Endpoints (D2)
 	mux.HandleFunc("/api/ui/home/state", s.handleHomeState)
@@ -170,6 +183,11 @@ func (s *Server) registerRoutes() *http.ServeMux {
 
 	// Settings - Home Assistant Initial Sync (FAZ S5, admin-only)
 	mux.HandleFunc("/api/settings/homeassistant/sync", s.handleHAInitialSync)
+
+	// Devices - Lighting (read: all roles, write: user/admin)
+	mux.HandleFunc("/api/devices/lights", s.handleDevicesLights)
+	mux.HandleFunc("/api/devices/lights/toggle", s.handleDevicesLightsToggle)
+	mux.HandleFunc("/api/devices/lights/set", s.handleDevicesLightsSet)
 
 	return mux
 }

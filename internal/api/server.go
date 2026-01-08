@@ -1180,6 +1180,8 @@ func (s *Server) handleAlarmState(w http.ResponseWriter, r *http.Request) {
 			state.Mode = alarm.ModeDisarmed
 		case "arming":
 			state.Mode = alarm.ModeArming
+		case "pending":
+			state.Mode = alarm.ModePending
 		case "armed":
 			state.Mode = alarm.ModeArmed
 		case "triggered":
@@ -1276,6 +1278,8 @@ func (s *Server) handleAlarmSummary(w http.ResponseWriter, r *http.Request) {
 			summary.Mode = alarm.ModeDisarmed
 		case "arming":
 			summary.Mode = alarm.ModeArming
+		case "pending":
+			summary.Mode = alarm.ModePending
 		case "armed":
 			summary.Mode = alarm.ModeArmed
 		case "triggered":
@@ -2025,6 +2029,217 @@ func (s *Server) fetchAlarmoSensors(baseURL string, token string) ([]alarmoSenso
 	})
 
 	return sensors, entityIDs, nil
+}
+
+// === DEVICES: LIGHTS ===
+
+type lightDevice struct {
+	ID            string `json:"id"`
+	Name          string `json:"name"`
+	State         string `json:"state"`
+	BrightnessPct int    `json:"brightness_pct,omitempty"`
+	SupportsColor bool   `json:"supports_color,omitempty"`
+}
+
+// handleDevicesLights lists light.* entities with basic state (read-only)
+func (s *Server) handleDevicesLights(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		s.respondError(w, r, CodeMethodNotAllowed, "GET required")
+		return
+	}
+
+	baseURL, token, err := s.getHACredentials()
+	if err != nil {
+		s.respondError(w, r, CodeInternalError, "failed to load HA credentials")
+		return
+	}
+	if baseURL == "" || token == "" {
+		// Not configured; return empty list gracefully
+		s.respond(w, true, []interface{}{}, "", 200)
+		return
+	}
+
+	states, err := s.fetchHAStates(baseURL, token)
+	if err != nil {
+		logger.Error("lights fetch states failed: " + err.Error())
+		s.respond(w, true, []interface{}{}, "", 200)
+		return
+	}
+
+	lights := make([]lightDevice, 0, 16)
+	for _, st := range states {
+		if !strings.HasPrefix(st.EntityID, "light.") {
+			continue
+		}
+		name := st.EntityID
+		if st.Attributes != nil {
+			if fn, ok := st.Attributes["friendly_name"].(string); ok && fn != "" {
+				name = fn
+			}
+		}
+		ld := lightDevice{ID: st.EntityID, Name: name, State: st.State}
+		if st.Attributes != nil {
+			if b, ok := st.Attributes["brightness"]; ok {
+				switch v := b.(type) {
+				case float64:
+					pct := int((v / 255.0) * 100.0)
+					if pct < 0 {
+						pct = 0
+					}
+					if pct > 100 {
+						pct = 100
+					}
+					ld.BrightnessPct = pct
+				case int:
+					pct := int(float64(v) / 255.0 * 100.0)
+					if pct < 0 {
+						pct = 0
+					}
+					if pct > 100 {
+						pct = 100
+					}
+					ld.BrightnessPct = pct
+				}
+			}
+			// Determine color support from supported_color_modes or color_mode
+			if modes, ok := st.Attributes["supported_color_modes"]; ok {
+				switch mv := modes.(type) {
+				case []interface{}:
+					for _, m := range mv {
+						if ms, ok2 := m.(string); ok2 {
+							if ms == "rgb" || ms == "hs" || ms == "xy" || ms == "rgbw" || ms == "rgbww" {
+								ld.SupportsColor = true
+								break
+							}
+						}
+					}
+				case []string:
+					for _, ms := range mv {
+						if ms == "rgb" || ms == "hs" || ms == "xy" || ms == "rgbw" || ms == "rgbww" {
+							ld.SupportsColor = true
+							break
+						}
+					}
+				}
+			} else if cm, ok := st.Attributes["color_mode"].(string); ok {
+				if cm == "rgb" || cm == "hs" || cm == "xy" || cm == "rgbw" || cm == "rgbww" {
+					ld.SupportsColor = true
+				}
+			}
+		}
+		lights = append(lights, ld)
+	}
+
+	s.respond(w, true, lights, "", 200)
+}
+
+// handleDevicesLightsToggle toggles a light on/off (write; user/admin)
+func (s *Server) handleDevicesLightsToggle(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		s.respondError(w, r, CodeMethodNotAllowed, "POST required")
+		return
+	}
+	if _, allowed := s.checkPerm(w, r, auth.PermDevice); !allowed {
+		return
+	}
+	var req struct {
+		ID string `json:"id"`
+	}
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil || req.ID == "" {
+		s.respondError(w, r, CodeBadRequest, "invalid request body")
+		return
+	}
+	payload := map[string]interface{}{"entity_id": req.ID}
+	if err := s.coord.HA.CallService("light", "toggle", payload); err != nil {
+		logger.Error("light toggle failed: " + err.Error())
+		s.respondError(w, r, CodeUpstreamError, "ha toggle failed")
+		return
+	}
+	s.respond(w, true, map[string]string{"result": "ok"}, "", 200)
+}
+
+// handleDevicesLightsSet sets light parameters (on/off, brightness_pct, rgb_color)
+func (s *Server) handleDevicesLightsSet(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		s.respondError(w, r, CodeMethodNotAllowed, "POST required")
+		return
+	}
+	if _, allowed := s.checkPerm(w, r, auth.PermDevice); !allowed {
+		return
+	}
+	var req struct {
+		ID            string `json:"id"`
+		On            *bool  `json:"on,omitempty"`
+		BrightnessPct *int   `json:"brightness_pct,omitempty"`
+		RGBColor      []int  `json:"rgb_color,omitempty"`
+	}
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil || req.ID == "" {
+		s.respondError(w, r, CodeBadRequest, "invalid request body")
+		return
+	}
+
+	// If explicit off requested
+	if req.On != nil && !*req.On {
+		if err := s.coord.HA.CallService("light", "turn_off", map[string]interface{}{"entity_id": req.ID}); err != nil {
+			logger.Error("light turn_off failed: " + err.Error())
+			s.respondError(w, r, CodeUpstreamError, "ha turn_off failed")
+			return
+		}
+		s.respond(w, true, map[string]string{"result": "ok"}, "", 200)
+		return
+	}
+
+	// Build turn_on payload
+	pl := map[string]interface{}{"entity_id": req.ID}
+	if req.BrightnessPct != nil {
+		pct := *req.BrightnessPct
+		if pct < 0 {
+			pct = 0
+		}
+		if pct > 100 {
+			pct = 100
+		}
+		// Convert percent to 0-255
+		bri := int(float64(pct) / 100.0 * 255.0)
+		if bri < 0 {
+			bri = 0
+		}
+		if bri > 255 {
+			bri = 255
+		}
+		pl["brightness"] = bri
+	}
+	if len(req.RGBColor) == 3 {
+		// Clamp values to 0-255
+		r := req.RGBColor[0]
+		if r < 0 {
+			r = 0
+		}
+		if r > 255 {
+			r = 255
+		}
+		g := req.RGBColor[1]
+		if g < 0 {
+			g = 0
+		}
+		if g > 255 {
+			g = 255
+		}
+		b := req.RGBColor[2]
+		if b < 0 {
+			b = 0
+		}
+		if b > 255 {
+			b = 255
+		}
+		pl["rgb_color"] = []int{r, g, b}
+	}
+	if err := s.coord.HA.CallService("light", "turn_on", pl); err != nil {
+		logger.Error("light turn_on failed: " + err.Error())
+		s.respondError(w, r, CodeUpstreamError, "ha turn_on failed")
+		return
+	}
+	s.respond(w, true, map[string]string{"result": "ok"}, "", 200)
 }
 
 // parseBatteryPercent attempts to extract a battery percentage from HA attributes

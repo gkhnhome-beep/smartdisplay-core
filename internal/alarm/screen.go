@@ -14,6 +14,7 @@ type ScreenMode string
 const (
 	ModeDisarmed  ScreenMode = "disarmed"
 	ModeArming    ScreenMode = "arming"
+	ModePending   ScreenMode = "pending"
 	ModeArmed     ScreenMode = "armed"
 	ModeTriggered ScreenMode = "triggered"
 	ModeBlocked   ScreenMode = "blocked"

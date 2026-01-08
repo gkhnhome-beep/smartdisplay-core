@@ -19,6 +19,7 @@ const (
 	CodeMethodNotAllowed   ErrorCode = "method_not_allowed"  // 405
 	CodeConflict           ErrorCode = "conflict"            // 409
 	CodeInternalError      ErrorCode = "internal_error"      // 500
+	CodeUpstreamError      ErrorCode = "upstream_error"      // 502
 	CodeServiceUnavailable ErrorCode = "service_unavailable" // 503
 )
 
@@ -45,6 +46,8 @@ func (e ErrorCode) StatusCode() int {
 		return http.StatusMethodNotAllowed
 	case CodeConflict:
 		return http.StatusConflict
+	case CodeUpstreamError:
+		return http.StatusBadGateway
 	case CodeInternalError:
 		return http.StatusInternalServerError
 	case CodeServiceUnavailable:

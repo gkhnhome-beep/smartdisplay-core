@@ -101,6 +101,32 @@
                 lastSeenAt: null           // RFC3339 timestamp of last successful HA read
             },
 
+            // FAZ 7: Camera monitoring (read-only)
+            cameraState: {
+                cameras: [
+                    { id: 'camera_front',   name: 'Ring Doorbell (Front)', streamUrl: '', online: false, lastMotion: null },
+                    { id: 'camera_garden',  name: 'Garden Camera',          streamUrl: '', online: false, lastMotion: null },
+                    { id: 'camera_indoor1', name: 'Indoor Camera 1',        streamUrl: '', online: false, lastMotion: null },
+                    { id: 'camera_indoor2', name: 'Indoor Camera 2',        streamUrl: '', online: false, lastMotion: null }
+                ],
+                loading: false,
+                error: null
+            },
+
+            // FAZ 6: Lighting overview state
+            lightingState: {
+                lights: [],
+                loading: false,
+                error: null,
+                lastUpdated: null
+            },
+
+            // FAZ 6.A: UI-only lighting configuration (no HA writes)
+            lightingConfig: {
+                lights: [], // [{ id, enabled, cardType, room }]
+                lastUpdated: null
+            },
+
             // FAZ L4: Admin AI Advisor state
             aiAdvisorState: {
                 enabled: true,
