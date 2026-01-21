@@ -29,6 +29,306 @@ import (
 	"time"
 )
 
+// Shutdown gracefully shuts down the HTTP server.
+func (s *Server) Shutdown(ctx context.Context) error {
+	if s.httpServer != nil {
+		return s.httpServer.Shutdown(ctx)
+	}
+	return nil
+}
+
+// Kullanıcı yönetimi endpointleri
+// Kullanıcı yönetimi endpointleri (sade)
+func (s *Server) HandleUserList(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet && r.Method != http.MethodPost {
+		w.WriteHeader(http.StatusMethodNotAllowed)
+		_ = json.NewEncoder(w).Encode(map[string]interface{}{"success": false, "message": "Method not allowed"})
+		return
+	}
+	role, pin := "", ""
+	if cookie, err := r.Cookie("sd_session"); err == nil {
+		parts := strings.SplitN(cookie.Value, ":", 2)
+		if len(parts) == 2 {
+			role = parts[0]
+			pin = parts[1]
+		}
+	}
+	if role != "admin" || pin == "" {
+		role = r.Header.Get("X-User-Role")
+		pin = r.Header.Get("X-User-Pin")
+	}
+	ctx, err := auth.ValidatePIN(pin)
+	if err != nil || !ctx.Authenticated || ctx.Role != "admin" {
+		w.WriteHeader(http.StatusForbidden)
+		_ = json.NewEncoder(w).Encode(map[string]interface{}{"success": false, "message": "Yetkisiz erişim"})
+		return
+	}
+	users, err := auth.LoadAllUsers()
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		_ = json.NewEncoder(w).Encode(map[string]interface{}{"success": false, "message": "Kullanıcılar yüklenemedi"})
+		return
+	}
+	_ = json.NewEncoder(w).Encode(map[string]interface{}{"success": true, "users": users})
+}
+
+func (s *Server) HandleUserAdd(w http.ResponseWriter, r *http.Request) {
+	role, pin := "", ""
+	if cookie, err := r.Cookie("sd_session"); err == nil {
+		parts := strings.SplitN(cookie.Value, ":", 2)
+		if len(parts) == 2 {
+			role = parts[0]
+			pin = parts[1]
+		}
+	}
+	if role != "admin" || pin == "" {
+		role = r.Header.Get("X-User-Role")
+		pin = r.Header.Get("X-User-Pin")
+	}
+	ctx, err := auth.ValidatePIN(pin)
+	if err != nil || !ctx.Authenticated || ctx.Role != "admin" {
+		w.WriteHeader(http.StatusForbidden)
+		_ = json.NewEncoder(w).Encode(map[string]interface{}{"success": false, "message": "Yetkisiz erişim"})
+		return
+	}
+	var user auth.User
+	if err := json.NewDecoder(r.Body).Decode(&user); err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		_ = json.NewEncoder(w).Encode(map[string]interface{}{"success": false, "message": "Geçersiz istek"})
+		return
+	}
+	err = auth.AddUser(user)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		_ = json.NewEncoder(w).Encode(map[string]interface{}{"success": false, "message": err.Error()})
+		return
+	}
+	_ = json.NewEncoder(w).Encode(map[string]interface{}{"success": true})
+}
+
+func (s *Server) HandleUserUpdate(w http.ResponseWriter, r *http.Request) {
+	role, pin := "", ""
+	if cookie, err := r.Cookie("sd_session"); err == nil {
+		parts := strings.SplitN(cookie.Value, ":", 2)
+		if len(parts) == 2 {
+			role = parts[0]
+			pin = parts[1]
+		}
+	}
+	if role != "admin" || pin == "" {
+		role = r.Header.Get("X-User-Role")
+		pin = r.Header.Get("X-User-Pin")
+	}
+	ctx, err := auth.ValidatePIN(pin)
+	if err != nil || !ctx.Authenticated || ctx.Role != "admin" {
+		w.WriteHeader(http.StatusForbidden)
+		_ = json.NewEncoder(w).Encode(map[string]interface{}{"success": false, "message": "Yetkisiz erişim"})
+		return
+	}
+	var user auth.User
+	if err := json.NewDecoder(r.Body).Decode(&user); err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		_ = json.NewEncoder(w).Encode(map[string]interface{}{"success": false, "message": "Geçersiz istek"})
+		return
+	}
+	err = auth.UpdateUser(user)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		_ = json.NewEncoder(w).Encode(map[string]interface{}{"success": false, "message": err.Error()})
+		return
+	}
+	_ = json.NewEncoder(w).Encode(map[string]interface{}{"success": true})
+}
+
+func (s *Server) HandleUserDelete(w http.ResponseWriter, r *http.Request) {
+	role, pin := "", ""
+	if cookie, err := r.Cookie("sd_session"); err == nil {
+		parts := strings.SplitN(cookie.Value, ":", 2)
+		if len(parts) == 2 {
+			role = parts[0]
+			pin = parts[1]
+		}
+	}
+	if role != "admin" || pin == "" {
+		role = r.Header.Get("X-User-Role")
+		pin = r.Header.Get("X-User-Pin")
+	}
+	ctx, err := auth.ValidatePIN(pin)
+	if err != nil || !ctx.Authenticated || ctx.Role != "admin" {
+		w.WriteHeader(http.StatusForbidden)
+		_ = json.NewEncoder(w).Encode(map[string]interface{}{"success": false, "message": "Yetkisiz erişim"})
+		return
+	}
+	var req struct {
+		Username string `json:"username"`
+	}
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		_ = json.NewEncoder(w).Encode(map[string]interface{}{"success": false, "message": "Geçersiz istek"})
+		return
+	}
+	err = auth.DeleteUser(req.Username)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		_ = json.NewEncoder(w).Encode(map[string]interface{}{"success": false, "message": err.Error()})
+		return
+	}
+	_ = json.NewEncoder(w).Encode(map[string]interface{}{"success": true})
+}
+
+// ...existing code...
+
+// haConnectionTestResult models the result of a connection test
+type haConnectionTestResult struct {
+	Success bool
+	Stage   string
+	Message string
+}
+
+// runHAConnectionTest performs the sequential HA connection test (FAZ S3)
+func (s *Server) runHAConnectionTest() haConnectionTestResult {
+	// 1. Load config and decrypt credentials
+	cfg, err := settings.LoadHAConfig()
+	if err != nil || cfg == nil || cfg.ServerURL == "" || cfg.EncryptedToken == "" {
+		return haConnectionTestResult{
+			Success: false,
+			Stage:   "server_unreachable",
+			Message: "Cannot reach Home Assistant server",
+		}
+	}
+	token, err := settings.Decrypt(cfg.EncryptedToken)
+	if err != nil || token == "" {
+		return haConnectionTestResult{
+			Success: false,
+			Stage:   "auth_failed",
+			Message: "Authentication failed. Please check token",
+		}
+	}
+	baseURL := cfg.ServerURL
+	client := &http.Client{Timeout: 4 * time.Second}
+
+	// 2a. Server Reachability
+	req, err := http.NewRequest("GET", baseURL+"/api/", nil)
+	if err != nil {
+		return haConnectionTestResult{
+			Success: false,
+			Stage:   "server_unreachable",
+			Message: "Cannot reach Home Assistant server",
+		}
+	}
+	resp, err := client.Do(req)
+	if err != nil || resp.StatusCode != 200 {
+		return haConnectionTestResult{
+			Success: false,
+			Stage:   "server_unreachable",
+			Message: "Cannot reach Home Assistant server",
+		}
+	}
+	resp.Body.Close()
+
+	// 2b. Authentication Validity
+	req, err = http.NewRequest("GET", baseURL+"/api/config", nil)
+	if err != nil {
+		return haConnectionTestResult{
+			Success: false,
+			Stage:   "api_unavailable",
+			Message: "Home Assistant API unavailable",
+		}
+	}
+	req.Header.Set("Authorization", "Bearer "+token)
+	resp, err = client.Do(req)
+	if err != nil {
+		return haConnectionTestResult{
+			Success: false,
+			Stage:   "api_unavailable",
+			Message: "Home Assistant API unavailable",
+		}
+	}
+	if resp.StatusCode == 401 || resp.StatusCode == 403 {
+		resp.Body.Close()
+		return haConnectionTestResult{
+			Success: false,
+			Stage:   "auth_failed",
+			Message: "Authentication failed. Please check token",
+		}
+	}
+	if resp.StatusCode != 200 {
+		resp.Body.Close()
+		return haConnectionTestResult{
+			Success: false,
+			Stage:   "api_unavailable",
+			Message: "Home Assistant API unavailable",
+		}
+	}
+	// 2c. Core API Sanity (valid JSON)
+	var apiSanity map[string]interface{}
+	dec := json.NewDecoder(resp.Body)
+	if err := dec.Decode(&apiSanity); err != nil {
+		resp.Body.Close()
+		return haConnectionTestResult{
+			Success: false,
+			Stage:   "api_unavailable",
+			Message: "Home Assistant API unavailable",
+		}
+	}
+	resp.Body.Close()
+
+	// 2d. Alarmo Presence (read-only)
+	req, err = http.NewRequest("GET", baseURL+"/api/states/alarm_control_panel.alarmo", nil)
+	if err != nil {
+		return haConnectionTestResult{
+			Success: false,
+			Stage:   "alarmo_missing",
+			Message: "Alarmo integration not found",
+		}
+	}
+	req.Header.Set("Authorization", "Bearer "+token)
+	resp, err = client.Do(req)
+	if err != nil {
+		return haConnectionTestResult{
+			Success: false,
+			Stage:   "alarmo_missing",
+			Message: "Alarmo integration not found",
+		}
+	}
+	if resp.StatusCode != 200 && resp.StatusCode != 404 {
+		resp.Body.Close()
+		return haConnectionTestResult{
+			Success: false,
+			Stage:   "alarmo_missing",
+			Message: "Alarmo integration not found",
+		}
+	}
+	if resp.StatusCode == 404 {
+		resp.Body.Close()
+		return haConnectionTestResult{
+			Success: false,
+			Stage:   "alarmo_missing",
+			Message: "Alarmo integration not found",
+		}
+	}
+	resp.Body.Close()
+
+	// 4. Success: update last_tested_at
+	now := time.Now().UTC()
+	cfg.LastTestedAt = &now
+	_ = settings.SaveHAConfig(cfg) // ignore error, do not fail test
+
+	return haConnectionTestResult{
+		Success: true,
+		Stage:   "ok",
+		Message: "Home Assistant connection successful",
+	}
+}
+
+// --- Register FAZ S2 endpoints ---
+func (s *Server) RegisterFAZS2Endpoints(mux *http.ServeMux) {
+	mux.HandleFunc("/api/settings/homeassistant/test", s.handleHASettingsTest)
+	mux.HandleFunc("/api/settings/homeassistant", s.handleHASettingsSave)
+	mux.HandleFunc("/api/settings/homeassistant/status", s.handleHASettingsStatus)
+	mux.HandleFunc("/api/login", s.handleLogin)
+}
+
 // handleAIAnomalies returns grouped anomaly packets for UI
 func (s *Server) handleAIAnomalies(w http.ResponseWriter, r *http.Request) {
 	packets := s.coord.AI.GroupAnomalies()
@@ -42,11 +342,6 @@ func (s *Server) handleAIDaily(w http.ResponseWriter, r *http.Request) {
 }
 
 // getRole extracts the role from auth context (set by auth middleware)
-// FAZ L1: Backend is source of truth for role (not headers)
-func getRole(r *http.Request) auth.Role {
-	authCtx := getAuthContext(r)
-	return authCtx.Role
-}
 
 // checkPerm enforces permission, logs/audits the decision, and returns role/allowed
 func (s *Server) checkPerm(w http.ResponseWriter, r *http.Request, perm auth.Permission) (auth.Role, bool) {
@@ -107,6 +402,12 @@ func NewServer(coord *system.Coordinator, runtimeCfg *config.RuntimeConfig) *Ser
 }
 
 func (s *Server) Start(port int) error {
+	// Register FAZ S2 endpoints before starting HTTP server
+	if s.httpServer != nil && s.httpServer.Handler != nil {
+		if mux, ok := s.httpServer.Handler.(*http.ServeMux); ok {
+			s.RegisterFAZS2Endpoints(mux)
+		}
+	}
 	return s.startHTTPServer(port)
 }
 
@@ -144,7 +445,7 @@ func itoa(i int) string {
 	return fmt.Sprintf("%d", i)
 }
 
-func (s *Server) handleHealth(w http.ResponseWriter, r *http.Request) {
+func (s *Server) handleHealth(w http.ResponseWriter, _ *http.Request) {
 	s.coord.UpdateFailsafeState()
 	res := s.coord.SelfCheck()
 	s.respond(w, true, res, "", 200)
@@ -625,13 +926,14 @@ func (s *Server) handleGuestApprove(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var err error
-	if req.Decision == "approve" {
+	switch req.Decision {
+	case "approve":
 		logger.Info("guest request approved: request_id=" + req.RequestID)
 		err = s.coord.GuestRequest.ApproveRequest(req.RequestID)
-	} else if req.Decision == "reject" {
+	case "reject":
 		logger.Info("guest request rejected: request_id=" + req.RequestID)
 		err = s.coord.GuestRequest.RejectRequest(req.RequestID)
-	} else {
+	default:
 		s.respondError(w, r, CodeBadRequest, "invalid decision")
 		return
 	}
@@ -872,14 +1174,16 @@ func (s *Server) handleUpdateStage(w http.ResponseWriter, r *http.Request) {
 // GET: Returns current accessibility preferences
 // POST: Updates accessibility preferences with validation
 func (s *Server) handleAccessibility(w http.ResponseWriter, r *http.Request) {
-	if r.Method == http.MethodGet {
+	switch r.Method {
+	case http.MethodGet:
 		s.handleAccessibilityGet(w, r)
 		return
-	} else if r.Method == http.MethodPost {
+	case http.MethodPost:
 		s.handleAccessibilityPost(w, r)
 		return
+	default:
+		s.respondError(w, r, CodeMethodNotAllowed, "GET or POST required")
 	}
-	s.respondError(w, r, CodeMethodNotAllowed, "GET or POST required")
 }
 
 // handleAccessibilityGet returns current accessibility preferences
@@ -966,11 +1270,12 @@ func (s *Server) handleAccessibilityPost(w http.ResponseWriter, r *http.Request)
 // GET: Returns current voice feedback state
 // POST: Updates voice_enabled setting
 func (s *Server) handleVoice(w http.ResponseWriter, r *http.Request) {
-	if r.Method == http.MethodGet {
+	switch r.Method {
+	case http.MethodGet:
 		s.handleVoiceGet(w, r)
-	} else if r.Method == http.MethodPost {
+	case http.MethodPost:
 		s.handleVoicePost(w, r)
-	} else {
+	default:
 		s.respondError(w, r, CodeMethodNotAllowed, "GET or POST required")
 	}
 }
@@ -1537,11 +1842,12 @@ func (s *Server) handleLogbook(w http.ResponseWriter, r *http.Request) {
 
 	// Map user role string to logbook role type
 	var logbookRole logbook.UserRole
-	if userRole == "admin" {
+	switch userRole {
+	case "admin":
 		logbookRole = logbook.RoleAdmin
-	} else if userRole == "user" {
+	case "user":
 		logbookRole = logbook.RoleUser
-	} else {
+	default:
 		logbookRole = logbook.RoleGuest
 	}
 
@@ -1572,11 +1878,12 @@ func (s *Server) handleLogbookSummary(w http.ResponseWriter, r *http.Request) {
 
 	// Map user role string to logbook role type
 	var logbookRole logbook.UserRole
-	if userRole == "admin" {
+	switch userRole {
+	case "admin":
 		logbookRole = logbook.RoleAdmin
-	} else if userRole == "user" {
+	case "user":
 		logbookRole = logbook.RoleUser
-	} else {
+	default:
 		logbookRole = logbook.RoleGuest
 	}
 
@@ -1600,13 +1907,14 @@ func (s *Server) handleSettings(w http.ResponseWriter, r *http.Request) {
 
 	// Map user role string to settings role type and update SettingsManager role
 	var settingsRole string
-	if userRole == "admin" {
+	switch userRole {
+	case "admin":
 		settingsRole = "admin"
 		s.coord.Settings.SetUserRole(settings.RoleAdmin)
-	} else if userRole == "user" {
+	case "user":
 		settingsRole = "user"
 		s.coord.Settings.SetUserRole(settings.RoleUser)
-	} else {
+	default:
 		settingsRole = "guest"
 		s.coord.Settings.SetUserRole(settings.RoleGuest)
 	}
@@ -1640,11 +1948,12 @@ func (s *Server) handleSettingsAction(w http.ResponseWriter, r *http.Request) {
 
 	// Update SettingsManager role from incoming header so ApplyFieldChange/ApplyAction honor permissions
 	if s.coord != nil && s.coord.Settings != nil {
-		if userRole == "admin" {
+		switch userRole {
+		case "admin":
 			s.coord.Settings.SetUserRole(settings.RoleAdmin)
-		} else if userRole == "user" {
+		case "user":
 			s.coord.Settings.SetUserRole(settings.RoleUser)
-		} else {
+		default:
 			s.coord.Settings.SetUserRole(settings.RoleGuest)
 		}
 	}
@@ -2272,9 +2581,7 @@ func parseBatteryPercent(attrs map[string]interface{}) int {
 			case string:
 				// Try to parse like "85" or "85%"
 				s := tv
-				if strings.HasSuffix(s, "%") {
-					s = strings.TrimSuffix(s, "%")
-				}
+				s = strings.TrimSuffix(s, "%")
 				var n int
 				if _, err := fmt.Sscanf(s, "%d", &n); err == nil {
 					if n < 0 {
@@ -2429,5 +2736,62 @@ func mapEventType(state string) string {
 		return "clear"
 	default:
 		return "info"
+	}
+}
+
+// handleLogin: PIN ile giriş için endpoint
+func (s *Server) handleLogin(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("DEBUG: handleLogin çağrıldı")
+	if r.Method != http.MethodPost {
+		w.WriteHeader(http.StatusMethodNotAllowed)
+		_ = json.NewEncoder(w).Encode(map[string]interface{}{
+			"success": false,
+			"message": "POST methodu gerekli",
+		})
+		return
+	}
+	var req struct {
+		Pin string `json:"pin"`
+	}
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		_ = json.NewEncoder(w).Encode(map[string]interface{}{
+			"success": false,
+			"message": "Geçersiz istek formatı",
+		})
+		return
+	}
+	fmt.Println("DEBUG: Gelen PIN:", req.Pin)
+	log.Printf("DEBUG: Gelen PIN: '%s'", req.Pin)
+	ctx, err := auth.ValidatePIN(req.Pin)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		_ = json.NewEncoder(w).Encode(map[string]interface{}{
+			"success": false,
+			"message": "Sunucu hatası",
+		})
+		return
+	}
+	if ctx.Authenticated {
+		// Basit bir session cookie oluştur (gerçek projede JWT veya secure session kullanılmalı)
+		cookie := &http.Cookie{
+			Name:     "sd_session",
+			Value:    string(ctx.Role) + ":" + req.Pin, // Basit örnek, prod için güvenli değil!
+			Path:     "/",
+			HttpOnly: true,
+			SameSite: http.SameSiteLaxMode,
+		}
+		http.SetCookie(w, cookie)
+		_ = json.NewEncoder(w).Encode(map[string]interface{}{
+			"success": true,
+			"role":    ctx.Role,
+			"message": "Giriş başarılı",
+		})
+	} else {
+		w.WriteHeader(http.StatusUnauthorized)
+		_ = json.NewEncoder(w).Encode(map[string]interface{}{
+			"success": false,
+			"message": "Hatalı PIN",
+		})
 	}
 }

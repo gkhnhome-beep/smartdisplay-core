@@ -11,23 +11,31 @@ import (
 	"strings"
 )
 
+// getRole extracts the role from auth context (set by auth middleware)
+func getRole(r *http.Request) auth.Role {
+	authCtx := getAuthContext(r)
+	return authCtx.Role
+}
+
 // corsDevMiddleware adds CORS headers for local development (localhost:5500)
 // This allows frontend on different ports to call the API during development
 func corsDevMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		// Handle OPTIONS preflight requests
+		allowedOrigins := map[string]bool{
+			"http://localhost:5500": true,
+			"http://localhost:8090": true,
+		}
+		origin := r.Header.Get("Origin")
+		if allowedOrigins[origin] {
+			w.Header().Set("Access-Control-Allow-Origin", origin)
+		}
+		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, X-User-Role, X-Request-ID, X-SmartDisplay-PIN, X-SmartDisplay-Role")
 		if r.Method == "OPTIONS" {
-			w.Header().Set("Access-Control-Allow-Origin", "http://localhost:5500")
-			w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
-			w.Header().Set("Access-Control-Allow-Headers", "Content-Type, X-User-Role, X-Request-ID, X-SmartDisplay-PIN, X-SmartDisplay-Role")
 			w.WriteHeader(http.StatusOK)
 			return
 		}
-
-		// Add CORS headers to all responses
-		w.Header().Set("Access-Control-Allow-Origin", "http://localhost:5500")
-		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
-		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, X-User-Role, X-Request-ID, X-SmartDisplay-PIN, X-SmartDisplay-Role")
 
 		next.ServeHTTP(w, r)
 	})
@@ -91,7 +99,7 @@ func authMiddleware(next http.Handler) http.Handler {
 			case "admin":
 				authCtx = &auth.AuthContext{Role: auth.Admin, Authenticated: true, PIN: ""}
 			case "user":
-				authCtx = &auth.AuthContext{Role: auth.User, Authenticated: true, PIN: ""}
+				authCtx = &auth.AuthContext{Role: auth.UserRole, Authenticated: true, PIN: ""}
 			default:
 				authCtx = &auth.AuthContext{Role: auth.Guest, Authenticated: false, PIN: ""}
 			}
@@ -141,10 +149,10 @@ func getAuthContext(r *http.Request) *auth.AuthContext {
 	return authCtx
 }
 
-// requireAdmin returns 403 if request is not from admin role
+// requireAdmin returns true if request is from admin role
 func requireAdmin(r *http.Request) bool {
 	authCtx := getAuthContext(r)
-	return authCtx.IsAdmin()
+	return authCtx.Role == auth.Admin
 }
 
 // boolToString converts bool to string

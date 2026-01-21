@@ -1,134 +1,22 @@
 <!DOCTYPE html>
+<script>
+  console.log('INLINE SCRIPT ÇALIŞIYOR');
+</script>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>SmartDisplay</title>
-    <link rel="stylesheet" href="styles/main.css?v=20260108c">
+  <meta charset="UTF-8">
+  <title>Smart Display Intro</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="intro.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="main.css">
 </head>
 <body>
-    <div id="app" class="app-container">
-        <!-- Fixed Top Bar (FAZ 1) -->
-        <div id="top-bar" class="top-bar" style="display:none;">
-            <div class="top-bar-left">
-                <div class="time-display">
-                    <span id="current-time">--:--</span>
-                    <span id="current-date" class="date-text">--</span>
-                </div>
-            </div>
-            <div class="top-bar-center">
-                <div class="weather-display">
-                    <span id="weather-icon" class="weather-icon">☀️</span>
-                    <span id="weather-temp" class="weather-temp">--°</span>
-                </div>
-            </div>
-            <div class="top-bar-right">
-                <div class="network-status">
-                    <span id="network-status" class="network-indicator">Connected</span>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Main Content Area -->
-        <div id="main-content" class="main-content">
-            <!-- Fixed Sidebar (FAZ 1) -->
-            <div id="sidebar" class="sidebar" style="display:none;">
-                <nav class="sidebar-nav">
-                    <div class="nav-item" data-view="home">
-                        <span class="nav-icon">🏠</span>
-                        <span class="nav-label">Home</span>
-                    </div>
-                    <div class="nav-item" data-view="alarm">
-                        <span class="nav-icon">🛡️</span>
-                        <span class="nav-label">Alarm</span>
-                    </div>
-                    <div class="nav-item" data-view="lighting">
-                        <span class="nav-icon">💡</span>
-                        <span class="nav-label">Lighting</span>
-                    </div>
-                    <div class="nav-item" data-view="thermostats">
-                        <span class="nav-icon">🌡️</span>
-                        <span class="nav-label">Thermostats</span>
-                    </div>
-                    <div class="nav-item" data-view="cameras">
-                        <span class="nav-icon">📹</span>
-                        <span class="nav-label">Cameras</span>
-                    </div>
-                    <div class="nav-divider"></div>
-                    <div class="nav-item" data-view="settings">
-                        <span class="nav-icon">⚙️</span>
-                        <span class="nav-label">Settings</span>
-                    </div>
-                    <div class="nav-divider"></div>
-                    <div class="nav-item nav-logout" data-action="logout">
-                        <span class="nav-icon">🚪</span>
-                        <span class="nav-label">Logout</span>
-                    </div>
-                </nav>
-            </div>
-            
-            <!-- View Container -->
-            <div id="view-container" class="view-container">
-                <!-- App content will be rendered here -->
-            </div>
-        </div>
-    </div>
-    
-    <!-- Menu overlay (hidden by default) -->
-    <div id="menu-overlay" class="menu-overlay"></div>
-
-    <!-- Guest Mode Indicator (FAZ L2: Shows when guest session is active) -->
-    <div id="guest-mode-indicator" class="guest-mode-indicator" style="display:none;">
-        <span class="guest-icon">👤</span>
-        <span class="guest-text">Guest</span>
-    </div>
-
-    <!-- A6.A: System Status Diagnostic Overlay -->
-    <div id="system-status-overlay" class="system-status-overlay" style="display:none;">
-        <div class="system-status-content">
-            <h3>System Status</h3>
-            <div class="status-item">
-                <span class="status-label">Version:</span>
-                <span id="status-version">--</span>
-            </div>
-            <div class="status-item">
-                <span class="status-label">Backend:</span>
-                <span id="status-backend">--</span>
-            </div>
-            <div class="status-item">
-                <span class="status-label">Alarmo:</span>
-                <span id="status-alarmo">--</span>
-            </div>
-            <div class="status-item">
-                <span class="status-label">Last Poll:</span>
-                <span id="status-last-poll">--</span>
-            </div>
-            <button id="status-close-btn" class="status-close-btn">Close</button>
-        </div>
-    </div>
-
-    <!-- Bootstrap script - initializes global state and app -->
-    <script src="js/bootstrap.js?v=20260108c"></script>
-    <!-- Store - state management and polling -->
-    <script src="js/store.js?v=20260108c"></script>
-    <!-- API utilities -->
-    <script src="js/api.js?v=20260108c"></script>
-    <!-- Controllers and services -->
-    <script src="js/login.js?v=20260108c"></script>
-    <script src="js/guest.js?v=20260108c"></script>
-    <script src="js/intro.js?v=20260108c"></script>
-    <script src="js/home.js?v=20260108c"></script>
-    <script src="js/alarm.js?v=20260108c"></script>
-    <script src="js/alarmScene.js?v=20260108c"></script>
-    <script src="js/menu.js?v=20260108c"></script>
-    <script src="js/settings.js?v=20260108c"></script>
-    <script src="js/advisor.js?v=20260108c"></script>
-    <!-- View Manager - contains all views and routing -->
-    <script src="js/viewManager.js?v=20260108c"></script>
+  <canvas id="star-bg"></canvas>
+  <div id="app"></div>
+  <!-- Intro ve diğer içerikler SPA açılışında app içine render edilecek. -->
+  <script src="intro.js"></script>
+  <script src="main.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>

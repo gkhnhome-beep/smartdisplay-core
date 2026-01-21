@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"smartdisplay-core/internal/config"
 	"smartdisplay-core/internal/logger"
 	"time"
 )
@@ -191,8 +192,10 @@ func IsConfigured() (bool, error) {
 // GetStatus returns safe status information (no secrets exposed).
 // Used by the GET /api/settings/homeassistant/status endpoint.
 type HAStatus struct {
-	IsConfigured bool       `json:"is_configured"`
-	ConfiguredAt *time.Time `json:"configured_at,omitempty"`
+	IsConfigured   bool       `json:"is_configured"`
+	ConfiguredAt   *time.Time `json:"configured_at,omitempty"`
+	HaConnected    *bool      `json:"ha_connected,omitempty"`
+	HaLastTestedAt *string    `json:"ha_last_tested_at,omitempty"`
 }
 
 // GetHAStatus returns safe status without exposing token.
@@ -206,9 +209,20 @@ func GetHAStatus() (*HAStatus, error) {
 		return &HAStatus{IsConfigured: false}, nil
 	}
 
+	// Load runtime config for connection state
+	runtimeCfg, err := config.LoadRuntimeConfig()
+	var haConnectedPtr *bool
+	var haLastTestedAtPtr *string
+	if err == nil && runtimeCfg != nil {
+		haConnectedPtr = &runtimeCfg.HaConnected
+		haLastTestedAtPtr = runtimeCfg.HaLastTestedAt
+	}
+
 	return &HAStatus{
-		IsConfigured: cfg.ServerURL != "" && cfg.EncryptedToken != "",
-		ConfiguredAt: &cfg.ConfiguredAt,
+		IsConfigured:   cfg.ServerURL != "" && cfg.EncryptedToken != "",
+		ConfiguredAt:   &cfg.ConfiguredAt,
+		HaConnected:    haConnectedPtr,
+		HaLastTestedAt: haLastTestedAtPtr,
 	}, nil
 }
 

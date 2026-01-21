@@ -1,87 +1,703 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>SmartDisplay - Settings (Security)</title>
-  <style>
-    body { font-family: Arial, sans-serif; padding: 20px; }
-    .card { max-width:480px; margin:0 auto; border:1px solid #ddd; padding:16px; border-radius:8px; }
-    .row { margin-bottom:12px; }
-    label { display:block; font-weight:600; margin-bottom:6px; }
-    input[type=number]{ width:100%; padding:8px; font-size:16px }
-    button { padding:10px 14px; font-size:16px }
-    .hint { font-size:13px; color:#666 }
-    .msg { margin-top:12px }
-  </style>
+  <meta charset="UTF-8">
+  <title>Smart Display Settings</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="main.css">
 </head>
 <body>
-  <div class="card">
-    <h2>Security Settings</h2>
-    <div class="row">
-      <label for="entryDelay">Entry Delay (seconds)</label>
-      <input id="entryDelay" type="number" min="0" max="600" />
-      <div class="hint">Seconds allowed to disarm after entry before alarm triggers.</div>
+  <div class="core-topbar">
+    <div class="topbar-weather-left">
+      <span class="weather-indicator" title="Hava Durumu"><span style="font-size:1.2em;">☀️</span> <span id="weather-degree">22°C</span> <span id="weather-city">İstanbul</span></span>
     </div>
-    <div class="row">
-      <label for="exitDelay">Exit Delay (seconds)</label>
-      <input id="exitDelay" type="number" min="0" max="600" />
-      <div class="hint">Seconds allowed to leave after arming before alarm becomes active.</div>
+    <div class="topbar-user-label topbar-user-left"><span class="topbar-user">admin</span></div>
+    <div class="topbar-center">
+      <span class="topbar-time" id="topbar-time">12:00</span>
+      <span class="topbar-date" id="topbar-date">11 Ocak 2026</span>
     </div>
-    <div class="row">
-      <button id="saveBtn">Save</button>
-      <span id="status" class="msg"></span>
+    <div class="topbar-connections">
+      <span class="connection-indicator" id="conn-network"><span class="conn-led"></span><span class="conn-icon">📶</span></span>
+      <span class="connection-indicator" id="conn-ha"><span class="conn-led"></span><span class="conn-icon">🏠</span></span>
+      <span class="connection-indicator" id="conn-system"><span class="conn-led"></span><span class="conn-icon">💻</span></span>
     </div>
   </div>
+  <!-- Sadece bir core-sidebar olacak, fazlalık kaldırıldı -->
+  <main class="core-main">
+    <div class="settings-layout">
+      <nav class="settings-nav" id="settings-nav">
+          <!-- USER & ACCESS MENU -->
+          <div class="settings-nav-item" id="useraccess-menu" data-section="useraccess"><span class="settings-nav-icon">👤</span><span class="settings-nav-label">USER & ACCESS</span></div>
+          <div id="useraccess-submenu" style="display:none;">
+            <div class="settings-nav-item" data-section="users"><span class="settings-nav-icon">👥</span><span class="settings-nav-label">Kullanıcılar</span></div>
+            <div class="settings-nav-item" data-section="pinmgmt"><span class="settings-nav-icon">🔢</span><span class="settings-nav-label">PIN Management</span></div>
+            <div class="settings-nav-item" data-section="sessioninfo"><span class="settings-nav-icon">🕒</span><span class="settings-nav-label">Session Info <span style="font-size:0.9em;color:#b0c4d4;">(Read-only)</span></span></div>
+          </div>
+          <!-- HOME ASSISTANT MENU -->
+          <div class="settings-nav-item" id="ha-menu" data-section="ha"><span class="settings-nav-icon">🏠</span><span class="settings-nav-label">Home Assistant</span></div>
+          <div id="ha-submenu" style="display:none;">
+            <div class="settings-nav-item" data-section="connection"><span class="settings-nav-icon">🔗</span><span class="settings-nav-label">Connection</span></div>
+            <div class="settings-nav-item" data-section="alarmo"><span class="settings-nav-icon">🚨</span><span class="settings-nav-label">Alarmo</span></div>
+            <div class="settings-nav-item" data-section="lighting"><span class="settings-nav-icon">💡</span><span class="settings-nav-label">Lighting</span></div>
+            <div class="settings-nav-item" data-section="thermostats"><span class="settings-nav-icon">🌡️</span><span class="settings-nav-label">Thermostats</span></div>
+            <div class="settings-nav-item" data-section="cameras"><span class="settings-nav-icon">📷</span><span class="settings-nav-label">Cameras</span></div>
+          </div>
+          <!-- SYSTEM MENU -->
+          <div class="settings-nav-item" id="system-menu" data-section="system"><span class="settings-nav-icon">🖥️</span><span class="settings-nav-label">System</span></div>
+          <div id="system-submenu" style="display:none;">
+            <div class="settings-nav-item" data-section="display"><span class="settings-nav-icon">💡</span><span class="settings-nav-label">Display</span></div>
+            <div class="settings-nav-item" data-section="language"><span class="settings-nav-icon">🌐</span><span class="settings-nav-label">Language</span></div>
+            <div class="settings-nav-item" data-section="datetime"><span class="settings-nav-icon">⏰</span><span class="settings-nav-label">Date & Time</span></div>
+            <div class="settings-nav-item" data-section="network"><span class="settings-nav-icon">🌐</span><span class="settings-nav-label">Network</span></div>
+            <div class="settings-nav-item" data-section="deviceinfo"><span class="settings-nav-icon">🧩</span><span class="settings-nav-label">Device Info</span></div>
+          </div>
+          <!-- MAINTENANCE MENU -->
+          <div class="settings-nav-item" id="maintenance-menu" data-section="maintenance"><span class="settings-nav-icon">🛠️</span><span class="settings-nav-label" style="font-size:1em;">MAINTENANCE</span></div>
+          <div id="maintenance-submenu" style="display:none;">
+            <div class="settings-nav-item" data-section="otaupdate"><span class="settings-nav-icon">🔄</span><span class="settings-nav-label">OTA Update</span></div>
+            <div class="settings-nav-item" data-section="backuprestore"><span class="settings-nav-icon">💾</span><span class="settings-nav-label">Backup & Restore</span></div>
+            <div class="settings-nav-item" data-section="maintlogs"><span class="settings-nav-icon">📋</span><span class="settings-nav-label">Logs</span></div>
+            <div class="settings-nav-item" data-section="restartshutdown"><span class="settings-nav-icon">⏻</span><span class="settings-nav-label">Restart / Shutdown</span></div>
+          </div>
+          <!-- ABOUT MENU -->
+          <div class="settings-nav-item" id="about-menu" data-section="about"><span class="settings-nav-icon">ℹ️</span><span class="settings-nav-label">About</span></div>
+        <div class="sidebar-back-container" style="width:100%;text-align:center;margin-top:32px;">
+          <button id="sidebar-back-btn" style="width:80%;padding:10px 0;border-radius:8px;background:#232c36;color:#b0c4d4;font-size:1.08em;border:none;cursor:pointer;box-shadow:0 2px 8px #0002;">⬅️ Geri</button>
+        </div>
+      </nav>
+      <section class="settings-content" id="settings-content">
+        <div id="settings-panels">
+                                      <!-- HA Setup Warning Card: Always visible if not configured -->
+                                      <div id="ha-setup-warning" style="display:none;margin-bottom:24px;">
+                                        <div style="background:#232c36;border-left:5px solid #e67e22;padding:18px 22px;border-radius:10px;box-shadow:0 2px 12px #0003;max-width:520px;margin:auto;">
+                                          <div style="font-size:1.18em;font-weight:600;color:#e67e22;margin-bottom:6px;">Home Assistant bağlantısı kurulmamış</div>
+                                          <div style="color:#b0c4d4;font-size:1.04em;">Lütfen önce Home Assistant ayarlarını tamamlayın. Diğer ayarlar devre dışı bırakıldı.</div>
+                                        </div>
+                                      </div>
+                            <div class="settings-panel" data-panel="otaupdate" style="display:none;">
+                              <h2>OTA Update</h2>
+                              <div class="settings-group">
+                                <label>Güncelleme durumu</label>
+                                <span id="ota-status">Bekleniyor</span>
+                              </div>
+                              <div class="settings-group">
+                                <label>Son kontrol zamanı</label>
+                                <span id="ota-last-check">-</span>
+                              </div>
+                              <div class="settings-group">
+                                <button id="ota-check-btn">Check for updates</button>
+                                <button id="ota-update-btn" disabled>Güncelleme başlat (ileride)</button>
+                              </div>
+                            </div>
+                            <div class="settings-panel" data-panel="backuprestore" style="display:none;">
+                              <h2>Backup & Restore</h2>
+                              <div class="settings-group">
+                                <label>Ayar yedeği (local)</label>
+                                <button id="backup-btn">Yedekle</button>
+                              </div>
+                              <div class="settings-group">
+                                <label>Geri yükleme (ileride)</label>
+                                <button id="restore-btn" disabled>Geri Yükle</button>
+                              </div>
+                            </div>
+                            <div class="settings-panel" data-panel="maintlogs" style="display:none;">
+                              <h2>Logs</h2>
+                              <div class="settings-group">
+                                <label>Son N sistem olayı (read-only)</label>
+                                <textarea id="maint-log" rows="6" readonly style="background:#1a232b;color:#b0c4d4;">No logs yet.</textarea>
+                              </div>
+                              <div class="settings-group">
+                                <label>Log seviyesi bilgisi</label>
+                                <span id="maint-log-level">Info</span>
+                              </div>
+                              <div class="settings-group">
+                                <label>Log boyutu</label>
+                                <span id="maint-log-size">0 KB</span>
+                              </div>
+                              <div class="settings-group">
+                                <label>Loglar HA’ya gönderiliyor</label>
+                                <span id="maint-ha-log-status">Kapalı</span>
+                              </div>
+                            </div>
+                            <div class="settings-panel" data-panel="restartshutdown" style="display:none;">
+                              <h2>Restart / Shutdown</h2>
+                              <div class="settings-group">
+                                <button id="restart-btn">Restart device</button>
+                                <button id="shutdown-btn">Shutdown device</button>
+                              </div>
+                              <div class="settings-group" style="font-size:0.98em;color:#e74c3c;">
+                                ⚠️ Onay penceresi zorunlu
+                              </div>
+                            </div>
+                    <div class="settings-panel" data-panel="pinmgmt" style="display:none;">
+                      <h2>PIN Management</h2>
+                      <div class="settings-group">
+                        <label for="pin-code">PIN Code</label>
+                        <input type="password" id="pin-code" maxlength="6" placeholder="Enter PIN">
+                      </div>
+                      <div class="settings-group">
+                        <button id="pin-save-btn">Save PIN</button>
+                        <button id="pin-reset-btn">Reset PIN</button>
+                      </div>
+                      <div class="settings-group" style="font-size:0.98em;color:#b0c4d4;">
+                        PIN kodunuzu güvenli bir şekilde yönetin.
+                      </div>
+                    </div>
+                    <div class="settings-panel" data-panel="users" style="display:none;">
+                      <h2>Kullanıcılar</h2>
+                      <div class="settings-group">
+                        <button id="user-add-btn">Kullanıcı Ekle</button>
+                      </div>
+                      <table id="user-table" style="width:100%;margin-bottom:1em;">
+                        <thead>
+                          <tr><th>Kullanıcı Adı</th><th>Rol</th><th>PIN</th><th>İşlemler</th></tr>
+                        </thead>
+                        <tbody></tbody>
+                      </table>
+                      <div id="user-form-modal" class="modal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.4);align-items:center;justify-content:center;">
+                        <div style="background:#fff;padding:2em;border-radius:8px;min-width:300px;max-width:90vw;">
+                          <h3 id="user-form-title">Kullanıcı Ekle</h3>
+                          <form id="user-form">
+                            <input type="hidden" id="user-form-mode" value="add">
+                            <label>Kullanıcı Adı: <input id="user-username" required></label><br><br>
+                            <label>Rol: 
+                              <select id="user-role" required>
+                                <option value="admin">Admin</option>
+                                <option value="user">User</option>
+                                <option value="guest">Guest</option>
+                              </select>
+                            </label><br><br>
+                            <label>PIN: <input id="user-pin" required minlength="4" maxlength="8"></label><br><br>
+                            <button type="submit">Kaydet</button>
+                            <button type="button" onclick="hideUserForm()">İptal</button>
+                          </form>
+                        </div>
+                      </div>
+                      <div id="user-delete-modal" class="modal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.4);align-items:center;justify-content:center;">
+                        <div style="background:#fff;padding:2em;border-radius:8px;min-width:300px;max-width:90vw;">
+                          <p id="user-delete-msg"></p>
+                          <button onclick="confirmUserDelete()">Evet</button>
+                          <button onclick="hideUserDelete()">İptal</button>
+                        </div>
+                      </div>
+                    </div>
+                    <script>
+                    // Kullanıcılar paneli için JS
+                    let users = [];
+                    let userDeleteTarget = null;
 
-<script>
-(function(){
-  const entryEl = document.getElementById('entryDelay');
-  const exitEl = document.getElementById('exitDelay');
-  const saveBtn = document.getElementById('saveBtn');
-  const statusEl = document.getElementById('status');
+                    function fetchUsers() {
+                      fetch('/api/users', { headers: { 'X-User-Role': 'admin' } })
+                        .then(r => r.json())
+                        .then(data => {
+                          if (data.success) {
+                            users = data.users;
+                            renderUserTable();
+                          }
+                        });
+                    }
 
-  function showStatus(msg, ok){ statusEl.textContent = msg; statusEl.style.color = ok? 'green':'red'; }
+                    function renderUserTable() {
+                      const tbody = document.querySelector('#user-table tbody');
+                      if (!tbody) return;
+                      tbody.innerHTML = '';
+                      users.forEach(u => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `<td>${u.username}</td><td>${u.role}</td><td>${u.pin}</td>
+                          <td>
+                            <button onclick="showUserEdit('${u.username}')">Düzenle</button>
+                            <button onclick="showUserDelete('${u.username}')">Sil</button>
+                          </td>`;
+                        tbody.appendChild(tr);
+                      });
+                    }
 
-  // Load current settings
-  function loadSettings(){
-    fetch('/api/ui/settings', { headers: { 'X-SmartDisplay-PIN': '1234' } })
-      .then(r => r.json())
-      .then(j => {
-        if (j && j.response && j.response.data && j.response.data.sections){
-          const sec = j.response.data.sections.security;
-          if (sec && sec.fields){
-            for (const f of sec.fields){
-              if (f.id === 'alarm_entry_delay_s') entryEl.value = f.value || '';
-              if (f.id === 'alarm_exit_delay_s') exitEl.value = f.value || '';
-            }
+                    document.getElementById('user-add-btn')?.addEventListener('click', () => {
+                      showUserForm('add');
+                    });
+
+                    function showUserForm(mode, username = '') {
+                      document.getElementById('user-form-mode').value = mode;
+                      if (mode === 'add') {
+                        document.getElementById('user-form-title').innerText = 'Kullanıcı Ekle';
+                        document.getElementById('user-username').value = '';
+                        document.getElementById('user-username').disabled = false;
+                        document.getElementById('user-role').value = 'user';
+                        document.getElementById('user-pin').value = '';
+                      } else {
+                        const user = users.find(u => u.username === username);
+                        if (!user) return;
+                        document.getElementById('user-form-title').innerText = 'Kullanıcı Düzenle';
+                        document.getElementById('user-username').value = user.username;
+                        document.getElementById('user-username').disabled = true;
+                        document.getElementById('user-role').value = user.role;
+                        document.getElementById('user-pin').value = user.pin;
+                      }
+                      document.getElementById('user-form-modal').style.display = 'flex';
+                    }
+
+                    function hideUserForm() {
+                      document.getElementById('user-form-modal').style.display = 'none';
+                    }
+
+                    document.getElementById('user-form')?.addEventListener('submit', function(e) {
+                      e.preventDefault();
+                      const mode = document.getElementById('user-form-mode').value;
+                      const user = {
+                        username: document.getElementById('user-username').value,
+                        role: document.getElementById('user-role').value,
+                        pin: document.getElementById('user-pin').value
+                      };
+                      const url = mode === 'add' ? '/api/users/add' : '/api/users/update';
+                      fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'X-User-Role': 'admin' },
+                        body: JSON.stringify(user)
+                      })
+                      .then(r => r.json())
+                      .then(data => {
+                        if (data.success) {
+                          fetchUsers();
+                          hideUserForm();
+                        } else {
+                          alert(data.message || 'İşlem başarısız');
+                        }
+                      });
+                    });
+
+                    function showUserEdit(username) {
+                      showUserForm('edit', username);
+                    }
+
+                    function showUserDelete(username) {
+                      userDeleteTarget = username;
+                      document.getElementById('user-delete-msg').innerText = `${username} kullanıcısını silmek istiyor musunuz?`;
+                      document.getElementById('user-delete-modal').style.display = 'flex';
+                    }
+
+                    function hideUserDelete() {
+                      document.getElementById('user-delete-modal').style.display = 'none';
+                      userDeleteTarget = null;
+                    }
+
+                    function confirmUserDelete() {
+                      if (!userDeleteTarget) return;
+                      fetch('/api/users/delete', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'X-User-Role': 'admin' },
+                        body: JSON.stringify({ username: userDeleteTarget })
+                      })
+                      .then(r => r.json())
+                      .then(data => {
+                        if (data.success) {
+                          fetchUsers();
+                        } else {
+                          alert(data.message || 'Silme başarısız');
+                        }
+                        hideUserDelete();
+                      });
+                    }
+
+                    // Panel açıldığında kullanıcıları getir
+                    document.querySelector('.settings-nav-item[data-section="users"]')?.addEventListener('click', fetchUsers);
+                    </script>
+                    <div class="settings-panel" data-panel="sessioninfo" style="display:none;">
+                      <h2>Session Info <span style="font-size:0.9em;color:#b0c4d4;">(Read-only)</span></h2>
+                      <div class="settings-group">
+                        <label>Current User</label>
+                        <span id="session-user">admin</span>
+                      </div>
+                      <div class="settings-group">
+                        <label>Session Start</label>
+                        <span id="session-start">11 Ocak 2026, 12:00</span>
+                      </div>
+                      <div class="settings-group">
+                        <label>Session Duration</label>
+                        <span id="session-duration">00:15:23</span>
+                      </div>
+                      <div class="settings-group" style="font-size:0.98em;color:#b0c4d4;">
+                        Oturum bilgileri sadece görüntülenebilir.
+                      </div>
+                    </div>
+          <div class="settings-panel" data-panel="system">
+            <h1>System <span style="font-size:0.9em;color:#b0c4d4;">(read-only)</span></h1>
+            <div style="margin-top:24px;color:#b0c4d4;font-size:1.08em;max-width:420px;">
+              Sistem bilgileri ve ağ durumu sadece görüntülenebilir. Tüm gelişmiş ayarlar için Home Assistant kurulumu gereklidir.
+            </div>
+          </div>
+          <div class="settings-panel" data-panel="display" style="display:none;">
+            <h2>Display <span style="font-size:0.9em;color:#b0c4d4;">(coming soon)</span></h2>
+            <div class="settings-group" style="color:#b0c4d4;">Tüm ekran ve tema ayarları yakında burada olacak.</div>
+          </div>
+          <div class="settings-panel" data-panel="language" style="display:none;">
+            <h2>Language</h2>
+            <div class="settings-group">
+              <label for="language-select">Dil Seçimi</label>
+              <select id="language-select">
+                <option value="tr">Türkçe</option>
+                <option value="en">İngilizce</option>
+                <option value="de">Almanca</option>
+              </select>
+            </div>
+            <div class="settings-group" style="font-size:0.98em;color:#b0c4d4;">
+              Dil değişince arayüz yeniden yüklenir, ayarlar korunur.
+            </div>
+          </div>
+          <div class="settings-panel" data-panel="datetime" style="display:none;">
+            <h2>Date & Time</h2>
+            <div class="settings-group">
+              <label for="datetime-format">Saat / Tarih Gösterimi</label>
+              <select id="datetime-format">
+                <option value="24h">24 Saat</option>
+                <option value="12h">12 Saat (AM/PM)</option>
+              </select>
+            </div>
+            <div class="settings-group">
+              <label for="timezone">Zaman Dilimi</label>
+              <input type="text" id="timezone" value="Europe/Istanbul" style="min-width:120px;">
+            </div>
+            <div class="settings-group">
+              <label for="ntp-toggle">NTP</label>
+              <select id="ntp-toggle">
+                <option value="on">Açık</option>
+                <option value="off">Kapalı</option>
+              </select>
+            </div>
+            <div class="settings-group">
+              <label for="manual-time">Manuel Saat Ayarı</label>
+              <input type="time" id="manual-time">
+            </div>
+            <div class="settings-group" style="font-size:0.98em;color:#b0c4d4;">
+              Senkronizasyon durumu: <span id="sync-status">Senkronize</span>
+            </div>
+          </div>
+          <div class="settings-panel" data-panel="network" style="display:none;">
+            <h2>Network <span style="font-size:0.9em;color:#e74c3c;">(Read-only)</span></h2>
+            <div class="settings-group">
+              <label>Bağlantı</label>
+              <span id="network-type">Ethernet</span>
+            </div>
+            <div class="settings-group">
+              <label>IP Adresi</label>
+              <span id="ip-address">192.168.1.100</span>
+            </div>
+            <div class="settings-group">
+              <label>Gateway</label>
+              <span id="gateway">192.168.1.1</span>
+            </div>
+            <div class="settings-group">
+              <label>DNS</label>
+              <span id="dns">8.8.8.8</span>
+            </div>
+            <div class="settings-group">
+              <label>Durum</label>
+              <span id="online-status">Online</span>
+            </div>
+            <div class="settings-group" style="font-size:0.98em;color:#b0c4d4;">
+              ⚠️ Ağ ayarları değiştirilemez, sadece bilgi amaçlıdır.
+            </div>
+          </div>
+          <div class="settings-panel" data-panel="deviceinfo" style="display:none;">
+            <h2>Device Information <span style="font-size:0.9em;color:#e74c3c;">(Read-only)</span></h2>
+            <div class="settings-group">
+              <label>Cihaz Modeli</label>
+              <span id="device-model">Raspberry Pi 3B+</span>
+            </div>
+            <div class="settings-group">
+              <label>OS Versiyonu</label>
+              <span id="os-version">Raspbian 11</span>
+            </div>
+            <div class="settings-group">
+              <label>SmartDisplay Versiyonu</label>
+              <span id="sd-version">v3.0.0</span>
+            </div>
+            <div class="settings-group">
+              <label>Uptime</label>
+              <span id="uptime">2 gün 4 saat</span>
+            </div>
+          </div>
+          <!-- Diğer paneller (connection, alarmo, lighting, thermostats, cameras) için placeholder bırakıldı -->
+          <div class="settings-panel" data-panel="connection" style="display:none;">
+            <h2>Home Assistant</h2>
+            <div class="settings-group">
+              <label for="ha-server-url">Server Address</label>
+              <input type="text" id="ha-server-url" placeholder="http://192.168.1.10:8123" style="min-width:220px;">
+            </div>
+            <div class="settings-group">
+              <label for="ha-token">Token <span style="color:#b0c4d4;font-size:0.95em;">(şifreli)</span></label>
+              <input type="password" id="ha-token" placeholder="••••••••••••••••" style="min-width:220px;">
+            </div>
+            <div class="settings-group" style="margin-top:18px;display:flex;gap:12px;">
+              <button id="ha-save-btn">Save</button>
+              <button id="ha-test-btn">Test</button>
+              <button id="ha-sync-btn" disabled style="background:#444c55;color:#b0c4d4;">Sync</button>
+            </div>
+            <div class="settings-group" style="margin-top:18px;">
+              <label>Status:</label>
+              <div id="ha-conn-status" style="margin-top:4px;color:#e67e22;font-size:1.04em;">Not connected</div>
+              <div id="ha-status-msg" style="margin-top:6px;font-size:0.98em;color:#b0c4d4;"></div>
+            </div>
+            <div class="settings-group" style="margin-top:12px;">
+              <label>Last test</label>
+              <span id="ha-last-test">-</span>
+            </div>
+            <div class="settings-group" id="ha-placeholder-msg" style="margin-top:18px;color:#b0c4d4;display:none;">
+              <span>Home Assistant kurulumu tamamlanmadan diğer ayarlar kullanılamaz.</span>
+            </div>
+          </div>
+          <div class="settings-panel" data-panel="alarmo" style="display:none;">
+            <h2>Alarmo</h2>
+            <div class="settings-group">
+              <label>Alarmo bağlantı durumu</label>
+              <span id="alarmo-conn-status" style="color:#27ae60;">Bağlı</span>
+            </div>
+            <div class="settings-group">
+              <label>Alarmo entity doğrulaması</label>
+              <span id="alarmo-entity-check" style="color:#3498db;">Doğrulandı</span>
+            </div>
+            <div class="settings-group">
+              <label>Alarmo sensörleri <span style="color:#b0c4d4;font-size:0.95em;">(read-only)</span></label>
+              <ul id="alarmo-sensors" style="margin:8px 0 0 18px; color:#b0c4d4; font-size:0.98em;">
+                <li>Kapı Sensörü: Kapalı</li>
+                <li>Pencere Sensörü: Açık</li>
+                <li>Hareket Sensörü: Kapalı</li>
+              </ul>
+            </div>
+            <div class="settings-group">
+              <label>Son olaylar <span style="color:#b0c4d4;font-size:0.95em;">(log – read-only)</span></label>
+              <div id="alarmo-log" style="background:#1a232b;padding:10px 14px;border-radius:6px;font-size:0.97em;color:#b0c4d4;max-height:120px;overflow-y:auto;">
+                <div>[12:01] Alarm devreye alındı</div>
+                <div>[12:05] Kapı Sensörü tetiklendi</div>
+                <div>[12:06] Alarm çaldı</div>
+                <div>[12:08] Alarm devre dışı bırakıldı</div>
+              </div>
+            </div>
+          </div>
+          <div class="settings-panel" data-panel="lighting" style="display:none;">
+            <h2>Lighting</h2>
+            <div class="settings-group" style="margin-bottom:10px;">
+              <label>HA’daki tüm <b>light.*</b> entity’ler</label>
+            </div>
+            <div id="lighting-entities">
+              <div class="lighting-entity-card" style="background:#1a232b;padding:12px 16px;border-radius:7px;margin-bottom:14px;">
+                <div style="display:flex;align-items:center;gap:12px;">
+                  <input type="checkbox" checked id="light1-enabled">
+                  <span style="font-weight:500;">Salon Lamba (light.salon_lamba)</span>
+                  <span style="margin-left:auto;color:#b0c4d4;font-size:0.97em;">Oda: Salon</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:16px;margin-top:10px;flex-wrap:wrap;">
+                  <label>Kart tipi:</label>
+                  <select style="min-width:80px;">
+                    <option>Auto</option>
+                    <option>On / Off</option>
+                    <option>Dimmer</option>
+                    <option>RGB</option>
+                  </select>
+                  <label style="margin-left:18px;">On/Off:</label>
+                  <input type="checkbox" checked>
+                  <label style="margin-left:18px;">Dimmer:</label>
+                  <input type="range" min="0" max="100" value="80" style="width:90px;">
+                  <label style="margin-left:18px;">RGB:</label>
+                  <input type="color" value="#ffe680">
+                </div>
+              </div>
+              <div class="lighting-entity-card" style="background:#1a232b;padding:12px 16px;border-radius:7px;margin-bottom:14px;">
+                <div style="display:flex;align-items:center;gap:12px;">
+                  <input type="checkbox" id="light2-enabled">
+                  <span style="font-weight:500;">Yatak Odası Lamba (light.yatak_lamba)</span>
+                  <span style="margin-left:auto;color:#b0c4d4;font-size:0.97em;">Oda: Yatak Odası</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:16px;margin-top:10px;flex-wrap:wrap;">
+                  <label>Kart tipi:</label>
+                  <select style="min-width:80px;">
+                    <option>Auto</option>
+                    <option>On / Off</option>
+                    <option>Dimmer</option>
+                    <option>RGB</option>
+                  </select>
+                  <label style="margin-left:18px;">On/Off:</label>
+                  <input type="checkbox">
+                  <label style="margin-left:18px;">Dimmer:</label>
+                  <input type="range" min="0" max="100" value="0" style="width:90px;">
+                  <label style="margin-left:18px;">RGB:</label>
+                  <input type="color" value="#ffffff">
+                </div>
+              </div>
+            </div>
+            <div class="settings-group" style="margin-top:8px;color:#e67e22;font-size:0.98em;">
+              ❗ UI-only (HA’ya yazım yok)
+            </div>
+          </div>
+          <div class="settings-panel" data-panel="thermostats" style="display:none;">
+            <h2>Thermostats</h2>
+            <div class="settings-group" style="margin-bottom:10px;">
+              <label>HA’daki tüm <b>climate.*</b> entity’ler</label>
+            </div>
+            <div id="thermostat-entities">
+              <div class="thermostat-entity-card" style="background:#1a232b;padding:12px 16px;border-radius:7px;margin-bottom:14px;">
+                <div style="display:flex;align-items:center;gap:12px;">
+                  <input type="checkbox" id="thermo1-enabled">
+                  <span style="font-weight:500;">Salon Klima (climate.salon_klima)</span>
+                  <span style="margin-left:auto;color:#b0c4d4;font-size:0.97em;">Oda: Salon</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:18px;margin-top:10px;flex-wrap:wrap;">
+                  <label>Min Sıcaklık:</label>
+                  <input type="number" min="10" max="30" value="18" style="width:60px;">
+                  <label>Max Sıcaklık:</label>
+                  <input type="number" min="10" max="30" value="26" style="width:60px;">
+                </div>
+              </div>
+              <div class="thermostat-entity-card" style="background:#1a232b;padding:12px 16px;border-radius:7px;margin-bottom:14px;">
+                <div style="display:flex;align-items:center;gap:12px;">
+                  <input type="checkbox" id="thermo2-enabled">
+                  <span style="font-weight:500;">Yatak Odası Klima (climate.yatak_klima)</span>
+                  <span style="margin-left:auto;color:#b0c4d4;font-size:0.97em;">Oda: Yatak Odası</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:18px;margin-top:10px;flex-wrap:wrap;">
+                  <label>Min Sıcaklık:</label>
+                  <input type="number" min="10" max="30" value="16" style="width:60px;">
+                  <label>Max Sıcaklık:</label>
+                  <input type="number" min="10" max="30" value="24" style="width:60px;">
+                </div>
+              </div>
+            </div>
+            <div class="settings-group" style="margin-top:8px;color:#e67e22;font-size:0.98em;">
+              ❗ Kritik sistem → otomatik ekleme yok
+            </div>
+          </div>
+          <div class="settings-panel" data-panel="cameras" style="display:none;">
+            <h2>Cameras <span style="color:#b0c4d4;font-size:0.9em;">(Placeholder / Future)</span></h2>
+            <div class="settings-group">
+              <label>Kamera listesi <span style="color:#b0c4d4;font-size:0.95em;">(read-only)</span></label>
+              <ul id="camera-list" style="margin:8px 0 0 18px; color:#b0c4d4; font-size:0.98em;">
+                <li>Salon Kamera (camera.salon_kamera)</li>
+                <li>Bahçe Kamera (camera.bahce_kamera)</li>
+              </ul>
+            </div>
+            <div class="settings-group">
+              <label>Kaynak tipi</label>
+              <span id="camera-source-type" style="color:#3498db;">HA stream</span>
+            </div>
+            <div class="settings-group" style="margin-top:8px;color:#e67e22;font-size:0.98em;">
+              Şu an sadece bilgi
+            </div>
+          </div>
+          <div class="settings-panel" data-panel="about" style="display:none;">
+            <h2>About</h2>
+            <div class="settings-group">
+              <label>SmartDisplay Açıklaması</label>
+              <div style="color:#b0c4d4;font-size:1em;max-width:420px;">Akıllı ekranınız için merkezi ayar ve yönetim paneli. Tüm cihaz ve entegrasyonlarınızı buradan kontrol edebilirsiniz.</div>
+            </div>
+            <div class="settings-group">
+              <label>Versiyon</label>
+              <span id="about-version">v3.0.0</span>
+            </div>
+            <div class="settings-group">
+              <label>Build Bilgisi</label>
+              <span id="about-build">2026-01-11</span>
+            </div>
+            <div class="settings-group">
+              <label>Lisanslar</label>
+              <span id="about-licenses">MIT, GPLv3, Diğer</span>
+            </div>
+            <div class="settings-group">
+              <label>Yasal Metinler</label>
+              <div style="color:#b0c4d4;font-size:0.98em;max-width:420px;">Bu yazılım, ilgili açık kaynak lisansları ve yasal metinler kapsamında sunulmaktadır. Detaylar için lütfen dokümantasyona bakınız.</div>
+            </div>
+          </div>
+        </div>
+        <script>
+// Sade panel ve accordion yönetimi
+document.addEventListener('DOMContentLoaded', () => {
+  const menuMap = {
+    'useraccess-menu': 'useraccess-submenu',
+    'ha-menu': 'ha-submenu',
+    'system-menu': 'system-submenu',
+    'maintenance-menu': 'maintenance-submenu'
+  };
+  Object.entries(menuMap).forEach(([menuId, submenuId]) => {
+    const menu = document.getElementById(menuId);
+    const submenu = document.getElementById(submenuId);
+    if (menu && submenu) {
+      menu.onclick = () => {
+        // Toggle submenu
+        const isOpen = submenu.style.display === 'block';
+        submenu.style.display = isOpen ? 'none' : 'block';
+        // Close other submenus
+        Object.values(menuMap).forEach(id => {
+          if (id !== submenuId) {
+            const el = document.getElementById(id);
+            if (el) el.style.display = 'none';
           }
+        });
+        // Set active menu
+        document.querySelectorAll('.settings-nav-item').forEach(i => i.classList.remove('active'));
+        menu.classList.add('active');
+        // Varsayılan olarak ilk alt menü item'ını ve panelini aktif yap
+        const firstItem = submenu.querySelector('.settings-nav-item');
+        if (firstItem) {
+          firstItem.classList.add('active');
+          const section = firstItem.getAttribute('data-section');
+          document.querySelectorAll('.settings-panel').forEach(panel => {
+            panel.style.display = panel.getAttribute('data-panel') === section ? 'block' : 'none';
+          });
         }
-      })
-      .catch(err => showStatus('Failed to load settings: '+err.message, false));
-  }
-
-  function postFieldChange(fieldId, newValue){
-    return fetch('/api/ui/settings/action', {
-      method: 'POST',
-      headers: { 'Content-Type':'application/json', 'X-SmartDisplay-PIN': '1234' },
-      body: JSON.stringify({ action: 'field_change', field_id: fieldId, new_value: newValue, confirm: true })
-    }).then(r => r.json());
-  }
-
-  saveBtn.addEventListener('click', function(){
-    const entry = parseInt(entryEl.value||'0',10);
-    const exit = parseInt(exitEl.value||'0',10);
-    showStatus('Saving...', true);
-
-    // Save both sequentially
-    postFieldChange('alarm_entry_delay_s', entry)
-      .then(() => postFieldChange('alarm_exit_delay_s', exit))
-      .then(() => showStatus('Saved successfully', true))
-      .catch(err => showStatus('Save failed: '+err.message, false));
+      };
+      // Alt menü item click
+      submenu.querySelectorAll('.settings-nav-item').forEach(item => {
+        item.onclick = e => {
+          e.stopPropagation();
+          menu.classList.add('active');
+          submenu.querySelectorAll('.settings-nav-item').forEach(i => i.classList.remove('active'));
+          item.classList.add('active');
+          const section = item.getAttribute('data-section');
+          document.querySelectorAll('.settings-panel').forEach(panel => {
+            panel.style.display = panel.getAttribute('data-panel') === section ? 'block' : 'none';
+          });
+        };
+      });
+    }
   });
-
-  loadSettings();
-})();
-</script>
-</body>
-</html>
+  // Diğer ana menülere tıklanınca ilgili panel açılır, alt menüler kapanır
+  document.querySelectorAll('.settings-nav > .settings-nav-item').forEach(item => {
+    if (!menuMap[item.id]) {
+      item.onclick = () => {
+        Object.values(menuMap).forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.style.display = 'none';
+        });
+        document.querySelectorAll('.settings-nav-item').forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+        const section = item.getAttribute('data-section');
+        document.querySelectorAll('.settings-panel').forEach(panel => {
+          panel.style.display = panel.getAttribute('data-panel') === section ? 'block' : 'none';
+        });
+      };
+    }
+  });
+  // Varsayılan paneli göster
+  document.querySelectorAll('.settings-panel').forEach(panel => {
+    panel.style.display = panel.getAttribute('data-panel') === 'general' ? 'block' : 'none';
+  });
+});
+// Sidebar Back button logic
+const sidebarBackBtn = document.getElementById('sidebar-back-btn');
+if (sidebarBackBtn) {
+  sidebarBackBtn.onclick = function() {
+    window.location.href = 'home.html'; // Home ekranına yönlendir
+  };
+}
+          // Parlaklık sliderı güncellemesi
+          const brightnessSlider = document.getElementById('display-brightness');
+          const brightnessValue = document.getElementById('brightness-value');
+          if (brightnessSlider && brightnessValue) {
+            brightnessSlider.oninput = function() {
+              brightnessValue.textContent = brightnessSlider.value + '%';
+            };
+          }
+        </script>
+      </section>
+    </div>
+  </main>
+  <!-- Kod sadeleştirildi: Gereksiz ve duplicate panel/menu kodları, eski yorumlar ve tekrarlar kaldırıldı. Sadece tek panel geçiş JS ve tek style bloğu bırakıldı. -->

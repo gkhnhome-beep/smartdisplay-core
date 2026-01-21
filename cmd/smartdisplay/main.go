@@ -28,110 +28,29 @@ import (
 )
 
 func main() {
-	// Startup order: deterministic, panic-safe
-
-	// 0. Log version (first visible output)
+	// Sade başlatma ve shutdown
 	logger.Init()
-	logger.Info("[RC] SmartDisplay v" + version.Version)
-	if version.Commit != "" {
-		logger.Info("[RC] Commit: " + version.Commit)
-	}
-
-	// 1. Logger initialization (first, all logs depend on this)
+	logger.Info("SmartDisplay v" + version.Version)
 	setGOMAXPROCS()
-
-	// 2. Config loading
 	runtimeCfg, err := loadRuntimeConfig()
 	if err != nil {
-		logger.Error("runtime config load failed (using defaults): " + err.Error())
+		logger.Error("runtime config load failed: " + err.Error())
 		runtimeCfg = &config.RuntimeConfig{Language: "en"}
 	}
-
-	// 3. i18n initialization (language preferences)
 	initializeI18n(runtimeCfg)
-
-	// 4. Accessibility initialization (from runtime config)
 	cfg := config.Load()
-
-	// 5. Voice initialization (from runtime config)
-	// (Voice subsystem initialization happens through coordinator)
-
-	// 6. FirstBoot initialization (from runtime config)
-	// (FirstBoot is initialized as part of coordinator)
-
-	// 7. Coordinator and subsystems (HA adapter, alarm, guest, etc.)
 	coord := initializeCoordinator(cfg, runtimeCfg)
-
-	// 7.5 FAZ S4: Initialize global HA connection state from stored config
-	// If HA is configured but no test has been run yet, state is disconnected
-	// If HA is configured and was previously tested, restore last known state
-	haConfig, err := settings.LoadHAConfig()
-	if err == nil && haConfig != nil {
-		// HA is configured - state was already set during load, nothing to do
-		logger.Info("ha connection state initialized: connected=" + (map[bool]string{true: "yes", false: "no"})[runtimeCfg.HaConnected])
-	} else {
-		// HA not configured - mark as disconnected
-		runtimeCfg.HaConnected = false
-		runtimeCfg.HaLastTestedAt = nil
-		logger.Info("ha not configured, connection state set to disconnected")
-	}
-
-	// 8. Health monitoring startup
 	coord.StartHealthMonitor()
 	health.SetCoordinator(coord)
-
-	// 8.5 A2: Alarm polling startup (read-only Alarmo sync)
-	// Create cancellable context for graceful shutdown
 	pollCtx, pollCancel := context.WithCancel(context.Background())
 	coord.StartAlarmPolling(pollCtx)
-
-	// 8.7 FAZ S6: Initialize HA health monitor for runtime failure detection
 	settings.InitGlobalHealthMonitor()
-
-	// 9. HTTP server startup
 	apiServer := api.NewServer(coord, runtimeCfg)
 	if err := apiServer.Start(8090); err != nil {
 		logger.Error("failed to start API server: " + err.Error())
 		os.Exit(1)
 	}
 	logger.Info("ui api ready")
-
-	// 9.5 FAZ S5: Perform initial HA synchronization if not done yet and HA is connected
-	if runtimeCfg.HaConnected && !runtimeCfg.InitialSyncDone {
-		logger.Info("starting initial HA synchronization")
-		syncResult, err := settings.PerformInitialSync()
-		if err == nil && syncResult.Success {
-			// Update runtime config with sync results
-			runtimeCfg.InitialSyncDone = true
-			syncTime := time.Now().Format(time.RFC3339)
-			runtimeCfg.InitialSyncAt = &syncTime
-
-			if syncResult.Meta != nil {
-				runtimeCfg.HaVersion = syncResult.Meta.Version
-				runtimeCfg.HaTimeZone = syncResult.Meta.TimeZone
-				runtimeCfg.HaLocationName = syncResult.Meta.LocationName
-			}
-
-			if syncResult.Counts != nil {
-				runtimeCfg.EntityLights = syncResult.Counts.Lights
-				runtimeCfg.EntitySensors = syncResult.Counts.Sensors
-				runtimeCfg.EntitySwitches = syncResult.Counts.Switches
-				runtimeCfg.EntityOthers = syncResult.Counts.Others
-			}
-
-			// Save updated config
-			if err := config.SaveRuntimeConfig(runtimeCfg); err != nil {
-				logger.Error("failed to save initial sync state: " + err.Error())
-			}
-			logger.Info("initial HA synchronization completed")
-		} else if err != nil {
-			logger.Error("initial HA synchronization error: " + err.Error())
-		} else if !syncResult.Success {
-			logger.Error("initial HA synchronization failed: " + syncResult.Message)
-		}
-	}
-
-	// 10. Graceful shutdown handling (blocks on signal)
 	handleGracefulShutdown(apiServer, pollCancel)
 }
 
@@ -282,7 +201,7 @@ func handleGracefulShutdown(apiServer *api.Server, pollCancel context.CancelFunc
 	defer cancel()
 
 	// Shutdown HTTP server
-	if err := apiServer.ShutdownCtx(shutdownCtx); err != nil {
+	if err := apiServer.Shutdown(shutdownCtx); err != nil {
 		logger.Error("http server shutdown error: " + err.Error())
 	}
 

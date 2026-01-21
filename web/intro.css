@@ -1,0 +1,531 @@
+  /* Guest Access Button */
+  .guest-access-btn {
+    margin-top: 22px;
+    width: 100%;
+    grid-column: 1 / span 3;
+    padding: 0.9em 0;
+    font-size: 1.35rem;
+    font-weight: 700;
+    border-radius: 18px;
+    border: 2px solid #41bdf5cc;
+    background: linear-gradient(90deg, #41bdf5 0%, #00eaff 100%);
+    color: #fff;
+    box-shadow: 0 0 24px #41bdf5cc, 0 2px 8px #0a1633;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s;
+    outline: none;
+    display: block;
+  }
+  .guest-access-btn:hover {
+    background: linear-gradient(90deg, #00eaff 0%, #41bdf5 100%);
+    box-shadow: 0 0 36px #00eaffcc, 0 2px 12px #0a1633;
+  }
+  position: relative;
+  overflow: visible;
+}
+
+/* Animated glowing border effect */
+.pin-container.glass-glow.ultra-premium-glass::before {
+  content: '';
+  position: absolute;
+  inset: -12px;
+  border-radius: 36px;
+  pointer-events: none;
+  z-index: 2;
+  background: conic-gradient(from 0deg, #41bdf5 0%, #00eaff 30%, #eaf6ff 60%, #41bdf5 100%);
+  filter: blur(18px) brightness(1.2) saturate(1.2);
+  opacity: 0.55;
+  animation: borderGlowSpin 6s linear infinite;
+}
+
+@keyframes borderGlowSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Glass reflection overlay */
+.pin-container.glass-glow.ultra-premium-glass::after {
+  content: '';
+  position: absolute;
+  left: 12%;
+  top: 0;
+  width: 76%;
+  height: 38%;
+  border-radius: 0 0 80px 80px/0 0 120px 120px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.04) 100%);
+  opacity: 0.7;
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* Floating particles for extra depth */
+.pin-container.glass-glow.ultra-premium-glass .wow-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+}
+.wow-particle {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, #eaf6ff 0%, #41bdf5 60%, transparent 100%);
+  opacity: 0.18;
+  animation: wowParticleFloat 7s linear infinite;
+}
+@keyframes wowParticleFloat {
+  0% { transform: translateY(0) scale(1); opacity: 0.18; }
+  50% { transform: translateY(-24px) scale(1.18); opacity: 0.32; }
+  100% { transform: translateY(0) scale(1); opacity: 0.18; }
+}
+/* --- ULTRA PREMIUM PIN PAD STYLES --- */
+/* --- ULTRA PREMIUM PIN PAD STYLES --- */
+.ultra-premium-glass {
+    /* Misafir Girişi Butonu */
+    .guest-access-btn {
+    0 4px 32px 0 #0a1633cc,
+    0 0 64px 8px #41bdf5cc,
+    0 0 0 2.5px rgba(65,189,245,0.18),
+    0 0 0 12px rgba(65,189,245,0.06);
+  border-radius: 28px;
+  border: 2.5px solid rgba(65,189,245,0.22);
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(18px) saturate(1.18) brightness(1.08);
+  animation: glassGlowPulse 3.2s infinite alternate cubic-bezier(.4,1.2,.6,1);
+}
+
+.pin-container.glass-glow {
+  min-width: 370px;
+  padding: 44px 36px 36px 36px;
+  border-radius: 28px;
+      position: relative;
+      overflow: visible;
+    }
+    .guest-access-btn:hover {
+      background: linear-gradient(90deg, #00eaff 0%, #41bdf5 100%);
+      box-shadow: 0 0 36px #00eaffcc, 0 2px 12px #0a1633;
+    }
+  border: 2.5px solid rgba(65,189,245,0.22);
+  box-shadow:
+  /* Animasyonlu parlayan kenarlık efekti */
+    0 0 64px 8px #41bdf5cc,
+    0 0 0 2.5px rgba(65,189,245,0.18),
+  /* Cam yansıma katmanı */
+  background: linear-gradient(135deg, rgba(30,48,80,0.55) 60%, rgba(65,189,245,0.18) 100%);
+  backdrop-filter: blur(18px) saturate(1.18) brightness(1.08);
+  /* Derinlik için yüzen partiküller */
+}
+
+  /* --- ULTRA PREMIUM PIN PAD STİLLERİ --- */
+  width: 260px;
+  height: 56px;
+  /* --- PIN PAD GİRİŞ PREMIUM STİLLERİ --- */
+  border-radius: 16px;
+  border: 2px solid #41bdf5cc;
+    /* bulanık efekt kaldırıldı */
+  box-shadow: 0 0 32px #41bdf5cc, 0 2px 12px #0a1633, 0 0 64px #00eaffcc;
+  display: flex;
+  /* --- PIN PAD GİRİŞ PREMIUM STİLLERİ --- */
+  justify-content: center;
+  font-size: 2.2rem;
+  /* --- ULTRA PREMIUM PIN PAD STİLLERİ --- */
+  color: #eaf6ff;
+  letter-spacing: 18px;
+  /* --- PIN PAD GİRİŞ PREMIUM STİLLERİ --- */
+  animation: glassGlowPulse 2.2s infinite alternate cubic-bezier(.4,1.2,.6,1);
+  transition: box-shadow 0.3s, border-color 0.3s;
+}
+
+.pin-status {
+  width: 100%;
+  text-align: center;
+  font-size: 2.2rem;
+  letter-spacing: 18px;
+  color: #eaf6ff;
+  text-shadow: 0 0 18px #41bdf5cc, 0 2px 8px #0a1633, 0 0 32px #00eaffcc;
+  font-weight: 700;
+}
+
+.pin-pad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  width: 320px;
+  margin-top: 10px;
+}
+
+.pin-button.glass-btn {
+  background: linear-gradient(135deg, rgba(30,48,80,0.55) 60%, rgba(65,189,245,0.18) 100%);
+  border-radius: 16px;
+  border: 2px solid #41bdf5cc;
+  box-shadow: 0 0 32px #41bdf5cc, 0 2px 12px #0a1633, 0 0 32px #00eaffcc, 0 0 0 4px #0a163355;
+  color: #eaf6ff;
+  font-size: 2.1rem;
+  width: 84px;
+  height: 84px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-weight: 700;
+  user-select: none;
+  position: relative;
+  transition: transform 0.18s, background 0.3s, box-shadow 0.3s, border-color 0.3s;
+  overflow: hidden;
+  animation: glassGlowPulse 2.2s infinite alternate cubic-bezier(.4,1.2,.6,1);
+}
+
+.pin-button.glass-btn .embossed {
+  color: #eaf6ff;
+  font-size: 2.1rem;
+  font-weight: 700;
+  text-shadow: 0 1.5px 0 #fff, 0 0.5px 0 #41bdf5cc;
+  letter-spacing: 2px;
+  filter: none;
+}
+
+.pin-button.glass-btn:hover {
+  transform: scale(1.13);
+  background: linear-gradient(135deg, #41bdf5 60%, #00eaff 100%);
+  box-shadow: 0 0 48px #00eaffcc, 0 2px 12px #0a1633, 0 0 48px #41bdf5cc;
+  border-color: #00eaff;
+}
+
+.pin-button.glass-btn:active {
+  background: linear-gradient(135deg, #65e3ff 60%, #00eaff 100%);
+  box-shadow: 0 0 64px #00eaffcc, 0 2px 12px #0a1633, 0 0 64px #41bdf5cc;
+  border-color: #65e3ff;
+}
+
+.pin-button.glass-btn.special {
+  }
+
+  .pin-button.glass-btn.special.theme-sky {
+    background: linear-gradient(135deg, #0e6fff 60%, #41bdf5 100%) !important;
+    color: #eaf6ff !important;
+    border: 2.5px solid #41bdf5cc !important;
+    box-shadow: 0 0 32px #41bdf5cc, 0 2px 12px #0a1633, 0 0 32px #00eaffcc !important;
+    filter: brightness(1.12) saturate(1.18);
+    transition: background 0.3s, box-shadow 0.3s, border-color 0.3s;
+  }
+
+  .pin-button.glass-btn.special.theme-sky:hover {
+    background: linear-gradient(135deg, #41bdf5 60%, #00eaff 100%) !important;
+    border-color: #00eaff !important;
+    box-shadow: 0 0 48px #00eaffcc, 0 2px 12px #0a1633, 0 0 48px #41bdf5cc !important;
+  }
+
+  .pin-button.glass-btn.special.theme-sky:active {
+    background: linear-gradient(135deg, #65e3ff 60%, #00eaff 100%) !important;
+    border-color: #65e3ff !important;
+    box-shadow: 0 0 64px #00eaffcc, 0 2px 12px #0a1633, 0 0 64px #41bdf5cc !important;
+  }
+  background: linear-gradient(135deg, rgba(65,189,245,0.85) 60%, rgba(0,234,255,0.65) 100%);
+  color: #eaf6ff;
+  border: 2.5px solid #41bdf5cc;
+  box-shadow: 0 0 32px #41bdf5cc, 0 2px 12px #0a1633, 0 0 32px #00eaffcc;
+  filter: brightness(1.08) saturate(1.12);
+}
+
+.pin-button.glass-btn.special:hover {
+  background: linear-gradient(135deg, #41bdf5 60%, #00eaff 100%);
+  border-color: #00eaff;
+  box-shadow: 0 0 48px #00eaffcc, 0 2px 12px #0a1633, 0 0 48px #41bdf5cc;
+}
+
+.pin-button.glass-btn.special:active {
+  background: linear-gradient(135deg, #65e3ff 60%, #00eaff 100%);
+  border-color: #65e3ff;
+  box-shadow: 0 0 64px #00eaffcc, 0 2px 12px #0a1633, 0 0 64px #41bdf5cc;
+@keyframes glassGlowPulse {
+  0% { box-shadow: 0 4px 32px 0 #0a1633cc, 0 0 32px 8px #41bdf5cc, 0 0 0 2.5px rgba(65,189,245,0.18), 0 0 0 12px rgba(65,189,245,0.06); }
+  100% { box-shadow: 0 8px 48px 0 #0a1633cc, 0 0 64px 16px #41bdf5cc, 0 0 0 4px rgba(65,189,245,0.22), 0 0 0 24px rgba(65,189,245,0.09); }
+}
+}
+
+@media (max-width: 500px) {
+  .pin-container.glass-glow { min-width: 90vw; }
+  .pin-display.glass-glow { width: 80vw; font-size: 1.3rem; }
+  .pin-pad { width: 90vw; }
+  .pin-button.glass-btn { width: 20vw; height: 20vw; font-size: 1.2rem; }
+}
+/* --- PIN PAD LOGIN PREMIUM STYLES --- */
+body.pinpad-active {
+  overflow: hidden;
+}
+
+#pinpad-root {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10,22,51,0.65);
+  /* blur effect removed */
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+.pin-container {
+  background: linear-gradient(135deg, #23272b 60%, #2b3a4c 100%);
+  padding: 32px 28px 28px 28px;
+  border-radius: 28px;
+  box-shadow: 0 0 32px 0 #00eaff99, 0 4px 32px #0a1633cc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 340px;
+  border: 1.5px solid #41bdf5cc;
+  position: relative;
+  animation: pinPadAppear 1.2s cubic-bezier(.4,1.2,.6,1);
+}
+
+@keyframes pinPadAppear {
+  0% { transform: scale(0.92) translateY(40px); opacity: 0; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+.pin-display {
+  background: rgba(30,48,80,0.85);
+  border-radius: 12px;
+  width: 220px;
+  height: 48px;
+  margin-bottom: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.1rem;
+  color: #eaf6ff;
+  letter-spacing: 16px;
+  box-shadow: 0 0 18px #41bdf5cc, 0 2px 8px #0a1633, 0 0 32px #00eaffcc;
+  animation: pulse 2.2s infinite alternate;
+  border: 1.5px solid #41bdf5cc;
+  font-weight: 600;
+  text-shadow: 0 0 12px #41bdf5cc;
+  transition: box-shadow 0.3s;
+}
+
+.pin-display.pulse-success {
+  animation: pinSuccess 0.8s;
+  box-shadow: 0 0 32px #3cff7a, 0 2px 8px #0a1633, 0 0 32px #00eaffcc;
+  border-color: #3cff7a;
+  color: #3cff7a;
+}
+
+@keyframes pinSuccess {
+  0% { box-shadow: 0 0 18px #41bdf5cc; color: #eaf6ff; border-color: #41bdf5cc; }
+  60% { box-shadow: 0 0 32px #3cff7a; color: #3cff7a; border-color: #3cff7a; }
+  100% { box-shadow: 0 0 18px #41bdf5cc; color: #eaf6ff; border-color: #41bdf5cc; }
+}
+
+.pin-pad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  width: 280px;
+  margin-top: 10px;
+}
+
+.pin-button {
+  background: linear-gradient(135deg, #23272b 60%, #41bdf5 100%);
+  color: #eaf6ff;
+  font-size: 1.7rem;
+  width: 76px;
+  height: 76px;
+  border-radius: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 0 18px #41bdf5cc, 0 2px 8px #0a1633, 0 0 32px #00eaffcc;
+  transition: transform 0.18s, background 0.3s, box-shadow 0.3s;
+  font-weight: 600;
+  border: 1.5px solid #41bdf5cc;
+  user-select: none;
+}
+
+.pin-button:hover {
+  transform: scale(1.12);
+  background: linear-gradient(135deg, #41bdf5 60%, #00eaff 100%);
+  box-shadow: 0 0 32px #00eaffcc, 0 2px 8px #0a1633, 0 0 32px #41bdf5cc;
+}
+
+.pin-button:active {
+  background: linear-gradient(135deg, #65e3ff 60%, #00eaff 100%);
+}
+
+#clearButton {
+  background: linear-gradient(135deg, #f44 60%, #ff7a7a 100%);
+  color: #fff;
+  font-size: 1.5rem;
+  border: 1.5px solid #ff7a7a;
+}
+
+#enterButton {
+  background: linear-gradient(135deg, #4CAF50 60%, #3cff7a 100%);
+  color: #fff;
+  font-size: 1.5rem;
+  border: 1.5px solid #3cff7a;
+}
+
+#clearButton:hover, #enterButton:hover {
+  transform: scale(1.12);
+  background: linear-gradient(135deg, #2b93cc 60%, #41bdf5 100%);
+}
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg, #0a1633 0%, #133a6c 100%);
+  position: relative;
+  font-family: 'Segoe UI', 'Arial', sans-serif;
+}
+
+#star-bg {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+}
+
+#intro-root {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#intro-title {
+  margin-top: 0;
+  margin-bottom: 32px;
+  font-size: 3.5rem;
+  color: #eaf6ff;
+  letter-spacing: 0.05em;
+  opacity: 0;
+  transition: opacity 1.2s;
+  font-weight: 700;
+  text-shadow: 0 0 32px #41bdf5cc, 0 2px 16px #0a1633, 0 0 64px #00eaffcc;
+  text-align: center;
+  filter: drop-shadow(0 0 24px #41bdf5cc);
+  animation: wowTitleGlow 2.2s infinite alternate cubic-bezier(.4,1.2,.6,1);
+}
+
+@keyframes wowTitleGlow {
+  0% { filter: drop-shadow(0 0 24px #41bdf5cc) brightness(1); }
+  50% { filter: drop-shadow(0 0 48px #00eaffcc) brightness(1.15); }
+  100% { filter: drop-shadow(0 0 24px #41bdf5cc) brightness(1); }
+}
+
+#intro-logo-container {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0;
+  opacity: 0;
+  transition: opacity 1.2s;
+}
+
+#intro-logo-ring {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 60%, #1e90ff 60%, #133a6c 100%);
+  box-shadow: 0 0 32px 8px #1e90ff55, 0 0 0 8px #0a1633;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#intro-logo {
+  width: 90px;
+  height: 90px;
+  filter: drop-shadow(0 0 12px #1e90ff88);
+  background: transparent;
+  border-radius: 16px;
+}
+
+#intro-loading-bar-bg {
+  width: 340px;
+  height: 18px;
+  background: rgba(30, 48, 80, 0.45);
+  border-radius: 12px;
+  margin: 36px auto 0 auto;
+  overflow: hidden;
+  box-shadow: 0 2px 12px #0a163355;
+  opacity: 0;
+  transition: opacity 0.8s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#intro-loading-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #1e90ff 0%, #00eaff 100%);
+  border-radius: 12px;
+  transition: width 0.2s;
+  box-shadow: 0 0 12px #1e90ff88;
+}
+
+#intro-status {
+  margin-top: 32px;
+  font-size: 1.45rem;
+  color: #eaf6ff;
+  min-height: 2.2em;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.7s;
+  font-weight: 600;
+  text-shadow: 0 0 24px #41bdf5cc, 0 2px 8px #0a1633, 0 0 32px #00eaffcc;
+  filter: drop-shadow(0 0 12px #41bdf5cc);
+  animation: wowStatusGlow 2.2s infinite alternate cubic-bezier(.4,1.2,.6,1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@keyframes wowStatusGlow {
+  0% { filter: drop-shadow(0 0 12px #41bdf5cc) brightness(1); }
+  50% { filter: drop-shadow(0 0 32px #00eaffcc) brightness(1.12); }
+  100% { filter: drop-shadow(0 0 12px #41bdf5cc) brightness(1); }
+}
+
+#intro-status.ok {
+  color: #3cff7a;
+  font-weight: 700;
+  text-shadow: 0 0 32px #2ecc71cc, 0 2px 8px #0a1633, 0 0 32px #00eaffcc;
+  filter: drop-shadow(0 0 24px #2ecc71cc);
+  animation: wowStatusOkGlow 2.2s infinite alternate cubic-bezier(.4,1.2,.6,1);
+}
+
+@keyframes wowStatusOkGlow {
+  0% { filter: drop-shadow(0 0 24px #2ecc71cc) brightness(1); }
+  50% { filter: drop-shadow(0 0 48px #00eaffcc) brightness(1.18); }
+  100% { filter: drop-shadow(0 0 24px #2ecc71cc) brightness(1); }
+}
+
+@media (max-width: 500px) {
+  #intro-logo-ring { width: 100px; height: 100px; }
+  #intro-logo { width: 56px; height: 56px; }
+  #intro-loading-bar-bg { width: 80vw; }
+  #intro-title { font-size: 2rem; }
+}

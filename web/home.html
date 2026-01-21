@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Smart Display Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="main.css">
+</head>
+<body>
+  <div class="core-topbar">
+    <div class="topbar-weather-left">
+      <span class="weather-indicator" title="Hava Durumu"><span style="font-size:1.2em;">☀️</span> <span id="weather-degree">22°C</span> <span id="weather-city">İstanbul</span></span>
+    </div>
+    <div class="topbar-user-label topbar-user-left"><span class="topbar-user">admin</span></div>
+    <div class="topbar-center">
+      <span class="topbar-time" id="topbar-time">12:00</span>
+      <span class="topbar-date" id="topbar-date">11 Ocak 2026</span>
+    </div>
+    <div class="topbar-connections">
+      <span class="connection-indicator" id="conn-network"><span class="conn-led"></span><span class="conn-icon">📶</span></span>
+      <span class="connection-indicator" id="conn-ha"><span class="conn-led"></span><span class="conn-icon">🏠</span></span>
+      <span class="connection-indicator" id="conn-system"><span class="conn-led"></span><span class="conn-icon">💻</span></span>
+    </div>
+  </div>
+  <div class="core-sidebar">
+    <div class="sidebar-menu" id="sidebar-menu">
+      <div class="sidebar-menu-item active" data-route="home" title="Home"><span class="sidebar-icon">🏠</span><span class="sidebar-label">Home</span></div>
+      <div class="sidebar-menu-item" data-route="alarm" title="Alarm"><span class="sidebar-icon">🛡️</span><span class="sidebar-label">Alarm</span></div>
+      <div class="sidebar-menu-item" data-route="lights" title="Lighting"><span class="sidebar-icon">💡</span><span class="sidebar-label">Lighting</span></div>
+      <div class="sidebar-menu-item" data-route="thermostat" title="Thermostats"><span class="sidebar-icon">🌡️</span><span class="sidebar-label">Thermostats</span></div>
+      <div class="sidebar-menu-item" data-route="devices" title="Cameras"><span class="sidebar-icon">📷</span><span class="sidebar-label">Cameras</span></div>
+      <div class="sidebar-menu-item" data-route="settings" title="Settings"><span class="sidebar-icon">⚙️</span><span class="sidebar-label">Settings</span></div>
+    </div>
+    <div class="sidebar-menu-bottom">
+      <div class="sidebar-menu-item" data-route="logout" title="Logout"><span class="sidebar-icon">🚪</span><span class="sidebar-label">Logout</span></div>
+    </div>
+  </div>
+  <main class="core-main">
+    <div id="home-root">
+      <h1>Hoşgeldiniz!</h1>
+      <p>Smart Display ana sayfasına giriş yaptınız.</p>
+      <!-- Buraya ana sayfa içerikleri ve kontrolleri eklenebilir -->
+    </div>
+  </main>
+</body>
+<script src="main.js"></script>
+</html>

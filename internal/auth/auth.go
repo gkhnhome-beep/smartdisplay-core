@@ -1,17 +1,123 @@
 package auth
 
 import (
-	"crypto/sha256"
-	"encoding/hex"
+	"encoding/json"
 	"fmt"
+	"os"
+	"smartdisplay-core/internal/logger"
 )
 
+// Tüm kullanıcıları döndürür
+func LoadAllUsers() ([]User, error) {
+	return loadUsers()
+}
+
+// Kullanıcı ekler
+func AddUser(newUser User) error {
+	users, err := loadUsers()
+	if err != nil {
+		users = []User{}
+	}
+	// Aynı kullanıcı adı varsa hata
+	for _, u := range users {
+		if u.Username == newUser.Username {
+			return fmt.Errorf("Kullanıcı zaten mevcut")
+		}
+	}
+	users = append(users, newUser)
+	return saveUsers(users)
+}
+
+// Kullanıcı günceller
+func UpdateUser(updated User) error {
+	users, err := loadUsers()
+	if err != nil {
+		return err
+	}
+	found := false
+	for i, u := range users {
+		if u.Username == updated.Username {
+			users[i] = updated
+			found = true
+			break
+		}
+	}
+	if !found {
+		return fmt.Errorf("Kullanıcı bulunamadı")
+	}
+	return saveUsers(users)
+}
+
+// Kullanıcı siler
+func DeleteUser(username string) error {
+	users, err := loadUsers()
+	if err != nil {
+		return err
+	}
+	idx := -1
+	for i, u := range users {
+		if u.Username == username {
+			idx = i
+			break
+		}
+	}
+	if idx == -1 {
+		return fmt.Errorf("Kullanıcı bulunamadı")
+	}
+	users = append(users[:idx], users[idx+1:]...)
+	return saveUsers(users)
+}
+
+// Kullanıcıları dosyaya kaydeder
+func saveUsers(users []User) error {
+	path := "data/users.json"
+	f, err := os.Create(path)
+	if err != nil {
+		return err
+	}
+	defer f.Close()
+	enc := json.NewEncoder(f)
+	enc.SetIndent("", "  ")
+	return enc.Encode(users)
+}
+
+// Role represents a user role
 type Role string
 
+// AuthContext holds authentication result
+type AuthContext struct {
+	Role          Role
+	Authenticated bool
+	PIN           string
+}
+
+// ValidatePIN checks the given PIN against users.json and returns AuthContext
+func ValidatePIN(pin string) (*AuthContext, error) {
+	logger.Info("[AUTH] ValidatePIN: called with pin=" + pin)
+	users, err := loadUsers()
+	if err != nil {
+		logger.Error("[AUTH] ValidatePIN: loadUsers failed: " + err.Error())
+		return &AuthContext{Role: Guest, Authenticated: false, PIN: ""}, err
+	}
+	for _, user := range users {
+		logger.Info("[AUTH] ValidatePIN: checking user=" + user.Username + ", pin=" + user.PIN)
+		if user.PIN == pin {
+			logger.Info("[AUTH] ValidatePIN: PIN match for user=" + user.Username)
+			return &AuthContext{
+				Role:          user.Role,
+				Authenticated: true,
+				PIN:           pin,
+			}, nil
+		}
+	}
+	logger.Info("[AUTH] ValidatePIN: no match for pin=" + pin)
+	return &AuthContext{Role: Guest, Authenticated: false, PIN: ""}, nil
+}
+
 const (
-	Admin Role = "admin"
-	User  Role = "user"
-	Guest Role = "guest"
+	Admin    Role = "admin"
+	UserRole Role = "user"
+	Guest    Role = "guest"
 )
 
 type Permission string
@@ -23,9 +129,9 @@ const (
 )
 
 var rolePermissions = map[Role][]Permission{
-	Admin: {PermAlarm, PermDevice, PermGuest},
-	User:  {PermAlarm, PermDevice},
-	Guest: {PermGuest},
+	Admin:    {PermAlarm, PermDevice, PermGuest},
+	UserRole: {PermAlarm, PermDevice},
+	Guest:    {PermGuest},
 }
 
 func HasPermission(role Role, perm Permission) bool {
@@ -40,77 +146,42 @@ func HasPermission(role Role, perm Permission) bool {
 
 // AuthContext represents authenticated request context
 // FAZ L1: PIN-based authentication
-type AuthContext struct {
-	Role          Role
-	Authenticated bool
-	PIN           string // Never log or return in responses
+
+type User struct {
+	Username string `json:"username"`
+	PIN      string `json:"pin"`
+	Role     Role   `json:"role"` // Keep this line as it is
 }
 
-// PINStore holds hashed PINs for each role
-type PINStore struct {
-	AdminPINHash string // SHA-256 hash
-	UserPINHash  string // SHA-256 hash
-}
-
-// Default PIN store (hardcoded for FAZ L1)
-var defaultPINStore = &PINStore{
-	AdminPINHash: hashPIN("1234"), // Default admin PIN: 1234
-	UserPINHash:  hashPIN("5678"), // Default user PIN: 5678
+func loadUsers() ([]User, error) {
+	var paths = []string{"data/users.json", "internal/auth/users.json"}
+	var f *os.File
+	var err error
+	for _, path := range paths {
+		logger.Info("[AUTH] loadUsers: trying path=" + path)
+		f, err = os.Open(path)
+		if err == nil {
+			defer f.Close()
+			var users []User
+			if err := json.NewDecoder(f).Decode(&users); err != nil {
+				logger.Error("[AUTH] loadUsers: failed to decode users.json at " + path + ": " + err.Error())
+				return nil, err
+			}
+			logger.Info("[AUTH] loadUsers: loaded " + fmt.Sprintf("%d", len(users)) + " users from " + path)
+			return users, nil
+		} else {
+			logger.Info("[AUTH] loadUsers: not found at " + path)
+		}
+	}
+	// Otomatik admin oluştur
+	logger.Info("[AUTH] loadUsers: no users.json found, creating default admin user")
+	defaultUser := User{
+		Username: "admin",
+		PIN:      "1234",
+		Role:     Admin,
+	}
+	_ = saveUsers([]User{defaultUser})
+	return []User{defaultUser}, nil
 }
 
 // hashPIN creates SHA-256 hash of PIN
-func hashPIN(pin string) string {
-	hash := sha256.Sum256([]byte(pin))
-	return hex.EncodeToString(hash[:])
-}
-
-// ValidatePIN checks if PIN matches any role and returns auth context
-// FAZ L1: Simple PIN-based validation
-func ValidatePIN(pin string) (*AuthContext, error) {
-	if pin == "" {
-		// No PIN = guest/anonymous
-		return &AuthContext{
-			Role:          Guest,
-			Authenticated: false,
-			PIN:           "",
-		}, nil
-	}
-
-	hashedPIN := hashPIN(pin)
-
-	// Check admin PIN
-	if hashedPIN == defaultPINStore.AdminPINHash {
-		return &AuthContext{
-			Role:          Admin,
-			Authenticated: true,
-			PIN:           pin, // Stored for context, NEVER logged
-		}, nil
-	}
-
-	// Check user PIN
-	if hashedPIN == defaultPINStore.UserPINHash {
-		return &AuthContext{
-			Role:          User,
-			Authenticated: true,
-			PIN:           pin,
-		}, nil
-	}
-
-	// Invalid PIN
-	return nil, fmt.Errorf("invalid PIN")
-}
-
-// IsAdmin checks if context has admin role
-func (ac *AuthContext) IsAdmin() bool {
-	return ac.Authenticated && ac.Role == Admin
-}
-
-// IsUser checks if context has user role
-func (ac *AuthContext) IsUser() bool {
-	return ac.Authenticated && ac.Role == User
-}
-
-// IsGuest checks if context is guest (unauthenticated)
-func (ac *AuthContext) IsGuest() bool {
-	return !ac.Authenticated || ac.Role == Guest
-}

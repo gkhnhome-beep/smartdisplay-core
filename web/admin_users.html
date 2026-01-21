@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Kullanıcı Yönetimi</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 2em; }
+        table { border-collapse: collapse; width: 100%; margin-bottom: 1em; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        th { background: #f0f0f0; }
+        .actions button { margin-right: 5px; }
+        .hidden { display: none; }
+        .popup { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; }
+        .popup-content { background: #fff; padding: 2em; border-radius: 8px; min-width: 300px; }
+    </style>
+</head>
+<body>
+    <h1>Kullanıcı Yönetimi</h1>
+    <button onclick="showAddForm()">Kullanıcı Ekle</button>
+    <table id="userTable">
+        <thead>
+            <tr><th>Kullanıcı Adı</th><th>Rol</th><th>PIN</th><th>İşlemler</th></tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <div id="userForm" class="hidden">
+        <h2 id="formTitle">Kullanıcı Ekle</h2>
+        <form onsubmit="submitForm(event)">
+            <input type="hidden" id="formMode" value="add">
+            <label>Kullanıcı Adı: <input id="username" required></label><br><br>
+            <label>Rol: 
+                <select id="role" required>
+                    <option value="admin">Admin</option>
+                    <option value="user">User</option>
+                    <option value="guest">Guest</option>
+                </select>
+            </label><br><br>
+            <label>PIN: <input id="pin" required minlength="4" maxlength="8"></label><br><br>
+            <button type="submit">Kaydet</button>
+            <button type="button" onclick="hideForm()">İptal</button>
+        </form>
+    </div>
+
+    <div id="popup" class="popup hidden">
+        <div class="popup-content">
+            <p id="popupMsg"></p>
+            <button onclick="confirmDelete()">Evet</button>
+            <button onclick="hidePopup()">İptal</button>
+        </div>
+    </div>
+
+    <script>
+    // Sade JS: kullanıcı yönetimi
+    let users = [];
+    let deleteUserTarget = null;
+    function fetchUsers() {
+        fetch('/api/users', { headers: { 'X-User-Role': 'admin' } })
+            .then(r => r.json())
+            .then(data => {
+                if (data.success) {
+                    users = data.users;
+                    renderTable();
+                }
+            });
+    }
+    function renderTable() {
+        const tbody = document.querySelector('#userTable tbody');
+        tbody.innerHTML = '';
+        users.forEach(u => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td>${u.username}</td><td>${u.role}</td><td>${u.pin}</td>
+                <td class="actions">
+                    <button onclick="showEditForm('${u.username}')">Düzenle</button>
+                    <button onclick="showDeletePopup('${u.username}')">Sil</button>
+                </td>`;
+            tbody.appendChild(tr);
+        });
+    }
+    function showAddForm() {
+        document.getElementById('formTitle').innerText = 'Kullanıcı Ekle';
+        document.getElementById('formMode').value = 'add';
+        document.getElementById('username').value = '';
+        document.getElementById('username').disabled = false;
+        document.getElementById('role').value = 'user';
+        document.getElementById('pin').value = '';
+        document.getElementById('userForm').classList.remove('hidden');
+    }
+    function showEditForm(username) {
+        const user = users.find(u => u.username === username);
+        if (!user) return;
+        document.getElementById('formTitle').innerText = 'Kullanıcı Düzenle';
+        document.getElementById('formMode').value = 'edit';
+        document.getElementById('username').value = user.username;
+        document.getElementById('username').disabled = true;
+        document.getElementById('role').value = user.role;
+        document.getElementById('pin').value = user.pin;
+        document.getElementById('userForm').classList.remove('hidden');
+    }
+    function hideForm() {
+        document.getElementById('userForm').classList.add('hidden');
+    }
+    function submitForm(e) {
+        e.preventDefault();
+        const mode = document.getElementById('formMode').value;
+        const user = {
+            username: document.getElementById('username').value,
+            role: document.getElementById('role').value,
+            pin: document.getElementById('pin').value
+        };
+        const url = mode === 'add' ? '/api/users/add' : '/api/users/update';
+        fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'X-User-Role': 'admin' },
+            body: JSON.stringify(user)
+        })
+        .then(r => r.json())
+        .then(data => {
+            if (data.success) {
+                fetchUsers();
+                hideForm();
+            } else {
+                alert(data.message || 'İşlem başarısız');
+            }
+        });
+    }
+    function showDeletePopup(username) {
+        deleteUserTarget = username;
+        document.getElementById('popupMsg').innerText = `${username} kullanıcısını silmek istiyor musunuz?`;
+        document.getElementById('popup').classList.remove('hidden');
+    }
+    function hidePopup() {
+        document.getElementById('popup').classList.add('hidden');
+        deleteUserTarget = null;
+    }
+    function confirmDelete() {
+        if (!deleteUserTarget) return;
+        fetch('/api/users/delete', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'X-User-Role': 'admin' },
+            body: JSON.stringify({ username: deleteUserTarget })
+        })
+        .then(r => r.json())
+        .then(data => {
+            if (data.success) {
+                fetchUsers();
+            } else {
+                alert(data.message || 'Silme başarısız');
+            }
+            hidePopup();
+        });
+    }
+    // Sayfa yüklenince kullanıcıları getir
+    fetchUsers();
+    </script>
+</body>
+</html>

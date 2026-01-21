@@ -55,7 +55,7 @@ func rotateLogIfNeeded() {
 			new := fmt.Sprintf("logs/app.log.%d", i+1)
 			os.Rename(old, new)
 		}
-		os.Rename(logPath, fmt.Sprintf("logs/app.log.1"))
+		os.Rename(logPath, "logs/app.log.1")
 	}
 }
 func Debug(msg string) {
